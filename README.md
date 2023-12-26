@@ -1,5 +1,5 @@
 # dotNet5784_8080_0359
-dvora enav
-MiniProject windows test Dvora hello
-ping world
-i am  tired now
+MiniProject windows 
+hello world
+have a nice day
+we succeeded the first stage of the project
