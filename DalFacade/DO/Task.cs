@@ -1,7 +1,7 @@
 ﻿
 namespace DO;
 
-public record Tesk
+public record Task
 ( int id,
   string? name,
   string? description,
@@ -18,5 +18,5 @@ public record Tesk
   DateTime? endTask
 )
 {
-    public Tesk() : this(0,null,null,false,0,null,null,0,0,null,null,null,null,null) { } 
+    public Task() : this(0,null,null,false,0,null,null,0,0,null,null,null,null,null) { } 
 }
