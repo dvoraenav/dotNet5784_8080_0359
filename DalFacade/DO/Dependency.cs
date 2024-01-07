@@ -8,9 +8,5 @@ public record Dependency
     int dependsOnTesk
 )
 {
- public Dependency() : this(0) { }
-public Dependency(int i, int dT, int dOT)
-{ this.id = i;
-        this.dependentTask = dT;
-        this.dependsOnTesk = dOT;
-}}
+ public Dependency() : this(0,0,0) { }
+}

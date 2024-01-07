@@ -9,20 +9,12 @@ namespace DO;
 /// <param name="level"></param>
 /// <param name="payPerHour"></param>
 public record Engineer
-(int id,
-  string fullName,
-  string mail,
+( int id,
+  string? fullName,
+  string? mail,
   int level,
   double payPerHour
 )
 {
-    public Engineer() : this(0) { }
-    public Engineer(int i, string n, string m, int l, double p)
-    {
-        this.id = i;
-        this.fullName = n;
-        this.mail = m;
-        this.level = l;
-        this.payPerHour = p;
-    }
+    public Engineer() : this(0,null,null,0,0) { }
 }
