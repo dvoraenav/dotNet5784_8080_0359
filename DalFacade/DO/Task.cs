@@ -1,22 +1,22 @@
-﻿
-namespace DO;
+﻿namespace DO;
 
 public record Task
-( int id,
-  string? name,
-  string? description,
-  bool mileston,
-  int numDays,
-  string? result,
-  string? comment,
-  int engineerId,
-  int difficultyLevel,
- DateTime? startTask,
-  DateTime? newTask,
-  DateTime? scheduleStart,
-  DateTime? deadline,
-  DateTime? endTask
+(
+    int id,
+    string? name,
+    string? description,
+    bool mileston,
+    DateTime? newTask,
+    int numDays=0,
+    string? result=null,
+    string? comment = null,
+    int engineerId = 0,
+    int difficultyLevel = 0,
+    DateTime? startTask=null,
+    DateTime? scheduleStart = null,
+    DateTime? deadline = null,
+    DateTime? endTask= null
 )
 {
-    public Task() : this(0,null,null,false,0,null,null,0,0,null,null,null,null,null) { } 
+    public Task() : this(0, null, null, false,null) { }
 }

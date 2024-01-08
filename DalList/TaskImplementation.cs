@@ -2,13 +2,14 @@
 namespace Dal;
 using DalApi;
 using DO;
-using System.Collections.Generic;
 
 public class TaskImplementation : ITask
 {
-    public int Create(System.Threading.Tasks.Task item)
+    public int Create(Task item)
     {
-        throw new NotImplementedException();
+        int newID = DataSource.Config.NextTaskID;
+        DataSource.Tasks.Add(item with { id = newID });
+        return newID;
     }
 
     public void Delete(int id)
@@ -16,17 +17,17 @@ public class TaskImplementation : ITask
         throw new NotImplementedException();
     }
 
-    public System.Threading.Tasks.Task? Read(int id)
+    public Task? Read(int id)
     {
         throw new NotImplementedException();
     }
 
-    public List<System.Threading.Tasks.Task> ReadAll()
+    public List<Task> ReadAll()
     {
         throw new NotImplementedException();
     }
 
-    public void Update(System.Threading.Tasks.Task item)
+    public void Update(Task item)
     {
         throw new NotImplementedException();
     }
