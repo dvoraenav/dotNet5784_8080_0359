@@ -17,21 +17,31 @@ public class DependencyImplementation : IDependency
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        Dependency d1 = DataSource.Dependencies.Find(dependency => dependency.id == id);
+        if (d1==null)
+            throw new Exception($"dependancy with id ={id} does not exist");
+        DataSource.Dependencies.Remove(d1);
     }
 
     public Dependency? Read(int id)
     {
-        throw new NotImplementedException();
+         Dependency d1= DataSource.Dependencies.Find(dependency=> dependency.id==id);
+        if (d1 == null)
+            throw new Exception($"dependancy with id ={id} does not exist");
+        return d1;
     }
 
     public List<Dependency> ReadAll()
     {
-        throw new NotImplementedException();
+        return new List<Dependency>(DataSource.Dependencies);
     }
 
     public void Update(Dependency item)
     {
-        throw new NotImplementedException();
+        Dependency d1 = DataSource.Dependencies.Find(dependency => dependency.id == item.id);
+        if (d1 == null)
+            throw new Exception($"dependancy with id ={item.id} does not exist");
+        Delete(d1.id);
+        Create(item);
     }
 }

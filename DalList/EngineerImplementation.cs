@@ -17,21 +17,31 @@ public class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        Engineer e1 = DataSource.Engineers.Find(engineer => engineer.id == id);
+        if (e1 == null)
+            throw new Exception($"engineer with id ={id} does not exist");
+        DataSource.Engineers.Remove(e1);
     }
 
     public Engineer? Read(int id)
     {
-        throw new NotImplementedException();
+        Engineer e1 = DataSource.Engineers.Find(engineer => engineer.id == id);
+        if (e1 == null)
+            throw new Exception($"engineer with id ={id} does not exist");
+        return e1;
     }
 
     public List<Engineer> ReadAll()
     {
-        throw new NotImplementedException();
+        return new List<Engineer>(DataSource.Engineers);
     }
 
     public void Update(Engineer item)
     {
-        throw new NotImplementedException();
+        Engineer e1 = DataSource.Engineers.Find(engineer => engineer.id == item.id);
+        if (e1 == null)
+            throw new Exception($"engineer with id ={item.id} does not exist");
+        Delete(e1.id);
+        Create(item);
     }
 }

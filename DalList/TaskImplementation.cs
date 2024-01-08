@@ -13,22 +13,32 @@ public class TaskImplementation : ITask
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        Task t1 = DataSource.Tasks.Find(task => task.id == id);
+        if (t1 == null)
+            throw new Exception($"task with id ={id} does not exist");
+        DataSource.Tasks.Remove(t1);
     }
 
     public Task? Read(int id)
     {
-        throw new NotImplementedException();
+        Task t1 = DataSource.Tasks.Find(task => task.id == id);
+        if (t1 == null)
+            throw new Exception($"task with id ={id} does not exist");
+        return t1;
     }
 
     public List<Task> ReadAll()
     {
-        throw new NotImplementedException();
+        return  new List<Task>(DataSource.Tasks);
     }
 
     public void Update(Task item)
     {
-        throw new NotImplementedException();
+        Task t1 = DataSource.Tasks.Find(task => task.id == item.id);
+        if (t1 == null)
+            throw new Exception($"task with id ={item.id} does not exist");
+        Delete(t1.id);
+        Create(item);
     }
 }
 

@@ -9,5 +9,5 @@ public record Dependency
     int dependsLastTesk  //the id of the last task
 )
 {
- public Dependency() : this(0) { }
+ public Dependency() : this(0,0,0) { }
 }
