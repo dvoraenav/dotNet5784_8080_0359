@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 public class DependencyImplementation : IDependency
 {
-    public int Create(Dependency item)
+    public int Create(Dependency item) //creating a new Dependency
     {
-        int newID = DataSource.Config.NextDependencyId;
+        int newID = DataSource.Config.NextDependencyId; //new id number
         Dependency newItem = item with { id = newID };
-        DataSource.Dependencies.Add(newItem);
+        DataSource.Dependencies.Add(newItem);//adding to the list of Dependencys
         return newID;
 
     }

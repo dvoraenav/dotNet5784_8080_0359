@@ -10,11 +10,11 @@ namespace DO;
 /// <param name="payPerHour"></param>
 public record Engineer
 ( 
-   int id=0,
-   string? fullName = null,
-   string? mail = null,
-   double payPerHour=0,
-   EngineerExpireance level=EngineerExpireance.Beginner
+   int id, //id og the engineer
+   string? fullName = null, //the engineer's full name
+   string? mail = null, //the engineer's mail
+   double? payPerHour=null, //the engineer's payment per hour
+   EngineerExpireance level=EngineerExpireance.Beginner //the engineer's level of expiriance
 
 )
 {

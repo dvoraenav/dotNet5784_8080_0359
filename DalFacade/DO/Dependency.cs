@@ -4,9 +4,9 @@ namespace DO;
 
 public record Dependency
 (   
-    int id = 0,
-    int dependentTask = 0,
-    int dependsOnTesk = 0
+    int id , //id of the dependncy
+    int dependentTask , //the id of the current task
+    int dependsLastTesk  //the id of the last task
 )
 {
  public Dependency() : this(0) { }
