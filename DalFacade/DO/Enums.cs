@@ -2,7 +2,7 @@
 namespace DO;
 public enum EngineerExpireance
 {
-   Beginner,
+   Beginner=0,
    AdvancedBeginner,
    Intermediate, 
    Advanced, 

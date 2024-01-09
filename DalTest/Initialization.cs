@@ -47,9 +47,9 @@ public static class Initialization
         foreach (int i in dep)
         { 
            int eID = dep[i, 0];
-           int dID = dep[0, i];
+           int dID = dep[i,1];
            Dependency d= new Dependency(i,eID, dID);
-           s_dalDependency!.Create(d);
+           int c=s_dalDependency.Create(d);
         }
     
     }
