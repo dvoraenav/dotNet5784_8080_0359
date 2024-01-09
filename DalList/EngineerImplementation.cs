@@ -17,7 +17,8 @@ public class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
-        Engineer e1 = DataSource.Engineers.Find(engineer => engineer.id == id);
+        Engineer e1 = new Engineer();
+        e1=DataSource.Engineers.Find(engineer => engineer.id == id);
         if (e1 == null)
             throw new Exception($"engineer with id ={id} does not exist");
         DataSource.Engineers.Remove(e1);

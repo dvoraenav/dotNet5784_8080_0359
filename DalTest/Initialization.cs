@@ -3,6 +3,7 @@
 namespace DalTest;
 using DO;
 using DalApi;
+using System.Xml.Linq;
 
 public static class Initialization
 {
@@ -23,17 +24,19 @@ public static class Initialization
             "sophia.jones@email.com",
             "david.brown@email.com"
         };
-        for (int i = 0; i < fullNames.Length; i++)
+        for (int i = 0; i < fullNames.Length; i++)//going throw the arry of names
         {
-            int id;
-            do
-                id = s_rand.Next(2000000, 4000000);
-            while (s_dalEngineer!.Read(id) != null);
-            string name = fullNames[i];
-            string email = emails[i];
-            int pay = 35;
-            Engineer newEngineer = new(id, name, email, pay);
-            s_dalEngineer!.Create(newEngineer);
+            
+            try {
+                int id = s_rand.Next(200000000, 400000000);// a random number for id
+                string name = fullNames[i];//taking the name [i] in the arry 
+                string email = emails[i];//taking the email [i] in the arry 
+                int pay = 35; //pay pre hour is set the same for all 5 engineers
+                Engineer newEngineer = new(id, name, email, pay);//adding all the values to the object
+                s_dalEngineer!.Create(newEngineer);//trying to creat a new engineer 
+            }
+            catch (Exception e)//if there  is engineer with the radome id
+            { i--; }//trying to cerat agine 
         }
     }
 
@@ -49,7 +52,7 @@ public static class Initialization
            int eID = dep[i, 0];
            int dID = dep[i,1];
            Dependency d= new Dependency(i,eID, dID);
-           int c=s_dalDependency.Create(d);
+            s_dalDependency!.Create(d);
         }
     
     }
@@ -93,13 +96,15 @@ public static class Initialization
             s_dalTask!.Create(newTask);
         }
     }
-    public static void Do(IEngineer dalEngineer,IDependency dalDependency,ITask dalTask)
+    public static void Do(IEngineer? dalEngineer,IDependency? dalDependency,ITask? dalTask)
     {
-        dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-        dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
-        dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
         createDependency();
         createEngineer();
         createTask();
+       
+
     }
 }
