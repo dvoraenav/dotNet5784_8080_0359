@@ -41,17 +41,25 @@ public static class Initialization
     }
 
     private static void createDependency()
-    {//לבדוקק
-        int[,] dep = { {1,1},{ 1, 2 },{ 1,3},{ 1, 4},
-                       {2,1},{ 2, 2 },{ 2,5},{ 2, 4},
-                       {3,1},{ 3, 3 },{ 3,5},{ 3, 4},
-                       {4,1},{ 4, 2 },{ 5,3},{ 4, 3},
-                       {5,1},{ 5, 2 },{4, 5}, {5, 4},};
-        foreach (int i in dep)
+    {
+        int[,] dep = {
+        {1, 2}, {2, 3}, {3, 4}, {4, 5},
+        {5, 6}, {6, 7}, {7, 8}, {8, 9},
+        {9, 10}, {10, 11}, {11, 12}, {12, 13},
+        {13, 14}, {14, 15}, {15, 16}, {16, 17},
+        {17, 18}, {18, 19}, {19, 20}, {20, 21},
+        {21, 22}, {22, 23}, {23, 24}, {24, 25},
+        {25, 26}, {26, 27}, {27, 28}, {28, 29},
+        {29, 30}, {30, 31}, {31, 32}, {32, 33},
+        {33, 34}, {34, 35}, {35, 36}, {36, 37},
+        {37, 38}, {38, 39}, {39, 40} };
+        //arry of dependency
+
+       for (int i = 0;i < dep.GetLength(0);i++)
         { 
-           int eID = dep[i, 0];
-           int dID = dep[i,1];
-           Dependency d= new Dependency(i,eID, dID);
+           int currentTID = dep[i, 1];//cureent dependency
+           int oldTID = dep[i, 0]; //last dependency
+           Dependency d= new Dependency(i, currentTID, oldTID);
             s_dalDependency!.Create(d);
         }
     
@@ -63,7 +71,7 @@ public static class Initialization
             "Define","Research","Scope","Plan","Stakeholders","Resources","Risk",
             "Milestones","Team","Communication","Design","Infrastructure","Coding",
             "Quality","Testing","Deployment","Monitor","Issues","Review","Closure"
-        };
+        };//arry of tasks
 
         string[] taskDescriptions = {
             "Define project goals and objectives","Research and analyze construction requirements",
@@ -76,22 +84,22 @@ public static class Initialization
             "Conduct testing and inspection for construction","Deploy construction components",
             "Monitor construction progress","Address and resolve construction issues",
             "Conduct construction review and evaluation","Document and close the construction project"
-        };
+        };//arry of description of the tasks
         for (int i = 0; i < tasks.Length; i++)
         {
-            string name = tasks[i];
-            string des = taskDescriptions[i];
-            bool mile = false;
-            int numD = 5;
-            string result = "done";
-            string comment = "the task is compilted";
-            int dlevel = (i % 2) + 1;
-            int num = s_rand.Next(1, 30);
-            DateTime? newT = DateTime.Now.AddDays(num);
-            DateTime? startT = DateTime.Now.AddDays(num + 1);
-            DateTime? schhdual = DateTime.Now.AddDays(num + 5);
-            DateTime? deadline = DateTime.Now.AddDays(num + 10);
-            DateTime? end = DateTime.Now.AddDays(num + 7);
+            string name = tasks[i];//name of the task
+            string des = taskDescriptions[i];//description of the task
+            bool mile = false;//milston
+            int numD = 5;//nume days it will take to finish the task
+            string result = "done";//result og the task
+            string comment = "the task is completed";//task comment
+            int dlevel = (i % 2) + 1;//difficulty level of the task
+            int num = s_rand.Next(1, 30); //to create the date
+            DateTime? newT = DateTime.Now.AddDays(num); //creation time
+            DateTime? startT = DateTime.Now.AddDays(num + 1);//when started to work on the task
+            DateTime? schhdual = DateTime.Now.AddDays(num + 5);// when the task was schedual to be done
+            DateTime? deadline = DateTime.Now.AddDays(num + 10);// the task deadline
+            DateTime? end = DateTime.Now.AddDays(num + 7); // when the task ended
             Task newTask = new Task(num, name, des, newT, mile, numD, result, comment, dlevel, schhdual, startT, deadline, end);
             s_dalTask!.Create(newTask);
         }
