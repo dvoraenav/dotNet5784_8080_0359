@@ -1,6 +1,4 @@
-﻿
-
-namespace DalTest;
+﻿namespace DalTest;
 using DO;
 using DalApi;
 using System.Xml.Linq;
