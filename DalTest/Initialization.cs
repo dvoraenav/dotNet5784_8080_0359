@@ -6,9 +6,11 @@ using System.Xml.Linq;
 public static class Initialization
 {
 
-    private static IEngineer? s_dalEngineer;// stage1
-    private static IDependency? s_dalDependency;//stage 1
-    private static ITask? s_dalTask;//stage 1
+    //private static IEngineer? s_dalEngineer;// stage1
+    //private static IDependency? s_dalDependency;//stage 1
+    //private static ITask? s_dalTask;//stage 1
+    private static IDal? s_dal; //stage 2
+
 
     private static readonly Random s_rand = new();
     private static void createEngineer()
@@ -31,7 +33,7 @@ public static class Initialization
                 string email = emails[i];//taking the email [i] in the arry 
                 int pay = 35; //pay pre hour is set the same for all 5 engineers
                 Engineer newEngineer = new(id, name, email, pay);//adding all the values to the object
-                s_dalEngineer!.Create(newEngineer);//trying to creat a new engineer 
+                s_dal.Engineer!.Create(newEngineer);//trying to creat a new engineer 
             }
             catch (Exception e)//if there  is engineer with the radome id
             { i--; }//trying to cerat agine 
@@ -58,7 +60,7 @@ public static class Initialization
            int currentTID = dep[i, 1];//cureent dependency
            int oldTID = dep[i, 0]; //last dependency
            Dependency d= new Dependency(i, currentTID, oldTID);
-            s_dalDependency!.Create(d);
+            s_dal.Dependency!.Create(d);
         }
     
     }
@@ -99,14 +101,16 @@ public static class Initialization
             DateTime? deadline = DateTime.Now.AddDays(num + 10);// the task deadline
             DateTime? end = DateTime.Now.AddDays(num + 7); // when the task ended
             Task newTask = new Task(num, name, des, newT, mile, numD, result, comment, dlevel, schhdual, startT, deadline, end);
-            s_dalTask!.Create(newTask);
+            s_dal.Task!.Create(newTask);
         }
     }
-    public static void Do(IEngineer? dalEngineer,IDependency? dalDependency,ITask? dalTask)
+    public static void Do(IDal dal)
     {
-        s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        //s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
+        //s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+        //s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
+
         createDependency();
         createEngineer();
         createTask();

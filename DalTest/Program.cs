@@ -10,14 +10,16 @@ using Task = DO.Task;
 
 internal class Program
 {
-    private static IEngineer s_dalEngineer = new EngineerImplementation();
-    private static IDependency s_dalDapendncy = new DependencyImplementation();
-    private static ITask s_dalTask= new TaskImplementation();
+    //private static IEngineer s_dalEngineer = new EngineerImplementation();
+    //private static IDependency s_dalDapendncy = new DependencyImplementation();
+    //private static ITask s_dalTask= new TaskImplementation();
+    static readonly IDal s_dal = new DalList(); //stage 2
+
     private static void Main(string[] args)
     {
         try
         {
-            Initialization.Do(s_dalEngineer, s_dalDapendncy, s_dalTask);
+            Initialization.Do(s_dal);
             int choice;
             do 
             { 
@@ -94,7 +96,7 @@ internal class Program
                         {
                             Console.WriteLine("Enter engineer's valuses to add:");
                             Engineer eg = newEG(); //creating a new Enginerr
-                            int id = s_dalEngineer.Create(eg);
+                            int id = s_dal.Engineer.Create(eg);
                             Console.WriteLine();//spaces
                             Console.WriteLine($"The engineer ={id} was created successfully");
                             Console.WriteLine();//spaces
@@ -107,7 +109,7 @@ internal class Program
                         {
                             Console.WriteLine("Enter engineer's ID");
                             int.TryParse(Console.ReadLine(), out Id);
-                            Console.WriteLine(s_dalEngineer.Read(Id)); //printing engineer
+                            Console.WriteLine(s_dal.Engineer.Read(Id)); //printing engineer
                             Console.WriteLine();//spaces
                         }
                         catch (Exception ex)
@@ -116,7 +118,7 @@ internal class Program
                     case 3:
                         try
                         {
-                            foreach (var engineer in s_dalEngineer.ReadAll())
+                            foreach (var engineer in s_dal.Engineer.ReadAll())
                                 Console.WriteLine(engineer); //printing all engineers
                             Console.WriteLine();//spaces
                         }
@@ -130,7 +132,7 @@ internal class Program
                             Console.WriteLine();//spaces
                             Engineer e = newEG();
                             if (e != null)
-                                s_dalEngineer.Update(e); //updating values og engineer
+                                s_dal.Engineer.Update(e); //updating values og engineer
                             Console.WriteLine();//spaces
                         }
                         catch (Exception ex)
@@ -141,7 +143,7 @@ internal class Program
                         {
                             Console.WriteLine("Enter engineer's ID");
                             int.TryParse(Console.ReadLine(), out Id);
-                            s_dalEngineer.Delete(Id);
+                            s_dal.Engineer.Delete(Id);
                             Console.WriteLine();//spaces
                         }
                         catch (Exception ex)
@@ -184,7 +186,7 @@ internal class Program
                             {
                                 Console.WriteLine("Enter values for a new task");
                                 Task task = newT();//creating a new task
-                                s_dalTask.Create(task);//adding a new task
+                                s_dal.Task.Create(task);//adding a new task
                                 Console.WriteLine();//spaces
                             }
                             catch (Exception ex)
@@ -195,7 +197,7 @@ internal class Program
                             {
                                 Console.WriteLine("Enter engineer's ID");
                                 int.TryParse(Console.ReadLine(), out Id);
-                                Console.WriteLine(s_dalTask.Read(Id));//printing task
+                                Console.WriteLine(s_dal.Task.Read(Id));//printing task
                                 Console.WriteLine();//spaces
                             }
                             catch (Exception ex)
@@ -204,7 +206,7 @@ internal class Program
                         case 3:
                             try
                             {
-                                foreach (var task in s_dalTask.ReadAll())
+                                foreach (var task in s_dal.Task.ReadAll())
                                 {
                                     Console.WriteLine(task); //printing all tasks
                                     Console.WriteLine();//spaces 
@@ -220,7 +222,7 @@ internal class Program
                                 Console.WriteLine();//spaces
                                 Task t = newT();
                                 if (t != null)
-                                    s_dalTask.Update(t);//apdating task values
+                                    s_dal.Task.Update(t);//apdating task values
                             }
                             catch (Exception ex)
                             { Console.WriteLine(ex.Message); }
@@ -230,7 +232,7 @@ internal class Program
                             {
                                 Console.WriteLine("Enter task's ID");
                                 int.TryParse(Console.ReadLine(), out Id);
-                                s_dalTask.Delete(Id);//deleting
+                                s_dal.Task.Delete(Id);//deleting
                                 Console.WriteLine();//spaces
                             }
                             catch (Exception ex)
@@ -272,7 +274,7 @@ internal class Program
                             {
                                 Console.WriteLine("enter Dependency's valuses to update:");
                                 Dependency dep = newDep();//creating a new dependency
-                                s_dalDapendncy.Create(dep);//adding a new dependency
+                                s_dal.Dependency.Create(dep);//adding a new dependency
                                 Console.WriteLine();//spaces 
                             }
                             catch (Exception ex)
@@ -281,9 +283,9 @@ internal class Program
                         case 2:
                             try
                             {
-                                Console.WriteLine("Enter engineer's ID");
+                                Console.WriteLine("Enter dependency's ID");
                                 int.TryParse(Console.ReadLine(), out Id);
-                                Console.WriteLine(s_dalDapendncy.Read(Id));//printing dependency
+                                Console.WriteLine(s_dal.Dependency.Read(Id));//printing dependency
                                 Console.WriteLine();//spaces
                             }
                             catch (Exception ex)
@@ -292,7 +294,7 @@ internal class Program
                         case 3:
                             try
                             {
-                                foreach (var dep in s_dalDapendncy.ReadAll())
+                                foreach (var dep in s_dal.Dependency.ReadAll())
                                     Console.WriteLine(dep); //printing all dependencies
                                 Console.WriteLine();//spaces
                             }
@@ -305,7 +307,7 @@ internal class Program
                                 Console.WriteLine("Enter Dependency's valuses to update:");
                                 Dependency d = newDep();
                                 if (d != null)
-                                    s_dalDapendncy.Update(d); //updating dependency
+                                    s_dal.Dependency.Update(d); //updating dependency
                                 Console.WriteLine();//spaces
                             }
                             catch (Exception ex)
@@ -316,7 +318,7 @@ internal class Program
                             {
                                 Console.WriteLine("enter Dependency's ID");
                                 int.TryParse(Console.ReadLine(), out Id);
-                                s_dalDapendncy.Delete(Id);//deleting dependency
+                                s_dal.Dependency.Delete(Id);//deleting dependency
                                 Console.WriteLine();//spaces
                             }
                             catch (Exception ex)
