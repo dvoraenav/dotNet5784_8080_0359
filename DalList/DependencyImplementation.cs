@@ -25,17 +25,13 @@ internal class DependencyImplementation : IDependency
 
     public Dependency? Read(int id)
     {
-         Dependency d1= DataSource.Dependencies.Find(dependency=> dependency.id==id);//looking for the Dependency
-        if (d1 == null)
-            throw new Exception($"dependancy with id ={id} does not exist");
-        return d1;//returning the Dependency
+        return DataSource.Dependencies.Where(x => x.id == id).FirstOrDefault();
     }
 
-    public List<Dependency> ReadAll()
+     public IEnumerable<Dependency> ReadAll()
     {
-        return new List<Dependency>(DataSource.Dependencies);//list of Dependencies
+        return DataSource.Dependencies.Select(x => x);//list of Dependencies
     }
-
     public void Update(Dependency item)
     {
         Dependency d1 = DataSource.Dependencies.Find(dependency => dependency.id == item.id);//looking for the Dependency

@@ -21,15 +21,12 @@ internal class TaskImplementation : ITask
 
     public Task? Read(int id)
     {
-        Task t1 = DataSource.Tasks.Find(task => task.id == id);//looking for the task
-        if (t1 == null)
-            throw new Exception($"task with id ={id} does not exist");
-        return t1; //returning the task
+        return DataSource.Tasks.Where(x => x.id == id).FirstOrDefault();
     }
 
-    public List<Task> ReadAll()
+     public IEnumerable<Task> ReadAll()
     {
-        return  new List<Task>(DataSource.Tasks);//list of all the tasks
+        return DataSource.Tasks.Select(x => x);//list of tasks
     }
 
     public void Update(Task item)

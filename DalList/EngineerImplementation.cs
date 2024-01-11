@@ -2,7 +2,6 @@
 namespace Dal;
 using DalApi;
 using DO;
-using System.ComponentModel.Design;
 
 internal class EngineerImplementation : IEngineer
 {
@@ -23,17 +22,14 @@ internal class EngineerImplementation : IEngineer
         DataSource.Engineers.Remove(e1);//removing from the list
     }
 
-    public Engineer? Read(int id)
+     public Engineer? Read(int id)
     {
-        Engineer e1 = DataSource.Engineers.Find(engineer => engineer.id == id);//looking for the Engineer
-        if (e1 == null)
-            throw new Exception($"engineer with id ={id} does not exist");
-        return e1;//returning Engineer
+       return DataSource.Engineers.Where(x=>x.id==id).FirstOrDefault();
     }
 
-    public List<Engineer> ReadAll()
+    public IEnumerable<Engineer> ReadAll()
     {
-        return new List<Engineer>(DataSource.Engineers);//list of Engineers
+        return DataSource.Engineers.Select(x=>x);//list of Engineers
     }
 
     public void Update(Engineer item)
