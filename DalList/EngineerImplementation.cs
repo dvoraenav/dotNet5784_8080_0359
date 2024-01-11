@@ -9,7 +9,7 @@ internal class EngineerImplementation : IEngineer
     {
         foreach (Engineer eg in DataSource.Engineers)
             if (eg.id == item.id)//checking if the id of the giving engineer is already in the list
-                throw new Exception($"Engineer with ID={item.id} already exist");
+                throw new DalAlreadyExistsException($"Engineer with ID{item.id} already exist");
         DataSource.Engineers.Add(item); //if not adding to the list of the engineers
         return item.id;
     }
@@ -18,25 +18,35 @@ internal class EngineerImplementation : IEngineer
     {
         Engineer e1=DataSource.Engineers.Find(engineer => engineer.id == id);//looking for the Engineer
         if (e1 == null)
-            throw new Exception($"engineer with id ={id} does not exist");
+            throw new DalDoesNotExistException($"engineer with id {id} does not exist");
         DataSource.Engineers.Remove(e1);//removing from the list
     }
 
-     public Engineer? Read(int id)
+    public void Read(int id)
     {
-       return DataSource.Engineers.Where(x=>x.id==id).FirstOrDefault();
+        Read(x => x.id == id);
+    }
+    public Engineer? Read(Func<Engineer, bool> filter)
+    { return DataSource.Engineers.Where(filter).FirstOrDefault(); }
+
+    public IEnumerable<Engineer> ReadAll(Func<Engineer , bool>? filter = null) //stage 2
+    {
+        if (filter != null)
+        {
+            return from item in DataSource.Engineers
+                   where filter(item)
+                   select item;
+        }
+        return from item in DataSource.Engineers
+               select item;
     }
 
-    public IEnumerable<Engineer> ReadAll()
-    {
-        return DataSource.Engineers.Select(x=>x);//list of Engineers
-    }
 
     public void Update(Engineer item)
     {
         Engineer e1 = DataSource.Engineers.Find(engineer => engineer.id == item.id);//looking for the Engineer
         if (e1 == null)
-            throw new Exception($"engineer with id ={item.id} does not exist");
+            throw new DalDoesNotExistException($"engineer with id {item.id} does not exist");
         Delete(e1.id);//deleting the old version
         Create(item);//creating a new virsion
     }

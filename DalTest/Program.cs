@@ -109,7 +109,7 @@ internal class Program
                         {
                             Console.WriteLine("Enter engineer's ID");
                             int.TryParse(Console.ReadLine(), out Id);
-                            Console.WriteLine(s_dal.Engineer.Read(Id)); //printing engineer
+                            Console.WriteLine(s_dal.Engineer.Read(x=>x.id==Id)); //printing engineer
                             Console.WriteLine();//spaces
                         }
                         catch (Exception ex)
@@ -195,9 +195,9 @@ internal class Program
                         case 2:
                             try
                             {
-                                Console.WriteLine("Enter engineer's ID");
+                                Console.WriteLine("Enter task's ID");
                                 int.TryParse(Console.ReadLine(), out Id);
-                                Console.WriteLine(s_dal.Task.Read(Id));//printing task
+                                Console.WriteLine(s_dal.Task.Read(x => x.id == Id));//printing task
                                 Console.WriteLine();//spaces
                             }
                             catch (Exception ex)
@@ -272,7 +272,7 @@ internal class Program
                         case 1:
                             try
                             {
-                                Console.WriteLine("enter Dependency's valuses to update:");
+                                Console.WriteLine("Enter Dependency's valuses to update:");
                                 Dependency dep = newDep();//creating a new dependency
                                 s_dal.Dependency.Create(dep);//adding a new dependency
                                 Console.WriteLine();//spaces 
@@ -285,7 +285,7 @@ internal class Program
                             {
                                 Console.WriteLine("Enter dependency's ID");
                                 int.TryParse(Console.ReadLine(), out Id);
-                                Console.WriteLine(s_dal.Dependency.Read(Id));//printing dependency
+                                Console.WriteLine(s_dal.Dependency.Read(x => x.id == Id));//printing dependency
                                 Console.WriteLine();//spaces
                             }
                             catch (Exception ex)
@@ -349,7 +349,7 @@ internal class Program
         int.TryParse(Console.ReadLine(), out pay);
         int choice;
         Engineer eg; // the new Engineer
-        Console.WriteLine(@"Hello!, please enter your choice for level of expireance");
+        Console.WriteLine(@"Please enter your choice for level of expireance");
         Console.WriteLine(" 0: Beginner");
         Console.WriteLine(" 1: Advanced Beginner");
         Console.WriteLine(" 2: Intermediate");
