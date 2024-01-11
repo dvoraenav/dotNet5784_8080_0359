@@ -3,6 +3,7 @@
 namespace DalTest;
 using DO;
 using DalApi;
+using System.Xml.Linq;
 
 public static class Initialization
 {
@@ -14,38 +15,104 @@ public static class Initialization
     private static readonly Random s_rand = new();
     private static void createEngineer()
     {
-        string[] engineerNames =
-        { "Dvora Eanv", "Riki Rubin", "Ranan Houri", "Shir Babayev", "David Tal", "Joe Biden" };
-        foreach (var name in engineerNames)
+        string[] fullNames =
+        {"John Smith","Emma Johnson","Michael Williams","Sophia Jones","David Brown"};
+        string[] emails = {
+            "john.smith@email.com",
+            "emma.johnson@email.com",
+            "michael.williams@email.com",
+            "sophia.jones@email.com",
+            "david.brown@email.com"
+        };
+        for (int i = 0; i < fullNames.Length; i++)//going throw the arry of names
         {
-            int id;
-            do
-                id = s_rand.Next(2000000, 4000000);
-            while (s_dalEngineer!.Read(id) != null);
-            string mail = name+"@gmail";
-            int pay = 35;
-            Engineer newEngineer = new(id, name, mail, pay);
-            s_dalEngineer!.Create(newEngineer);
+            
+            try {
+                int id = s_rand.Next(200000000, 400000000);// a random number for id
+                string name = fullNames[i];//taking the name [i] in the arry 
+                string email = emails[i];//taking the email [i] in the arry 
+                int pay = 35; //pay pre hour is set the same for all 5 engineers
+                Engineer newEngineer = new(id, name, email, pay);//adding all the values to the object
+                s_dalEngineer!.Create(newEngineer);//trying to creat a new engineer 
+            }
+            catch (Exception e)//if there  is engineer with the radome id
+            { i--; }//trying to cerat agine 
         }
     }
 
-    //private static void createDependency()
-    //{
-    //}
-    private static void createTask()
-    { 
-        string[] TaskNames =
-        { "Task1", "Task2", "Task3", "Task3", "Task4", "Task5" };
-        foreach (var name in TaskNames) 
+    private static void createDependency()
+    {
+        int[,] dep = {
+        {1, 2}, {2, 3}, {3, 4}, {4, 5},
+        {5, 6}, {6, 7}, {7, 8}, {8, 9},
+        {9, 10}, {10, 11}, {11, 12}, {12, 13},
+        {13, 14}, {14, 15}, {15, 16}, {16, 17},
+        {17, 18}, {18, 19}, {19, 20}, {20, 21},
+        {21, 22}, {22, 23}, {23, 24}, {24, 25},
+        {25, 26}, {26, 27}, {27, 28}, {28, 29},
+        {29, 30}, {30, 31}, {31, 32}, {32, 33},
+        {33, 34}, {34, 35}, {35, 36}, {36, 37},
+        {37, 38}, {38, 39}, {39, 40} };
+        //arry of dependency
+
+       for (int i = 0;i < dep.GetLength(0);i++)
         { 
-            int id=s_rand.Next(1, 100000);
-            string des = "new";
-            DateTime start = new DateTime(1955, 1, 1);
-            int range = (DateTime.Today - start).Days;
-            DateTime newTask=start.AddDays(range);
-            bool mil = false;
-            int numd = 5;
-            string result;
-         }
+           int currentTID = dep[i, 1];//cureent dependency
+           int oldTID = dep[i, 0]; //last dependency
+           Dependency d= new Dependency(i, currentTID, oldTID);
+            s_dalDependency!.Create(d);
+        }
+    
+    }
+    private static void createTask()
+    {
+        string[] tasks =
+        {
+            "Define","Research","Scope","Plan","Stakeholders","Resources","Risk",
+            "Milestones","Team","Communication","Design","Infrastructure","Coding",
+            "Quality","Testing","Deployment","Monitor","Issues","Review","Closure"
+        };//arry of tasks
+
+        string[] taskDescriptions = {
+            "Define project goals and objectives","Research and analyze construction requirements",
+            "Scope the construction project","Develop a detailed construction plan",
+            "Identify stakeholders in the construction project","Allocate construction resources and budget",
+            "Assess and manage construction risks","Define construction milestones",
+            "Assemble a construction project team","Develop a communication plan for construction",
+            "Design the construction project architecture","Implement construction infrastructure",
+            "Execute construction activities and coding","Ensure construction quality and compliance",
+            "Conduct testing and inspection for construction","Deploy construction components",
+            "Monitor construction progress","Address and resolve construction issues",
+            "Conduct construction review and evaluation","Document and close the construction project"
+        };//arry of description of the tasks
+        for (int i = 0; i < tasks.Length; i++)
+        {
+            string name = tasks[i];//name of the task
+            string des = taskDescriptions[i];//description of the task
+            bool mile = false;//milston
+            int numD = 5;//nume days it will take to finish the task
+            string result = "done";//result og the task
+            string comment = "the task is completed";//task comment
+            int dlevel = (i % 2) + 1;//difficulty level of the task
+            int num = s_rand.Next(1, 30); //to create the date
+            DateTime? newT = DateTime.Now.AddDays(num); //creation time
+            DateTime? startT = DateTime.Now.AddDays(num + 1);//when started to work on the task
+            DateTime? schhdual = DateTime.Now.AddDays(num + 5);// when the task was schedual to be done
+            DateTime? deadline = DateTime.Now.AddDays(num + 10);// the task deadline
+            DateTime? end = DateTime.Now.AddDays(num + 7); // when the task ended
+            Task newTask = new Task(num, name, des, newT, mile, numD, result, comment, dlevel, schhdual, startT, deadline, end);
+            s_dalTask!.Create(newTask);
+        }
+    }
+    public static void Do(IEngineer? dalEngineer,IDependency? dalDependency,ITask? dalTask)
+    {
+        s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        createDependency();
+        createEngineer();
+        createTask();
+       
+
     }
 }

@@ -1,8 +1,8 @@
 ﻿
 namespace DO;
-public enum EngineerExpireance
+public enum EngineerExpireance //Expireance Level Of The Engineers
 {
-   Beginner,
+   Beginner=0,
    AdvancedBeginner,
    Intermediate, 
    Advanced, 
