@@ -12,12 +12,12 @@ internal class Program
 {
     private static IEngineer s_dalEngineer = new EngineerImplementation();
     private static IDependency s_dalDapendncy = new DependencyImplementation();
-    private static ITask s_dalDependency = new TaskImplementation();
+    private static ITask s_dalTask= new TaskImplementation();
     private static void Main(string[] args)
     {
         try
         {
-            Initialization.Do(s_dalEngineer, s_dalDapendncy, s_dalDependency);
+            Initialization.Do(s_dalEngineer, s_dalDapendncy, s_dalTask);
             int choice;
             do 
             { 
@@ -184,7 +184,7 @@ internal class Program
                             {
                                 Console.WriteLine("Enter values for a new task");
                                 Task task = newT();//creating a new task
-                                s_dalDependency.Create(task);//adding a new task
+                                s_dalTask.Create(task);//adding a new task
                                 Console.WriteLine();//spaces
                             }
                             catch (Exception ex)
@@ -195,7 +195,7 @@ internal class Program
                             {
                                 Console.WriteLine("Enter engineer's ID");
                                 int.TryParse(Console.ReadLine(), out Id);
-                                Console.WriteLine(s_dalDependency.Read(Id));//printing task
+                                Console.WriteLine(s_dalTask.Read(Id));//printing task
                                 Console.WriteLine();//spaces
                             }
                             catch (Exception ex)
@@ -204,8 +204,11 @@ internal class Program
                         case 3:
                             try
                             {
-                                foreach (var task in s_dalDependency.ReadAll())
+                                foreach (var task in s_dalTask.ReadAll())
+                                {
                                     Console.WriteLine(task); //printing all tasks
+                                    Console.WriteLine();//spaces 
+                                }
                             }
                             catch (Exception ex)
                             { Console.WriteLine(ex.Message); }
@@ -217,7 +220,7 @@ internal class Program
                                 Console.WriteLine();//spaces
                                 Task t = newT();
                                 if (t != null)
-                                    s_dalDependency.Update(t);//apdating task values
+                                    s_dalTask.Update(t);//apdating task values
                             }
                             catch (Exception ex)
                             { Console.WriteLine(ex.Message); }
@@ -227,7 +230,7 @@ internal class Program
                             {
                                 Console.WriteLine("Enter task's ID");
                                 int.TryParse(Console.ReadLine(), out Id);
-                                s_dalDependency.Delete(Id);//deleting
+                                s_dalTask.Delete(Id);//deleting
                                 Console.WriteLine();//spaces
                             }
                             catch (Exception ex)
@@ -289,7 +292,7 @@ internal class Program
                         case 3:
                             try
                             {
-                                foreach (var dep in s_dalDependency.ReadAll())
+                                foreach (var dep in s_dalDapendncy.ReadAll())
                                     Console.WriteLine(dep); //printing all dependencies
                                 Console.WriteLine();//spaces
                             }
