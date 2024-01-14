@@ -9,12 +9,17 @@ namespace DalApi
 {
     public interface ICrud<T> where T : class
     {
-        int Create(T item); //Creates new entity object in DAL
-        public void Read(int id); //Reads entity object by its ID 
-        public T? Read(Func<T, bool> filter);////Reads entity object by its ID 
-        IEnumerable<T> ReadAll(Func<T, bool>? filter = null); //stage 1 only, Reads all entity objects
-        void Update(T item); //Updates entity object
-        void Delete(int id); //Deletes an object by its Id
+        /// <summary>
+        /// Creates new entity object in DAL
+        /// </summary>
+        /// <param name="item">new object to add to the entity</param>
+        /// <returns>the id of the new entity  (specially useful if it is an automatic number)</returns>
+        int Create(T item);
+        public void Read(int id); 
+        public T? Read(Func<T, bool> filter);
+        IEnumerable<T> ReadAll(Func<T, bool>? filter = null);
+        void Update(T item);
+        void Delete(int id);
     }
 
 }

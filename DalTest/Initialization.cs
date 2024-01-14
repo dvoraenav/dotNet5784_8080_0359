@@ -88,19 +88,32 @@ public static class Initialization
         for (int i = 0; i < tasks.Length; i++)
         {
             string name = tasks[i];//name of the task
-            string des = taskDescriptions[i];//description of the task
+            string description = taskDescriptions[i];//description of the task
             bool mile = false;//milston
-            int numD = 5;//nume days it will take to finish the task
+            int numDays = 5;//nume days it will take to finish the task
             string result = "done";//result og the task
             string comment = "the task is completed";//task comment
             int dlevel = (i % 2) + 1;//difficulty level of the task
             int num = s_rand.Next(1, 30); //to create the date
             DateTime? newT = DateTime.Now.AddDays(num); //creation time
             DateTime? startT = DateTime.Now.AddDays(num + 1);//when started to work on the task
-            DateTime? schhdual = DateTime.Now.AddDays(num + 5);// when the task was schedual to be done
+            DateTime? scheduleT = DateTime.Now.AddDays(num + 5);// when the task was schedual to be done
             DateTime? deadline = DateTime.Now.AddDays(num + 10);// the task deadline
             DateTime? end = DateTime.Now.AddDays(num + 7); // when the task ended
-            Task newTask = new Task(num, name, des, newT, mile, numD, result, comment, dlevel, schhdual, startT, deadline, end);
+            Task newTask = new
+               (Id:i,
+                Name: name,
+               Description: description,
+               Mileston: mile,
+               NumDays: numDays,
+               Result: result,
+               Comment: comment,
+               DifficultyLevel: dlevel,
+               NewTask: newT,
+               StartTask: startT,
+               ScheduleStart: scheduleT,
+               Deadline: deadline,
+               EndTask: end);
             s_dal.Task!.Create(newTask);
         }
     }
