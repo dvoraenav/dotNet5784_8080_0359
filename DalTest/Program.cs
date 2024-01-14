@@ -4,16 +4,11 @@ using Dal;
 using DalApi;
 using DalTest;
 using DO;
-using System.Threading.Channels;
-using System.Xml.Serialization;
 using Task = DO.Task;
 
 internal class Program
 {
-    //private static IEngineer s_dalEngineer = new EngineerImplementation();
-    //private static IDependency s_dalDapendncy = new DependencyImplementation();
-    //private static ITask s_dalTask= new TaskImplementation();
-    static readonly IDal s_dal = new DalList(); //stage 2
+    static readonly IDal s_dal = new DalList();
 
     private static void Main(string[] args)
     {
@@ -70,6 +65,10 @@ internal class Program
         catch (Exception ex)
         { Console.WriteLine(ex.Message); }
     }
+    /// <summary>
+    /// menu of engineer entity
+    /// </summary>
+    /// <returns>exsit the entity menu</returns>
     public static int EngineerMenu()
     {
         try
@@ -89,7 +88,7 @@ internal class Program
                 switch (choice)
                 {
                     case 0:
-                        Console.WriteLine("The program is ending");
+                        Console.WriteLine("Exsiting the menu");
                         break;
                     case 1:
                         try
@@ -128,10 +127,14 @@ internal class Program
                     case 4:
                         try
                         {
-                            Console.WriteLine("Enter engineer's valuses to update:");
+                            Console.Write("Enter engineer's id to update: ");
+                            int.TryParse(Console.ReadLine(), out int iD);
+                            Console.WriteLine("Current engineer values");
+                            Console.WriteLine(s_dal.Engineer.Read(x => x.Id == iD)); //printing engineer
                             Console.WriteLine();//spaces
-                            Engineer e = newEG();
-                            if (e != null)
+                            Console.WriteLine("If you do not want to update a certain field press ENTER");
+                            Engineer e = updateEG(s_dal.Engineer.Read(x => x.Id == iD));
+                            if (e != s_dal.Engineer.Read(x => x.Id == iD))//if there are updates in the object
                                 s_dal.Engineer.Update(e); //updating values og engineer
                             Console.WriteLine();//spaces
                         }
@@ -158,6 +161,10 @@ internal class Program
         return 0;
     }
 
+    /// <summary>
+    /// Menu of task entity
+    /// </summary>
+    /// <returns> exsiting the entity menu</returns>
     public static int TaskMenu()
     {
         try
@@ -177,7 +184,7 @@ internal class Program
                 switch (choice)
                 {
                     case 0:
-                        Console.WriteLine("The program is ending");
+                        Console.WriteLine("Exsiting the menu");
                         break;
                     case 1:
                         try
@@ -216,11 +223,18 @@ internal class Program
                     case 4:
                         try
                         {
-                            Console.WriteLine("Enter values to update task");
+                            Console.Write("Enter task's id to update: ");
+                            int.TryParse(Console.ReadLine(), out int iD);
+                            Console.WriteLine("Current task values");
+                            Console.WriteLine(s_dal.Task.Read(x => x.Id == iD)); //printing task
                             Console.WriteLine();//spaces
-                            Task t = newT();
-                            if (t != null)
-                                s_dal.Task.Update(t);//apdating task values
+                            Console.WriteLine("If you do not want to update a certain field press ENTER");
+                            Task t = updateT(s_dal.Task.Read(x => x.Id == iD));
+                            if (t != s_dal.Task.Read(x => x.Id == iD))//if we updated the task
+                            {   Task newT=t with { NewTask=DateTime.Now}; //setting a new creation time
+                                s_dal.Task.Update(t); //updating values 
+                            }
+                            Console.WriteLine();//spaces
                         }
                         catch (Exception ex)
                         { Console.WriteLine(ex.Message); }
@@ -243,6 +257,10 @@ internal class Program
         { Console.WriteLine(ex.Message); }
         return 0;
     }
+    /// <summary>
+    /// menu of dependency entity
+    /// </summary>
+    /// <returns>exsiting the menu</returns>
     public static int DependencyMenu()
     {
         try
@@ -262,7 +280,7 @@ internal class Program
                 switch (choice)
                 {
                     case 0:
-                        Console.WriteLine("The program is ending");
+                        Console.WriteLine("Exsiting the menu");
                         break;
                     case 1:
                         try
@@ -299,10 +317,15 @@ internal class Program
                     case 4:
                         try
                         {
-                            Console.WriteLine("Enter Dependency's valuses to update:");
-                            Dependency d = newDep();
-                            if (d != null)
-                                s_dal.Dependency.Update(d); //updating dependency
+                            Console.Write("Enter dependency's id to update: ");
+                            int.TryParse(Console.ReadLine(), out int iD);
+                            Console.WriteLine("Current dependency values");
+                            Console.WriteLine(s_dal.Task.Read(x => x.Id == iD)); //printing dependency
+                            Console.WriteLine();//spaces
+                            Console.WriteLine("If you do not want to update a certain field press ENTER");
+                            Dependency dep = updateDep(s_dal.Dependency.Read(x => x.Id == iD));
+                            if (dep != s_dal.Dependency.Read(x => x.Id == iD))//if we updated the object
+                                s_dal.Dependency.Update(dep); //updating values og engineer
                             Console.WriteLine();//spaces
                         }
                         catch (Exception ex)
@@ -321,8 +344,8 @@ internal class Program
                         break;
                 }
 
-            
-        } while (choice != 0);
+
+            } while (choice != 0);
 
         }
         catch (Exception ex)
@@ -330,53 +353,62 @@ internal class Program
         return 0;
     }
 
-    public static Engineer newEG()// Getting values from the user buliding a new Engineer 
+    /// <summary>
+    /// Getting values  from the user ​​and creating a new object
+    /// </summary>
+    /// <returns>new object</returns>
+    public static Engineer newEG()
     {
-        Console.WriteLine("enter engineer's ID");
-        int.TryParse(Console.ReadLine(), out int id);
-        Console.WriteLine("enter engineer's full name ");
+        Console.WriteLine("Enter engineer's ID");
+        int.TryParse(Console.ReadLine(), out int id);//id
+        Console.WriteLine("Enter engineer's full name ");
         string? name = Console.ReadLine(); //name
-        Console.WriteLine("enter engineer's mail address ");
+        Console.WriteLine("Enter engineer's mail address ");
         string? mail = Console.ReadLine(); //mail
-        Console.WriteLine("enter engineer's cost per hour");
-        int payPerHour = 0; //pay per hour
-        int.TryParse(Console.ReadLine(), out payPerHour);
+        Console.WriteLine("Enter engineer's cost per hour");
+        double payPerHour = 0; //pay per hour
+        double.TryParse(Console.ReadLine(), out payPerHour);
         int choice;
-        Engineer eg;
         Console.WriteLine(@"Please enter your choice for level of expireance");
-        Console.WriteLine(" 0: Beginner");
-        Console.WriteLine(" 1: Advanced Beginner");
-        Console.WriteLine(" 2: Intermediate");
-        Console.WriteLine(" 3: Advanced");
-        Console.WriteLine(" 4: Expert");
+        Console.WriteLine(" 1: Beginner");
+        Console.WriteLine(" 2: Advanced Beginner");
+        Console.WriteLine(" 3: Intermediate");
+        Console.WriteLine(" 4: Advanced");
+        Console.WriteLine(" 5: Expert");
+        EngineerExpireance expireance = new EngineerExpireance();
         int.TryParse(Console.ReadLine(), out choice); //level of expireance
         switch (choice)
         {
-            case 0:
-                eg = new(Id: id, FullName: name, Mail: mail, PayPerHour: payPerHour, Level: EngineerExpireance.Beginner);
-                break;
             case 1:
-                eg = new(Id: id, FullName: name, Mail: mail, PayPerHour: payPerHour, Level: EngineerExpireance.AdvancedBeginner);
+                expireance = EngineerExpireance.Beginner;
                 break;
             case 2:
-                eg = new(Id: id, FullName: name, Mail: mail, PayPerHour: payPerHour, Level: EngineerExpireance.Intermediate);
+                expireance = EngineerExpireance.AdvancedBeginner;
                 break;
             case 3:
-                eg = new(Id: id, FullName: name, Mail: mail, PayPerHour: payPerHour, Level: EngineerExpireance.Advanced);
+                expireance = EngineerExpireance.Intermediate;
                 break;
             case 4:
-                eg = new(Id: id, FullName: name, Mail: mail, PayPerHour: payPerHour, Level: EngineerExpireance.Expert);
+                expireance = EngineerExpireance.Advanced;
                 break;
-            default:
-                eg = new(Id: id, FullName: name, Mail: mail, PayPerHour: payPerHour, Level: EngineerExpireance.Beginner);
+            case 5:
+                expireance = EngineerExpireance.Expert;
+                break;
+            case 0:
+                expireance = EngineerExpireance.Beginner;
                 break;
         }
+        Engineer eg = new(Id: id, FullName: name, Mail: mail, PayPerHour: payPerHour, Level: expireance);
         return eg;
     }
-    public static Task newT()//creting a new Task
+    /// <summary>
+    /// Getting values from the user ​​and creating a new object
+    /// </summary>
+    /// <returns>new object</returns>
+    public static Task newT()
     {
         Console.WriteLine("Enter task's ID");
-        int.TryParse(Console.ReadLine(), out int id);
+        int.TryParse(Console.ReadLine(), out int id);//id
         Console.WriteLine("Enter task's name ");
         string? name = Console.ReadLine();//name
         Console.WriteLine("Enter task's description");
@@ -389,7 +421,7 @@ internal class Program
         int deLevel = 0;//level of diffculty
         int.TryParse(Console.ReadLine(), out deLevel);
         DateTime newT = DateTime.Now;
-        //they rest of the object of dataTime will be initialized as NULL in the ctor
+        //the rest of the object of dataTime will be initialized as NULL in the ctor
         Task newTask = new(
             Id: id,
             Name: name,
@@ -400,14 +432,127 @@ internal class Program
             DifficultyLevel: deLevel);
         return newTask;
     }
-    public static Dependency newDep()//creating a new dependecy
-    {
+    /// <summary>
+    /// Getting values from the user ​​and creating a new object
+    /// </summary>
+    /// <returns>new object</returns>
+    public static Dependency newDep()
+    { 
         Console.WriteLine("Enter dependency's ID");
-        int.TryParse(Console.ReadLine(), out int id);
+        int.TryParse(Console.ReadLine(), out int id);//id
         Console.WriteLine("Enter current task's ID");
         int.TryParse(Console.ReadLine(), out int currTId);//id of the current task
         Console.WriteLine("Enter last task's ID");
         int.TryParse(Console.ReadLine(), out int lastTId);//id of the last task
+        Dependency dep = new(
+            Id: id,
+            CurrentTaskId: currTId,
+            LastTaskId: lastTId);
+        return dep;
+    }
+
+    /// <summary>
+    /// Getting new values from the user and creating a new object
+    /// </summary>
+    /// <param name="e"> the current objects values</param>
+    /// <returns> new object </returns>
+    public static Engineer updateEG(Engineer e)
+    {
+        Console.WriteLine("Enter new id");
+        int.TryParse(Console.ReadLine(), out int id);
+        if (id == 0) id = e.Id; // if the input is empty use the old value
+        Console.WriteLine("Enter new full name:");
+        string? name = Console.ReadLine(); //name
+        if (name == "") name = e.FullName; // if the input is empty use the old value
+        Console.WriteLine("Enter new mail address ");
+        string? mail = Console.ReadLine(); //mail
+        if (mail == "") mail = e.Mail; // if the input is empty use the old value
+        Console.WriteLine("Enter new cost per hour");
+        double payPerHour = 0;
+        double.TryParse(Console.ReadLine(), out payPerHour);
+        if (payPerHour == 0) payPerHour = (double)e.PayPerHour; // if the input is empty use the old value
+        int choice;
+        Console.WriteLine(@"Please enter your new choice for level of expireance");
+        Console.WriteLine(" 1: Beginner");
+        Console.WriteLine(" 2: Advanced Beginner");
+        Console.WriteLine(" 3: Intermediate");
+        Console.WriteLine(" 4: Advanced");
+        Console.WriteLine(" 5: Expert");
+        EngineerExpireance expireance = new EngineerExpireance();
+        int.TryParse(Console.ReadLine(), out choice); //level of expireance
+        switch (choice)
+        {
+            case 1:
+                expireance = EngineerExpireance.Beginner;
+                break;
+            case 2:
+                expireance = EngineerExpireance.AdvancedBeginner;
+                break;
+            case 3:
+                expireance = EngineerExpireance.Intermediate;
+                break;
+            case 4:
+                expireance = EngineerExpireance.Advanced;
+                break;
+            case 5:
+                expireance = EngineerExpireance.Expert;
+                break;
+            case 0:
+                expireance = e.Level; // if the input is empty use the old value
+                break;
+        }
+        Engineer eg = new(Id: id, FullName: name, Mail: mail, PayPerHour: payPerHour, Level: expireance);
+
+        return eg;
+    }
+    /// <summary>
+    /// Getting new values from the user and creating a new object
+    /// </summary>
+    /// <param name="t"> the current objects values </param>
+    /// <returns> the new object </returns>
+    public static Task updateT(Task t)//creting a new Task
+    {
+        int id = t.Id;
+        Console.WriteLine("Enter new name ");
+        string? name = Console.ReadLine();//name
+        if(name == "") name=t.Name; // if the input is empty use the old value
+        Console.WriteLine("Enter task's description");
+        string? description = Console.ReadLine();//description
+        if(description=="") description=t.Description; // if the input is empty use the old value
+        Console.WriteLine("Enter task's result ");
+        string? result = Console.ReadLine();//result
+        if(result=="") result=t.Result; // if the input is empty use the old value
+        Console.WriteLine("Enter num days it will take to do the project");
+        int.TryParse(Console.ReadLine(), out int numDays);//num days it will take to finish the task
+        if (numDays == 0) numDays= (int)t.NumDays; // if the input is empty use the old value
+        Console.WriteLine("Enter task's difficulty level ");
+        int.TryParse(Console.ReadLine(), out int deLevel);
+        if (deLevel == 0) deLevel = t.DifficultyLevel;// if the input is empty use the old value
+        DateTime newT = (DateTime)t.NewTask;
+        Task newTask = new(
+            Id: id,
+            Name: name,
+            Description: description,
+            NewTask: newT,
+            NumDays: numDays,
+            Result: result,
+            DifficultyLevel: deLevel);
+        return newTask;
+    }
+    /// <summary>
+    /// Getting new values from the user and creating a new object
+    /// </summary>
+    /// <param name="d"> the current objects values</param>
+    /// <returns> new object</returns>
+    public static Dependency updateDep(Dependency d)//creating a new dependecy
+    {
+        int id =d.Id;
+        Console.WriteLine("Enter current task's ID");
+        int.TryParse(Console.ReadLine(), out int currTId);//id of the current task
+        if (currTId == 0) currTId= (int)d.CurrentTaskId;// if the input is empty use the old value
+        Console.WriteLine("Enter last task's ID");
+        int.TryParse(Console.ReadLine(), out int lastTId);//id of the last task
+        if(lastTId==0) lastTId= (int)d.LastTaskId;// if the input is empty use the old value
         Dependency dep = new(
             Id: id,
             CurrentTaskId: currTId,

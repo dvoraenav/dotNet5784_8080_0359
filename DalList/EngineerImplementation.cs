@@ -5,7 +5,7 @@ using DO;
 
 internal class EngineerImplementation : IEngineer
 {
-    public int Create(Engineer item)//creating a new engineer
+    public int Create(Engineer item)
     {
         foreach (Engineer eg in DataSource.Engineers)
             if (eg.Id == item.Id)//checking if the id of the giving engineer is already in the list
@@ -32,7 +32,6 @@ internal class EngineerImplementation : IEngineer
                select item;
     public void Update(Engineer item)
     {
-        //looking for the Engineer
         Engineer e1 = DataSource.Engineers.Find(engineer => engineer.Id == item.Id)
             ?? throw new DalDoesNotExistException($"engineer with id {item.Id} does not exist");
         Delete(e1.Id);//deleting the old version

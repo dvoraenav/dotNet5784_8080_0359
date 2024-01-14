@@ -4,10 +4,10 @@ using DO;
 
 internal class TaskImplementation : ITask
 {
-    public int Create(Task item)//creating a new task
+    public int Create(Task item)
     {
         int newID = DataSource.Config.NextTaskID; //new id task number
-        DataSource.Tasks.Add(item with { Id = newID }); //adding to the list of tasks
+        DataSource.Tasks.Add(item with { Id = newID });
         return newID;
     }
     public void Delete(int id) => DataSource.Tasks.Remove(
@@ -29,8 +29,7 @@ internal class TaskImplementation : ITask
 
     public void Update(Task item)
     {
-        Task? t1 = DataSource.Tasks.Find(task => task.Id == item.Id);//looking for the task
-        if (t1 == null)
+        Task? t1 = DataSource.Tasks.Find(task => task.Id == item.Id)??
             throw new DalDoesNotExistException($"task with id {item.Id} does not exist");
         Delete(t1.Id); //deleting the old version
         Create(item);//creating a new virsiom

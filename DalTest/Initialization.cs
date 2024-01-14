@@ -5,14 +5,14 @@ using System.Xml.Linq;
 
 public static class Initialization
 {
-
-    //private static IEngineer? s_dalEngineer;// stage1
-    //private static IDependency? s_dalDependency;//stage 1
-    //private static ITask? s_dalTask;//stage 1
-    private static IDal? s_dal; //stage 2
+    private static IDal? s_dal;
 
 
     private static readonly Random s_rand = new();
+    
+    /// <summary>
+    /// creating new engineers
+    /// </summary>
     private static void createEngineer()
     {
         string[] fullNames =
@@ -39,7 +39,9 @@ public static class Initialization
             { i--; }//trying to cerat agine 
         }
     }
-
+    /// <summary>
+    /// creating new dependencies
+    /// </summary>
     private static void createDependency()
     {
         int[,] dep = {
@@ -64,6 +66,10 @@ public static class Initialization
         }
     
     }
+
+    /// <summary>
+    /// creatind new tasks
+    /// </summary>
     private static void createTask()
     {
         string[] tasks =
@@ -96,10 +102,6 @@ public static class Initialization
             int dlevel = (i % 2) + 1;//difficulty level of the task
             int num = s_rand.Next(1, 30); //to create the date
             DateTime? newT = DateTime.Now.AddDays(num); //creation time
-            DateTime? startT = DateTime.Now.AddDays(num + 1);//when started to work on the task
-            DateTime? scheduleT = DateTime.Now.AddDays(num + 5);// when the task was schedual to be done
-            DateTime? deadline = DateTime.Now.AddDays(num + 10);// the task deadline
-            DateTime? end = DateTime.Now.AddDays(num + 7); // when the task ended
             Task newTask = new
                (Id:i,
                 Name: name,
@@ -109,20 +111,13 @@ public static class Initialization
                Result: result,
                Comment: comment,
                DifficultyLevel: dlevel,
-               NewTask: newT,
-               StartTask: startT,
-               ScheduleStart: scheduleT,
-               Deadline: deadline,
-               EndTask: end);
+               NewTask: newT);
             s_dal.Task!.Create(newTask);
         }
     }
     public static void Do(IDal dal)
     {
-        //s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-        //s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
-        //s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
-        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
+        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");
 
         createDependency();
         createEngineer();
