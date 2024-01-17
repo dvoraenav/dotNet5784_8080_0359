@@ -18,6 +18,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalTest", "DalTest\DalTest.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalXml,", "DalXml,\DalXml,.csproj", "{AB37519D-49D7-4C97-A6FA-ABFF5CB2648E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{107F9522-55F2-4DB1-A43D-35CBC6588594}"
+	ProjectSection(SolutionItems) = preProject
+		xml\data-config.xml = xml\data-config.xml
+		xml\dependencys.xml = xml\dependencys.xml
+		xml\engineers.xml = xml\engineers.xml
+		xml\tasks.xml = xml\tasks.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
