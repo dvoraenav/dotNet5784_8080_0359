@@ -1,3 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfEngineer>
+	<Engineer>
+		<Id></Id>
+		<FullName> </FullName>
+		<Mail></Mail>
+		<PayPerHour></PayPerHour>
+		<Level></Level>
+	</Engineer>
+
 </ArrayOfEngineer>

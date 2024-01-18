@@ -1,3 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTask>
+	<Task>
+		<Id></Id>
+		<Name></Name>
+		<Description></Description>
+		<Result></Result>
+		<BirthDate></BirthDate>
+		<NumDays></NumDays>
+		<NewTask></NewTask>
+		<Mileston></Mileston>
+		<Comment></Comment>
+		<DifficultyLevel></DifficultyLevel>
+		<ScheduleStart></ScheduleStart>
+		<StartTask></StartTask>
+		<Deadline></Deadline>
+		<EndTask></EndTask>
+	</Task>
 </ArrayOfTask>
+
