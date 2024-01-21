@@ -8,13 +8,15 @@ using Task = DO.Task;
 
 internal class Program
 {
-    static readonly IDal s_dal = new DalList();
+    //static readonly IDal s_dal = new DalList();
+    static readonly IDal s_dal = new DalXml(); //stage 3
+
 
     private static void Main(string[] args)
     {
         try
         {
-            Initialization.Do(s_dal);
+          
             int choice;
             do
             {
@@ -23,6 +25,7 @@ internal class Program
                 Console.WriteLine(" 1: Engineer");
                 Console.WriteLine(" 2: Task");
                 Console.WriteLine(" 3: Dependency");
+                Console.WriteLine(" 4: Initial Data");
                 int.TryParse(Console.ReadLine(), out choice);
 
                 switch (choice)
@@ -57,6 +60,13 @@ internal class Program
                         catch (Exception ex)
                         { Console.WriteLine(ex.Message); }
                         break;
+                    case 4:
+                        Console.Write("Would you like to create Initial data? (Y/N)"); //stage 3
+                        string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
+                        if (ans == "Y") //stage 3
+                            Initialization.Do(s_dal); //stage 2
+                        break;
+
                 }
 
             } while (choice != 0);
