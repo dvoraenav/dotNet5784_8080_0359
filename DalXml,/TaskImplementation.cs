@@ -12,34 +12,31 @@ internal class TaskImplementation : ITask
     public int Create(Task item)
     {
         List<Task> tasks = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
-        int newID = tasks.Config.NextTaskID; //new id task number
+        int newID = Config.NextTaskId; //new id task number
         tasks.Add(item with { Id = newID });
-        XMLTools.SaveListToXMLSerializer(s_tasks_xml);
+        XMLTools.SaveListToXMLSerializer(tasks,s_tasks_xml);
         return newID;
     }
 
-    public void Delete(int id)=>
-          XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml).Remove(
-          XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml).Find(task => task.Id == id) ??
-              throw new DalDoesNotExistException($"task with Id {id} does not exist"));
-        XMLTools.SaveListToXMLSerializer(s_tasks_xml);
-   
+    public void Delete(int id)
+    {
+        List<Task> tasks = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
+        tasks.Remove(tasks.Find(task => task.Id == id) ??
+        throw new DalDoesNotExistException($"task with Id {id} does not exist"));
+        XMLTools.SaveListToXMLSerializer(tasks, s_tasks_xml);
+    }
 
     public void Read(int id)=> Read(x => x.Id == id);
-
 
     public Task? Read(Func<Task, bool> filter) => XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml).Where(filter).FirstOrDefault();
 
     public IEnumerable<Task> ReadAll(Func<Task, bool>? filter = null) =>
          filter != null
-            ? from item in XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml).Tasks
+            ? from item in XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml)
               where filter(item)
               select item
-            : from item in XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml).Tasks
+            : from item in XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml)
               select item;
-
-
-
 
     public void Update(Task item)
     {

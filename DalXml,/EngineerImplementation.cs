@@ -23,8 +23,7 @@ internal class EngineerImplementation :IEngineer
     public void Delete(int id)
     {
         List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
-       engineers.Remove(
-         engineers.Find(engineer => engineer.Id == id) ??
+       engineers.Remove(engineers.Find(engineer => engineer.Id == id) ??
               throw new DalDoesNotExistException($"engineer with Id {id} does not exist"));
         XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
 
@@ -39,10 +38,10 @@ internal class EngineerImplementation :IEngineer
 
     public IEnumerable<Engineer> ReadAll(Func<Engineer, bool>? filter = null)=>
         filter != null
-            ? from item in XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml).Engineers
+            ? from item in XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml)
               where filter(item)
               select item
-            : from item in XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml).Engineers
+            : from item in XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml)
               select item;
     
 
