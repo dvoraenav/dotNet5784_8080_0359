@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalList", "DalList\DalList.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalTest", "DalTest\DalTest.csproj", "{FF920346-22A1-48CF-8259-2B7E6F52CD92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalXml,", "DalXml,\DalXml,.csproj", "{AB37519D-49D7-4C97-A6FA-ABFF5CB2648E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml,\DalXml.csproj", "{AB37519D-49D7-4C97-A6FA-ABFF5CB2648E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{107F9522-55F2-4DB1-A43D-35CBC6588594}"
 	ProjectSection(SolutionItems) = preProject
