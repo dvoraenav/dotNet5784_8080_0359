@@ -18,7 +18,7 @@ internal class DependencyImplementation : IDependency
             DataSource.Dependencies.Find(dependency => dependency.Id == id) ??
                 throw new DalDoesNotExistException($"dependancy with id {id} does not exist"));
 
-    public void Read(int id) => Read(x => x.Id== id);
+    public void Read(int id) => Read(x => x.Id == id);
     public Dependency? Read(Func<Dependency, bool> filter) => DataSource.Dependencies.Where(filter).FirstOrDefault();
     public IEnumerable<Dependency> ReadAll(Func<Dependency, bool>? filter = null) =>
         filter != null
