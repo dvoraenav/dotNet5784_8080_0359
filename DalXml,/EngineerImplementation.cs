@@ -11,31 +11,47 @@ internal class EngineerImplementation :IEngineer
 
     public int Create(Engineer item)
     {
-        throw new NotImplementedException();
+        List<Engineer> engineers=XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
+        foreach (Engineer eg in engineers)
+            if (eg.Id == item.Id)//checking if the id of the giving engineer is already in the list
+                throw new DalAlreadyExistsException($"Engineer with Id {item.Id} already exist");
+        engineers.Add(item); //if not adding to the list of the engineers
+        XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
+        return item.Id;
     }
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
+       engineers.Remove(
+         engineers.Find(engineer => engineer.Id == id) ??
+              throw new DalDoesNotExistException($"engineer with Id {id} does not exist"));
+        XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
+
     }
 
-    public void Read(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public void Read(int id)=> Read(x => x.Id == id);
 
-    public Engineer? Read(Func<Engineer, bool> filter)
-    {
-        throw new NotImplementedException();
-    }
 
-    public IEnumerable<Engineer> ReadAll(Func<Engineer, bool>? filter = null)
-    {
-        throw new NotImplementedException();
-    }
+    public Engineer? Read(Func<Engineer, bool> filter) => 
+         XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml).Where(filter).FirstOrDefault();
+
+
+    public IEnumerable<Engineer> ReadAll(Func<Engineer, bool>? filter = null)=>
+        filter != null
+            ? from item in XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml).Engineers
+              where filter(item)
+              select item
+            : from item in XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml).Engineers
+              select item;
+    
 
     public void Update(Engineer item)
     {
-        throw new NotImplementedException();
+        
+        Engineer e1 = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml).Find(engineer => engineer.Id == item.Id)
+            ?? throw new DalDoesNotExistException($"engineer with id {item.Id} does not exist");
+        Delete(e1.Id);//deleting the old version
+        Create(item);//creating a new virsion
     }
 }

@@ -11,31 +11,41 @@ internal class TaskImplementation : ITask
 
     public int Create(Task item)
     {
-        throw new NotImplementedException();
+        List<Task> tasks = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
+        int newID = tasks.Config.NextTaskID; //new id task number
+        tasks.Add(item with { Id = newID });
+        XMLTools.SaveListToXMLSerializer(s_tasks_xml);
+        return newID;
     }
 
-    public void Delete(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public void Delete(int id)=>
+          XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml).Remove(
+          XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml).Find(task => task.Id == id) ??
+              throw new DalDoesNotExistException($"task with Id {id} does not exist"));
+        XMLTools.SaveListToXMLSerializer(s_tasks_xml);
+   
 
-    public void Read(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public void Read(int id)=> Read(x => x.Id == id);
 
-    public Task? Read(Func<Task, bool> filter)
-    {
-        throw new NotImplementedException();
-    }
 
-    public IEnumerable<Task> ReadAll(Func<Task, bool>? filter = null)
-    {
-        throw new NotImplementedException();
-    }
+    public Task? Read(Func<Task, bool> filter) => XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml).Where(filter).FirstOrDefault();
+
+    public IEnumerable<Task> ReadAll(Func<Task, bool>? filter = null) =>
+         filter != null
+            ? from item in XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml).Tasks
+              where filter(item)
+              select item
+            : from item in XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml).Tasks
+              select item;
+
+
+
 
     public void Update(Task item)
     {
-        throw new NotImplementedException();
+        Task? t1 = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml).Find(task => task.Id == item.Id) ??
+             throw new DalDoesNotExistException($"task with id {item.Id} does not exist");
+        Delete(t1.Id); //deleting the old version
+        Create(item);//creating a new virsiom
     }
 }
