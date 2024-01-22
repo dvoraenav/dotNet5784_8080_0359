@@ -21,15 +21,15 @@ internal class EngineerImplementation : IEngineer
 
     public void Read(int id) => Read(x => x.Id == id);
 
-    public Engineer? Read(Func<Engineer, bool> filter)=>DataSource.Engineers.Where(filter).FirstOrDefault();
+    public Engineer? Read(Func<Engineer, bool> filter) => DataSource.Engineers.Where(filter).FirstOrDefault();
 
-    public IEnumerable<Engineer> ReadAll(Func<Engineer, bool>? filter = null)=>
+    public IEnumerable<Engineer> ReadAll(Func<Engineer, bool>? filter = null) =>
         filter != null
             ? from item in DataSource.Engineers
-                   where filter(item)
-                   select item
+              where filter(item)
+              select item
             : from item in DataSource.Engineers
-               select item;
+              select item;
     public void Update(Engineer item)
     {
         Engineer e1 = DataSource.Engineers.Find(engineer => engineer.Id == item.Id)
@@ -37,4 +37,6 @@ internal class EngineerImplementation : IEngineer
         Delete(e1.Id);//deleting the old version
         Create(item);//creating a new virsion
     }
+
+    public void Clear() => DataSource.Engineers.Clear();
 }

@@ -35,4 +35,6 @@ internal class DependencyImplementation : IDependency
         Delete(d1.Id); //deleting the old version
         Create(item); //creating a new vesion
     }
+    public void Clear() => DataSource.Dependencies.Clear();
+
 }

@@ -1,6 +1,6 @@
 ﻿
 namespace Dal;
-internal  static class DataSource
+internal static class DataSource
 {
     internal static class Config
     {

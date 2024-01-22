@@ -9,14 +9,14 @@ namespace DO;
 /// <param name="level"></param>
 /// <param name="payPerHour"></param>
 public record Engineer
-( 
+(
    int Id, //id og the engineer
-   string? FullName = null, //the engineer's full name
-   string? Mail = null, //the engineer's mail
-   double? PayPerHour=null, //the engineer's payment per hour
-   EngineerExpireance Level=EngineerExpireance.Beginner //the engineer's level of expiriance
+   string FullName, //the engineer's full name
+   string Mail, //the engineer's mail
+   double PayPerHour, //the engineer's payment per hour
+   EngineerExpireance Level = EngineerExpireance.Beginner //the engineer's level of expiriance
 
 )
 {
-    public Engineer() : this(0) { }
+    public Engineer() : this(0, "", "", 0, EngineerExpireance.Beginner) { }
 }

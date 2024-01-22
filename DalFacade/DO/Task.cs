@@ -12,10 +12,10 @@ public record Task
     string? Comment = null, //comments on the task
     int DifficultyLevel = 0, //the task's difficulty Level
     DateTime? ScheduleStart = null, //the task's schedule Starting time of the task
-    DateTime? StartTask=null, //the task's starting time
+    DateTime? StartTask = null, //the task's starting time
     DateTime? Deadline = null, //the task's deadline
-    DateTime? EndTask= null   // the time the task was done
+    DateTime? EndTask = null   // the time the task was done
 )
 {
-    public Task() : this(0,null,null, null,0,null) { }
+    public Task() : this(0, "", "", "", 0, null, false, "", 0, null, null, null, null) { }
 }

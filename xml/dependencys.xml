@@ -1,12 +1,2 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfDependency>
- <Dependency>
-	 <Id></Id>
-	 <CurrentTaskId></CurrentTaskId>
-	 <LastTaskId></LastTaskId>
- 
- </Dependency>
-	
-</ArrayOfDependency>
-  
-	 
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfDependency />

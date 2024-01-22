@@ -44,6 +44,11 @@ namespace DalApi
         /// </summary>
         /// <param name="id">Object ID number</param>
         void Delete(int id);
+
+        /// <summary>
+        /// deleting the data 
+        /// </summary>
+        void Clear();
     }
 
 }

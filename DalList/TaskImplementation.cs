@@ -15,24 +15,25 @@ internal class TaskImplementation : ITask
               throw new DalDoesNotExistException($"task with Id {id} does not exist"));
 
 
-    public void Read(int id)=> Read(x => x.Id == id);
-    public Task? Read(Func<Task, bool> filter)=>DataSource.Tasks.Where(filter).FirstOrDefault();
+    public void Read(int id) => Read(x => x.Id == id);
+    public Task? Read(Func<Task, bool> filter) => DataSource.Tasks.Where(filter).FirstOrDefault();
 
-    public IEnumerable<Task> ReadAll(Func<Task, bool>? filter = null)=>
+    public IEnumerable<Task> ReadAll(Func<Task, bool>? filter = null) =>
          filter != null
             ? from item in DataSource.Tasks
-                               where filter(item)
-                               select item
+              where filter(item)
+              select item
             : from item in DataSource.Tasks
-                           select item;
+              select item;
 
 
     public void Update(Task item)
     {
-        Task? t1 = DataSource.Tasks.Find(task => task.Id == item.Id)??
+        Task? t1 = DataSource.Tasks.Find(task => task.Id == item.Id) ??
             throw new DalDoesNotExistException($"task with id {item.Id} does not exist");
         Delete(t1.Id); //deleting the old version
         Create(item);//creating a new virsiom
     }
+    public void Clear() => DataSource.Tasks.Clear();
 }
 

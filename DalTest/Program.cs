@@ -16,10 +16,11 @@ internal class Program
     {
         try
         {
-          
+
             int choice;
             do
             {
+
                 Console.WriteLine(@"Hello!, please enter your choice");
                 Console.WriteLine(" 0: Exit Manu");
                 Console.WriteLine(" 1: Engineer");
@@ -64,7 +65,12 @@ internal class Program
                         Console.Write("Would you like to create Initial data? (Y/N)"); //stage 3
                         string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
                         if (ans == "Y") //stage 3
-                            Initialization.Do(s_dal); //stage 2
+                        {
+                            s_dal.Task.Clear();
+                            s_dal.Dependency.Clear();
+                            s_dal.Engineer.Clear();
+                            Initialization.Do(s_dal);
+                        } //stage 2
                         break;
 
                 }
@@ -143,7 +149,7 @@ internal class Program
                             Console.WriteLine(s_dal.Engineer.Read(x => x.Id == iD)); //printing engineer
                             Console.WriteLine();//spaces
                             Console.WriteLine("If you do not want to update a certain field press ENTER");
-                            Engineer e = updateEG(s_dal.Engineer.Read(x => x.Id == iD));
+                            Engineer e = updateEG(s_dal.Engineer.Read(x => x.Id == iD)!);
                             if (e != s_dal.Engineer.Read(x => x.Id == iD))//if there are updates in the object
                                 s_dal.Engineer.Update(e); //updating values og engineer
                             Console.WriteLine();//spaces
@@ -239,9 +245,10 @@ internal class Program
                             Console.WriteLine(s_dal.Task.Read(x => x.Id == iD)); //printing task
                             Console.WriteLine();//spaces
                             Console.WriteLine("If you do not want to update a certain field press ENTER");
-                            Task t = updateT(s_dal.Task.Read(x => x.Id == iD));
+                            Task t = updateT(s_dal.Task.Read(x => x.Id == iD)!);
                             if (t != s_dal.Task.Read(x => x.Id == iD))//if we updated the task
-                            {   Task newT=t with { NewTask=DateTime.Now}; //setting a new creation time
+                            {
+                                Task newT = t with { NewTask = DateTime.Now }; //setting a new creation time
                                 s_dal.Task.Update(t); //updating values 
                             }
                             Console.WriteLine();//spaces
@@ -333,7 +340,7 @@ internal class Program
                             Console.WriteLine(s_dal.Task.Read(x => x.Id == iD)); //printing dependency
                             Console.WriteLine();//spaces
                             Console.WriteLine("If you do not want to update a certain field press ENTER");
-                            Dependency dep = updateDep(s_dal.Dependency.Read(x => x.Id == iD));
+                            Dependency dep = updateDep(s_dal.Dependency.Read(x => x.Id == iD)!);
                             if (dep != s_dal.Dependency.Read(x => x.Id == iD))//if we updated the object
                                 s_dal.Dependency.Update(dep); //updating values og engineer
                             Console.WriteLine();//spaces
@@ -408,9 +415,10 @@ internal class Program
                 expireance = EngineerExpireance.Beginner;
                 break;
         }
-        Engineer eg = new(Id: id, FullName: name, Mail: mail, PayPerHour: payPerHour, Level: expireance);
+        Engineer eg = new(Id: id, FullName: name!, Mail: mail!, PayPerHour: payPerHour, Level: expireance);
         return eg;
     }
+
     /// <summary>
     /// Getting values from the user ​​and creating a new object
     /// </summary>
@@ -442,12 +450,13 @@ internal class Program
             DifficultyLevel: deLevel);
         return newTask;
     }
+
     /// <summary>
     /// Getting values from the user ​​and creating a new object
     /// </summary>
     /// <returns>new object</returns>
     public static Dependency newDep()
-    { 
+    {
         Console.WriteLine("Enter dependency's ID");
         int.TryParse(Console.ReadLine(), out int id);//id
         Console.WriteLine("Enter current task's ID");
@@ -464,23 +473,23 @@ internal class Program
     /// <summary>
     /// Getting new values from the user and creating a new object
     /// </summary>
-    /// <param name="e"> the current objects values</param>
+    /// <param name="engineer"> the current objects values</param>
     /// <returns> new object </returns>
-    public static Engineer updateEG(Engineer e)
+    public static Engineer updateEG(Engineer engineer)
     {
         Console.WriteLine("Enter new id");
         int.TryParse(Console.ReadLine(), out int id);
-        if (id == 0) id = e.Id; // if the input is empty use the old value
+        if (id == 0) id = engineer.Id; // if the input is empty use the old value
         Console.WriteLine("Enter new full name:");
         string? name = Console.ReadLine(); //name
-        if (name == "") name = e.FullName; // if the input is empty use the old value
+        if (name == "") name = engineer.FullName; // if the input is empty use the old value
         Console.WriteLine("Enter new mail address ");
         string? mail = Console.ReadLine(); //mail
-        if (mail == "") mail = e.Mail; // if the input is empty use the old value
+        if (mail == "") mail = engineer.Mail; // if the input is empty use the old value
         Console.WriteLine("Enter new cost per hour");
         double payPerHour = 0;
         double.TryParse(Console.ReadLine(), out payPerHour);
-        if (payPerHour == 0) payPerHour = (double)e.PayPerHour; // if the input is empty use the old value
+        if (payPerHour == 0) payPerHour = engineer.PayPerHour; // if the input is empty use the old value
         int choice;
         Console.WriteLine(@"Please enter your new choice for level of expireance");
         Console.WriteLine(" 1: Beginner");
@@ -508,37 +517,38 @@ internal class Program
                 expireance = EngineerExpireance.Expert;
                 break;
             case 0:
-                expireance = e.Level; // if the input is empty use the old value
+                expireance = engineer.Level; // if the input is empty use the old value
                 break;
         }
-        Engineer eg = new(Id: id, FullName: name, Mail: mail, PayPerHour: payPerHour, Level: expireance);
+        Engineer eg = new(Id: id, FullName: name!, Mail: mail!, PayPerHour: payPerHour, Level: expireance);
 
         return eg;
     }
+
     /// <summary>
     /// Getting new values from the user and creating a new object
     /// </summary>
-    /// <param name="t"> the current objects values </param>
+    /// <param name="task"> the current objects values </param>
     /// <returns> the new object </returns>
-    public static Task updateT(Task t)//creting a new Task
+    public static Task updateT(Task task)
     {
-        int id = t.Id;
+        int id = task.Id;
         Console.WriteLine("Enter new name ");
         string? name = Console.ReadLine();//name
-        if(name == "") name=t.Name; // if the input is empty use the old value
+        if (name == "") name = task.Name; // if the input is empty use the old value
         Console.WriteLine("Enter task's description");
         string? description = Console.ReadLine();//description
-        if(description=="") description=t.Description; // if the input is empty use the old value
+        if (description == "") description = task.Description; // if the input is empty use the old value
         Console.WriteLine("Enter task's result ");
         string? result = Console.ReadLine();//result
-        if(result=="") result=t.Result; // if the input is empty use the old value
+        if (result == "") result = task.Result; // if the input is empty use the old value
         Console.WriteLine("Enter num days it will take to do the project");
         int.TryParse(Console.ReadLine(), out int numDays);//num days it will take to finish the task
-        if (numDays == 0) numDays= (int)t.NumDays; // if the input is empty use the old value
+        if (numDays == 0) numDays = (int)task.NumDays; // if the input is empty use the old value
         Console.WriteLine("Enter task's difficulty level ");
         int.TryParse(Console.ReadLine(), out int deLevel);
-        if (deLevel == 0) deLevel = t.DifficultyLevel;// if the input is empty use the old value
-        DateTime newT = (DateTime)t.NewTask;
+        if (deLevel == 0) deLevel = task.DifficultyLevel;// if the input is empty use the old value
+        DateTime newT = (DateTime)task.NewTask!;
         Task newTask = new(
             Id: id,
             Name: name,
@@ -549,20 +559,21 @@ internal class Program
             DifficultyLevel: deLevel);
         return newTask;
     }
+
     /// <summary>
     /// Getting new values from the user and creating a new object
     /// </summary>
-    /// <param name="d"> the current objects values</param>
+    /// <param name="dependency"> the current objects values</param>
     /// <returns> new object</returns>
-    public static Dependency updateDep(Dependency d)//creating a new dependecy
+    public static Dependency updateDep(Dependency dependency)
     {
-        int id =d.Id;
+        int id = dependency.Id;
         Console.WriteLine("Enter current task's ID");
         int.TryParse(Console.ReadLine(), out int currTId);//id of the current task
-        if (currTId == 0) currTId= (int)d.CurrentTaskId;// if the input is empty use the old value
+        if (currTId == 0) currTId = (int)dependency.CurrentTaskId;// if the input is empty use the old value
         Console.WriteLine("Enter last task's ID");
         int.TryParse(Console.ReadLine(), out int lastTId);//id of the last task
-        if(lastTId==0) lastTId= (int)d.LastTaskId;// if the input is empty use the old value
+        if (lastTId == 0) lastTId = (int)dependency.LastTaskId;// if the input is empty use the old value
         Dependency dep = new(
             Id: id,
             CurrentTaskId: currTId,
