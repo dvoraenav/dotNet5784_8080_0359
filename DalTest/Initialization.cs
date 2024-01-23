@@ -24,7 +24,7 @@ public static class Initialization
             "sophia.jones@email.com",
             "david.brown@email.com"
         };
-        for (int i = 0; i < fullNames.Length; i++)//going throw the arry of names
+        for (int i = 0; i < fullNames.Length; i++)//going through the array of names
         {
 
             try
@@ -36,8 +36,8 @@ public static class Initialization
                 Engineer newEngineer = new(id, name, email, pay);//adding all the values to the object
                 s_dal!.Engineer.Create(newEngineer);//trying to creat a new engineer 
             }
-            catch //if there  is engineer with the radome id
-            { i--; }//trying to cerat agine 
+            catch //if there  is engineer with the randome id
+            { i--; }//trying to create again
         }
     }
     /// <summary>
@@ -58,12 +58,13 @@ public static class Initialization
                 {33, 34}, {34, 35}, {35, 36}, {36, 37},
                 {37, 38}, {38, 39}, {39, 40}
             };
-        //arry of dependency
+        //array of dependency while the first in
+        //couple is the last id and second is current id
 
         for (int i = 0; i < dep.GetLength(0); i++)
         {
-            int currentTID = dep[i, 1];//cureent dependency
             int oldTID = dep[i, 0]; //last dependency
+            int currentTID = dep[i, 1];//cureent dependency
             Dependency d = new Dependency(i, currentTID, oldTID);
             s_dal?.Dependency!.Create(d);
         }
@@ -99,7 +100,7 @@ public static class Initialization
             string name = tasks[i];//name of the task
             string description = taskDescriptions[i];//description of the task
             bool mile = false;//milston
-            int numDays = 5;//nume days it will take to finish the task
+            int numDays = 5;//num days it will take to finish the task
             string result = "done";//result og the task
             string comment = "the task is completed";//task comment
             int dlevel = (i % 2) + 1;//difficulty level of the task

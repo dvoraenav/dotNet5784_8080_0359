@@ -26,13 +26,13 @@ internal class DependencyImplementation : IDependency
     public int Create(Dependency item)
     {
         XElement? dependencyList = LoadListFromXMLElement(s_dependencys_xml);
-        var id = Config.NextDependencyId; //next atuo number of dependency
+        var id = Config.NextDependencyId; //next auto number of dependency
         dependencyList.Add(
             new XElement(_entityName,
             new XElement(_id, id),
             new XElement(_currentTaskId, item.CurrentTaskId),
             new XElement(_lastTaskId, item.LastTaskId))); //creating and adding
-        SaveListToXMLElement(dependencyList, s_dependencys_xml);
+        SaveListToXMLElement(dependencyList, s_dependencys_xml);//writing to file
         return id;
     }
 

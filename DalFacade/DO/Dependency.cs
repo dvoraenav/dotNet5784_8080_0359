@@ -4,7 +4,7 @@ namespace DO;
 
 public record Dependency
 (
-    int Id, //id of the dependncy
+    int Id, //id of the dependency
     int CurrentTaskId, //the id of the current task
     int LastTaskId  //the id of the last task
 )

@@ -46,7 +46,7 @@ namespace DalApi
         void Delete(int id);
 
         /// <summary>
-        /// deleting the data 
+        /// deleting the data from the xml file
         /// </summary>
         void Clear();
     }

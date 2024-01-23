@@ -32,7 +32,7 @@ internal class TaskImplementation : ITask
         Task? t1 = DataSource.Tasks.Find(task => task.Id == item.Id) ??
             throw new DalDoesNotExistException($"task with id {item.Id} does not exist");
         Delete(t1.Id); //deleting the old version
-        Create(item);//creating a new virsiom
+        Create(item);//creating a new version
     }
     public void Clear() => DataSource.Tasks.Clear();
 }

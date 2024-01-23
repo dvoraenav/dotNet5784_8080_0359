@@ -151,7 +151,7 @@ internal class Program
                             Console.WriteLine("If you do not want to update a certain field press ENTER");
                             Engineer e = updateEG(s_dal.Engineer.Read(x => x.Id == iD)!);
                             if (e != s_dal.Engineer.Read(x => x.Id == iD))//if there are updates in the object
-                                s_dal.Engineer.Update(e); //updating values og engineer
+                                s_dal.Engineer.Update(e); //updating values on engineer
                             Console.WriteLine();//spaces
                         }
                         catch (Exception ex)
@@ -522,7 +522,7 @@ internal class Program
         }
         Engineer eg = new(Id: id, FullName: name!, Mail: mail!, PayPerHour: payPerHour, Level: expireance);
 
-        return eg;
+        return eg;//the update
     }
 
     /// <summary>

@@ -6,7 +6,7 @@ public record Task
     string? Name, //the task's name
     string? Description, //the task's descripation
     string? Result, //a description of the result of the task
-    int NumDays, //the anount of days it takes to finish the task
+    int NumDays, //the amount of days it takes to finish the task
     DateTime? NewTask, //the time the task was created
     bool? Mileston = null, //the task's milestone
     string? Comment = null, //comments on the task

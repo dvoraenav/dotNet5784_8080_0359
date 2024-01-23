@@ -35,7 +35,7 @@ internal class EngineerImplementation : IEngineer
         Engineer e1 = DataSource.Engineers.Find(engineer => engineer.Id == item.Id)
             ?? throw new DalDoesNotExistException($"engineer with id {item.Id} does not exist");
         Delete(e1.Id);//deleting the old version
-        Create(item);//creating a new virsion
+        Create(item);//creating a new version
     }
 
     public void Clear() => DataSource.Engineers.Clear();

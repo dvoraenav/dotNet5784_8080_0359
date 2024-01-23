@@ -22,10 +22,10 @@ internal class DependencyImplementation : IDependency
     public Dependency? Read(Func<Dependency, bool> filter) => DataSource.Dependencies.Where(filter).FirstOrDefault();
     public IEnumerable<Dependency> ReadAll(Func<Dependency, bool>? filter = null) =>
         filter != null
-            ? from item in DataSource.Dependencies
+            ? from item in DataSource.Dependencies//return the elements maintain the filter
               where filter(item)
               select item
-            : from item in DataSource.Dependencies
+            : from item in DataSource.Dependencies //return all the list without filter
               select item;
 
     public void Update(Dependency item)
@@ -33,7 +33,7 @@ internal class DependencyImplementation : IDependency
         Dependency d1 = DataSource.Dependencies.Find(dependency => dependency.Id == item.Id) ??
             throw new DalDoesNotExistException($"dependancy with id {item.Id} does not exist");
         Delete(d1.Id); //deleting the old version
-        Create(item); //creating a new vesion
+        Create(item); //creating a new version
     }
     public void Clear() => DataSource.Dependencies.Clear();
 

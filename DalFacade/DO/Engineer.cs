@@ -10,7 +10,7 @@ namespace DO;
 /// <param name="payPerHour"></param>
 public record Engineer
 (
-   int Id, //id og the engineer
+   int Id, //id of the engineer
    string FullName, //the engineer's full name
    string Mail, //the engineer's mail
    double PayPerHour, //the engineer's payment per hour
