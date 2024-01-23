@@ -8,8 +8,9 @@ using Task = DO.Task;
 
 internal class Program
 {
-    //static readonly IDal s_dal = new DalList();
-    static readonly IDal s_dal = new DalXml(); //stage 3
+    //static readonly IDal s_dal = new DalList(); //stage2
+    //static readonly IDal s_dal = new DalXml(); //stage 3
+    static readonly IDal s_dal = DalApi.Factory.Get; //stage 4
 
 
     private static void Main(string[] args)
@@ -69,8 +70,9 @@ internal class Program
                             s_dal.Task.Clear();
                             s_dal.Dependency.Clear();
                             s_dal.Engineer.Clear();
-                            Initialization.Do(s_dal);
-                        } //stage 2
+                            //Initialization.Do(s_dal);//stage 2
+                            Initialization.Do();//stage 4
+                        }
                         break;
 
                 }

@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Dal;
 using DalApi;
-sealed public class DalList : IDal
+sealed internal class DalList : IDal
 {
+    public static IDal Instance { get; } = new DalList();//create new object
+    private DalList() { };// private empty ctr
     public IEngineer Engineer => new EngineerImplementation();
 
     public ITask Task => new TaskImplementation();
