@@ -1,5 +1,5 @@
 ﻿//using static DalApi.DalConfig;
-using DalApi.IDal
+
 
 
 
