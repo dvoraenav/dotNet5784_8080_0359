@@ -1,7 +1,10 @@
 ﻿//using static DalApi.DalConfig;
+using DalApi.IDal
 
-
-
+namespace DalApi;
+using System.Reflection;
+using System.Xml;
+using static DalApi.Config;
 
 public static class Factory
 {
