@@ -8,7 +8,7 @@ using DalApi;
 sealed internal class DalList : IDal
 {
     public static IDal Instance { get; } = new DalList();//create new object
-    private DalList() { };// private empty ctr
+    private DalList() { }// private empty ctr
     public IEngineer Engineer => new EngineerImplementation();
 
     public ITask Task => new TaskImplementation();
