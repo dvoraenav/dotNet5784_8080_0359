@@ -9,7 +9,6 @@ public record Task
     DateTime? NewTask, //the time the task was created
     string? Comment = null, //comments on the task
     EngineerExpireance DifficultyLevel = 0, //the task's difficulty Level
-    int EngneerId = 0,
     TimeSpan? NumDays=null, //the amount of days it takes to finish the task
     DateTime? ScheduleStart = null, //the task's schedule Starting time of the task
     DateTime? StartTask = null, //the task's starting time
@@ -18,5 +17,5 @@ public record Task
     int? EngineerId=null
 )
 {
-    public Task() : this(0, "", "", "", null, "", 0,0, null, null, null, null,null,0) { }
+    public Task() : this(0, "", "", "", null, "", 0, null, null, null, null,null,0) { }
 }

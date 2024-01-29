@@ -5,5 +5,5 @@ public class TaskInEngineer
 {
     public int Id { get; init; }
     public string? Name { get; init; }
-    public override string ToString() => this.ToStringProperty();
+    public override string ToString() => Tools.ToStringProperty(this);
 }

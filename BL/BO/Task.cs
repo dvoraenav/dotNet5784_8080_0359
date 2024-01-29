@@ -22,6 +22,7 @@ public class Task
     public DateTime? Deadline { get; set; } //the task's deadline
     public DateTime? EndTask { get; set; }  // the time the task was done
     public BO.EngineerInTask? Engineer { get; set; }
+    public List<BO.TaskInList>? TaskInList { get; set; }
     public override string ToString() => Tools.ToStringProperty(this);
 
 }
