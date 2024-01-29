@@ -99,23 +99,16 @@ public static class Initialization
         {
             string name = tasks[i];//name of the task
             string description = taskDescriptions[i];//description of the task
-            bool mile = false;//milston
-            int numDays = 5;//num days it will take to finish the task
             string result = "done";//result og the task
             string comment = "the task is completed";//task comment
-            int dlevel = (i % 2) + 1;//difficulty level of the task
-            int num = s_rand.Next(1, 30); //to create the date
-            DateTime? newT = DateTime.Now.AddDays(num); //creation time
+            DateTime? newT = DateTime.Now; //creation time
             Task newTask = new
                (
                 Id: i,
                 Name: name,
                 Description: description,
-                Mileston: mile,
-                NumDays: numDays,
                 Result: result,
                 Comment: comment,
-                DifficultyLevel: dlevel,
                 NewTask: newT
                );
             if (s_dal is not null) s_dal.Task!.Create(newTask);
@@ -126,8 +119,6 @@ public static class Initialization
     {
         //s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");//stage 2
         s_dal = DalApi.Factory.Get; //stage 4
-
-
         createEngineer();
         createTask();
         createDependency();

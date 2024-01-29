@@ -435,11 +435,30 @@ internal class Program
         string? description = Console.ReadLine();//description
         Console.WriteLine("Enter task's result ");
         string? result = Console.ReadLine();//result
-        Console.WriteLine("Enter num days it will take to do the project");
-        int.TryParse(Console.ReadLine(), out int numDays);//num days it will take to finish the task
         Console.WriteLine("Enter task's difficulty level ");
-        int deLevel = 0;//level of diffculty
-        int.TryParse(Console.ReadLine(), out deLevel);
+        EngineerExpireance deLevel = new EngineerExpireance();
+        int.TryParse(Console.ReadLine(), out int choice); //level of expireance
+        switch (choice)
+        {
+            case 1:
+                deLevel = EngineerExpireance.Beginner;
+                break;
+            case 2:
+                deLevel = EngineerExpireance.AdvancedBeginner;
+                break;
+            case 3:
+                deLevel = EngineerExpireance.Intermediate;
+                break;
+            case 4:
+                deLevel = EngineerExpireance.Advanced;
+                break;
+            case 5:
+                deLevel = EngineerExpireance.Expert;
+                break;
+            case 0:
+                deLevel = EngineerExpireance.Beginner;
+                break;
+        }
         DateTime newT = DateTime.Now;
         //the rest of the object of dataTime will be initialized as NULL in the ctor
         Task newTask = new(
@@ -447,7 +466,6 @@ internal class Program
             Name: name,
             Description: description,
             NewTask: newT,
-            NumDays: numDays,
             Result: result,
             DifficultyLevel: deLevel);
         return newTask;
@@ -545,18 +563,42 @@ internal class Program
         string? result = Console.ReadLine();//result
         if (result == "") result = task.Result; // if the input is empty use the old value
         Console.WriteLine("Enter num days it will take to do the project");
-        int.TryParse(Console.ReadLine(), out int numDays);//num days it will take to finish the task
-        if (numDays == 0) numDays = (int)task.NumDays; // if the input is empty use the old value
-        Console.WriteLine("Enter task's difficulty level ");
-        int.TryParse(Console.ReadLine(), out int deLevel);
-        if (deLevel == 0) deLevel = task.DifficultyLevel;// if the input is empty use the old value
+        int choice;
+        Console.WriteLine(@"Please enter your new choice for level of expireance");
+        Console.WriteLine(" 1: Beginner");
+        Console.WriteLine(" 2: Advanced Beginner");
+        Console.WriteLine(" 3: Intermediate");
+        Console.WriteLine(" 4: Advanced");
+        Console.WriteLine(" 5: Expert");
+        EngineerExpireance deLevel= new EngineerExpireance();
+        int.TryParse(Console.ReadLine(), out choice); //level of expireance
+        switch (choice)
+        {
+            case 1:
+                deLevel = EngineerExpireance.Beginner;
+                break;
+            case 2:
+                deLevel = EngineerExpireance.AdvancedBeginner;
+                break;
+            case 3:
+                deLevel = EngineerExpireance.Intermediate;
+                break;
+            case 4:
+                deLevel = EngineerExpireance.Advanced;
+                break;
+            case 5:
+                deLevel = EngineerExpireance.Expert;
+                break;
+            case 0:
+                deLevel = task.DifficultyLevel; // if the input is empty use the old value
+                break;
+        }
         DateTime newT = (DateTime)task.NewTask!;
         Task newTask = new(
             Id: id,
             Name: name,
             Description: description,
             NewTask: newT,
-            NumDays: numDays,
             Result: result,
             DifficultyLevel: deLevel);
         return newTask;
