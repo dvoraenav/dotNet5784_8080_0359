@@ -1,34 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BO;
 
 static class Tools
 {
-    public static string ToStringProperty<T>(this T obj)
+    public static string ToStringProperty<T>(T t)
     {
-        Type type = typeof(T);
-        PropertyInfo[] properties = type.GetProperties();
+        string str = "";
+        foreach (PropertyInfo item in t.GetType().GetProperties())
+            str += "\n" + item.Name
 
-        StringBuilder sb = new StringBuilder();
-        foreach (var property in properties)
-        {
-            sb.Append(property.Name);
-            sb.Append(": ");
-            sb.Append(property.GetValue(obj));
-            sb.Append(", ");
-        }
+            + ": " + item.GetValue(t, null);
 
-        // Remove the trailing comma and space
-        if (sb.Length > 0)
-        {
-            sb.Length -= 2;
-        }
-        //not sure
-        return sb.ToString();
+        return str;
     }
 }
+

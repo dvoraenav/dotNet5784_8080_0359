@@ -8,6 +8,6 @@ internal class TaskInList
     public string? Description { get; init; }
     public BO.TaskStatus Status { get; init; }
 
-    public override string ToString() => this.ToStringProperty();
+    public override string ToString() => Tools.ToStringProperty(this);
 
 }

@@ -9,5 +9,5 @@ public class Engineer
     public double PayPerHour { get; set; }
     EngineerExpireance Level = EngineerExpireance.Beginner;
     public  BO.TaskInEngineer? Task { get; set; }
-    public override string ToString() => this.ToStringProperty();
+    public override string ToString() => Tools.ToStringProperty(this);
 }
