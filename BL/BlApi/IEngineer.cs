@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +17,13 @@ namespace BlApi;
     /// </summary>
     /// <param name="item"> object of engineer</param>
     /// <returns> the id</returns>
-    public int AddEngineer(BO.Engineer item);
+    public int Create(BO.Engineer item);
     /// <summary>
     /// build an engineer object with the data of the engineer and return it
     /// </summary>
     /// <param name="id">the identity of the engineer </param>
     /// <returns> engineer's object with the data want</returns>
-    public BO.Engineer? Read(int id);
+    public BO.Engineer Read(int id);
     /// <summary>
     /// ask for the engineer's list (with filter) and find the task for every engineer and 
     /// build a fit entity for every engineer

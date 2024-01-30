@@ -14,9 +14,6 @@ namespace BlApi;
     {
     public IEngineer Engineer { get; }
     public ITask Task { get; }
-    public ITaskInEngineer taskInEngineer  { get; }
-    public IEngineerInTask EngineerInTask { get; }
-    public ITaskInList TaskInList { get; }
 
 }
 
