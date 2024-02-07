@@ -1,16 +1,14 @@
-﻿using DO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DalApi
+﻿namespace DalApi
 {
     public interface IDal
     {
+        DateTime? StartDate { get; set; }
+
+        DateTime? EndDate { get; set; }
+       
         IEngineer Engineer { get; }
         ITask Task { get; }
         IDependency Dependency { get; }
+
     }
 }

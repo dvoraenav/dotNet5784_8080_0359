@@ -1,6 +1,3 @@
-
-
-using Dal;
 using DalApi;
 using DalTest;
 using DO;
@@ -570,7 +567,7 @@ internal class Program
         Console.WriteLine(" 3: Intermediate");
         Console.WriteLine(" 4: Advanced");
         Console.WriteLine(" 5: Expert");
-        EngineerExpireance deLevel= new EngineerExpireance();
+        EngineerExpireance deLevel = new EngineerExpireance();
         int.TryParse(Console.ReadLine(), out choice); //level of expireance
         switch (choice)
         {

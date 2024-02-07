@@ -24,7 +24,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{107F9522-55F
 		xml\data-config.xml = xml\data-config.xml
 		xml\dependencys.xml = xml\dependencys.xml
 		xml\engineers.xml = xml\engineers.xml
+		xml\EngineerTest.xml = xml\EngineerTest.xml
 		xml\tasks.xml = xml\tasks.xml
+		TaskTest.xml = TaskTest.xml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{A50E6E4D-255E-4A76-ABD1-F4E44397AD91}"

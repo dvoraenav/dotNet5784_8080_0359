@@ -15,3 +15,16 @@ public enum TaskStatus
     OnTrack,
     Done
 }
+public enum EnginnerFilter
+{
+    None,
+    FilterByExpireance,
+    FilterByTask
+}
+public enum TaskFilter
+{
+    None,
+    FilterByExpireance,
+    FilterByEngineer,
+    FilterByAvailability
+}

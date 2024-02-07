@@ -14,7 +14,6 @@ internal class TaskImplementation : ITask
           DataSource.Tasks.Find(task => task.Id == id) ??
               throw new DalDoesNotExistException($"task with Id {id} does not exist"));
 
-
     public void Read(int id) => Read(x => x.Id == id);
     public Task? Read(Func<Task, bool> filter) => DataSource.Tasks.Where(filter).FirstOrDefault();
 
@@ -29,10 +28,13 @@ internal class TaskImplementation : ITask
 
     public void Update(Task item)
     {
-        Task? t1 = DataSource.Tasks.Find(task => task.Id == item.Id) ??
-            throw new DalDoesNotExistException($"task with id {item.Id} does not exist");
-        Delete(t1.Id); //deleting the old version
-        Create(item);//creating a new version
+        //return the index that contain the task
+       int index = DataSource.Tasks.FindIndex(task => task.Id == item.Id);
+
+        if (index == -1)
+            throw new DalDoesNotExistException($"Task with id {item.Id} does not exist");
+
+        DataSource.Tasks[index] = item;
     }
     public void Clear() => DataSource.Tasks.Clear();
 }

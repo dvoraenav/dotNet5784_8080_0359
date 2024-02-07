@@ -1,34 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BO;
 
 namespace BlApi;
 /// <summary>
 /// 
 /// </summary>
-    public interface ITask
-    {
+public interface ITask
+{
     /// <summary>
     /// ask for the task's list(with filter)
     /// </summary>
     /// <param name="filter"> the filter we want</param>
     /// <returns> the filtered list of tasks</returns>
-    public IEnumerable<BO.Task> ReadAll(Func<BO.Task, bool>? filter = null);
+    public IEnumerable<TaskInList> ReadAll(Func<BO.TaskInList, bool>? filter = null);
     /// <summary>
     /// build a task's object
     /// </summary>
     /// <param name="id"> the identity of task</param>
     /// <returns> object of task we built</returns>
-    public BO.Task? Read(int id);
+    public BO.Task? ReadTask(int id);
     /// <summary>
     /// check propriety of id and nickname and add dependencies for privious tasks from the task's list and if 
     /// the data is ok will try to add the task to dal
     /// </summary>
     /// <param name="item"> objectof task</param>
     /// <returns> the id of task</returns>
-    public int AddtASK(BO.Task item);
+    public int Create(BO.Task item);
     /// <summary>
     /// check the data and try to update
     /// </summary>

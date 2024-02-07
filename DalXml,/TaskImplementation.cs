@@ -4,6 +4,7 @@ using DalApi;
 using DO;
 using System;
 using System.Collections.Generic;
+using static XMLTools;
 
 internal class TaskImplementation : ITask
 {
@@ -21,13 +22,13 @@ internal class TaskImplementation : ITask
     {
         List<Task> tasks = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
         tasks.Remove(tasks.Find(task => task.Id == id) ??
-        throw new DalDoesNotExistException($"task with Id {id} does not exist"));
+        throw new DalDoesNotExistException($"Task with Id {id} does not exist"));
         XMLTools.SaveListToXMLSerializer(tasks, s_tasks_xml);
     }
 
     public void Read(int id) => Read(x => x.Id == id);
 
-    public Task? Read(Func<Task, bool> filter) => XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml).Where(filter).FirstOrDefault();
+    public Task? Read(Func<Task, bool> filter) => LoadListFromXMLSerializer<Task>(s_tasks_xml).Where(filter).FirstOrDefault();
 
     public IEnumerable<Task> ReadAll(Func<Task, bool>? filter = null) =>
          filter != null
@@ -37,14 +38,19 @@ internal class TaskImplementation : ITask
             : from item in XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml)
               select item;
 
-
     public void Update(Task item)
     {
-        Task? t1 = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml).Find(task => task.Id == item.Id) ??
-             throw new DalDoesNotExistException($"task with id {item.Id} does not exist");
-        Delete(t1.Id); //deleting the old version
-        Create(item);//creating a new virsiom
+        List<Task> list = LoadListFromXMLSerializer<Task>(s_tasks_xml) ?? throw new DalDoesNotExistException($"task with id {item.Id} does not exist");
+
+        int index = list.FindIndex(x => x.Id == item.Id);
+
+        if (index == -1)
+            throw new DalDoesNotExistException($"task with id {item.Id} does not exist");
+
+        list[index] = item;
+        SaveListToXMLSerializer<Task>(list, s_tasks_xml);
     }
+
     public void Clear()
     {
         List<Task> tasks = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);

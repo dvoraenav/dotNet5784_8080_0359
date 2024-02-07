@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Task xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Id>0</Id>
+	<Name>Scope</Name>
+	<Description>Scope the construction project</Description>
+	<Result>done</Result>
+	<NumDays xsi:nil="true"/>
+	<NewTask>2024-02-02T12:47:08.9307315+02:00</NewTask>
+	<Status>Unscheduled</Status>
+	<Comment>the task is completed</Comment>
+	<DifficultyLevel>Beginner</DifficultyLevel>
+	<ScheduleStart xsi:nil="true"/>
+	<StartTask xsi:nil="true"/>
+	<Deadline xsi:nil="true"/>
+	<EndTask xsi:nil="true"/>
+	<Dependencies>
+		<Id>3</Id>
+		<Name>Scope</Name>
+		<Description>Scope the construction project</Description>
+		<Status>Unscheduled</Status>
+	</Dependencies>
+	<Dependencies>
+		<Id>3</Id>
+		<Name>Scope</Name>
+		<Description>Scope the construction project</Description>
+		<Status>Unscheduled</Status>
+	</Dependencies>
+</Task>

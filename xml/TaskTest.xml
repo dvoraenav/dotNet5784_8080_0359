@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Task xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>0</Id>
+  <Name>Define</Name>
+  <Description>Define project goals and objectives</Description>
+  <Result>done</Result>
+  <NumDays xsi:nil="true" />
+  <NewTask>2024-02-02T12:47:08.8190238+02:00</NewTask>
+  <Status>Unscheduled</Status>
+  <Comment>the task is completed</Comment>
+  <DifficultyLevel>Beginner</DifficultyLevel>
+  <ScheduleStart xsi:nil="true" />
+  <StartTask xsi:nil="true" />
+  <ForecastDate xsi:nil="true" />
+  <EndTask xsi:nil="true" />
+  <Engineer>
+    <Id>759</Id>
+    <Name>bhsdfs</Name>
+  </Engineer>
+</Task>
