@@ -15,7 +15,7 @@ internal class EngineerImplementation : IEngineer
 
         try
         {
-            InputIntegrityCheck(item);
+            InputIntegrityCheck(item);//if everything is ok,we can try add
             DO.Engineer _doengineer = new DO.Engineer(
                          Id: item.Id,
                          FullName: item.FullName,
@@ -25,7 +25,7 @@ internal class EngineerImplementation : IEngineer
 
             if (item.Task is not null && item.Task.Id != 0)
             {
-                DO.Task task = _dal.Task.Read(x => x.Id == item.Task!.Id) ?? throw new BlDoesNotExistException($"Task with Id {item.Task!.Id} does not exist"); ;
+                DO.Task task = _dal.Task.Read(x => x.Id == item.Task!.Id) ?? throw new BlDoesNotExistException($"Task with Id {item.Task!.Id} does not exist");
 
                 if (task.EngineerId is not null && task.EngineerId != item.Id)
                     throw new BlTaskAlreadyLinkToEngineerException($"Task is already link to an engineer");
@@ -34,7 +34,7 @@ internal class EngineerImplementation : IEngineer
                 _dal.Task.Update(task);
             }
 
-            return _dal.Engineer.Create(_doengineer);
+            return _dal.Engineer.Create(_doengineer);//add to data leyer
 
         }
         catch (DO.DalAlreadyExistsException ex)
