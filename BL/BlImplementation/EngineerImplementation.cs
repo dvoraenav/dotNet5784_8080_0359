@@ -50,7 +50,7 @@ internal class EngineerImplementation : IEngineer
         if ((DO.EngineerExpireance)item.Level < _doEngineer.Level) { throw new BO.BlInvalidInputPropertyException("The new level of engineer too low"); }
         try
         {
-            if (item.Task is not null)
+            if (item.Task is not null&& item.Task.Id != 0)
             {
                 DO.Task task = _dal.Task.Read(x => x.Id == item.Task!.Id) ?? throw new BlDoesNotExistException($"Task with Id {item.Task!.Id} does not exist"); ;
 
@@ -114,6 +114,13 @@ internal class EngineerImplementation : IEngineer
                     Level = (BO.EngineerExpireance)engineer.Level,
                     Task = getTaskInEngineer(engineer.Id)
                 }).Where(engineer => filter is null ? true : filter(engineer));
+
+        //return _dal.Engineer.ReadAll().Select(engineer =>
+        //       {
+        //       var boEngineer = engineer.CopySimilarFields<DO.Engineer, Engineer>();
+        //       boEngineer.Task = getTaskInEngineer(boEngineer.Id);
+        //       return boEngineer;
+        //   }).Where(engineer => filter is null ? true : filter(engineer));
     }
 
     private void InputIntegrityCheck(BO.Engineer? item)
@@ -137,10 +144,5 @@ internal class EngineerImplementation : IEngineer
                         Name = task.Name,
                     } : null;
     }
-    //return _dal.Engineer.ReadAll().Select(engineer =>
-    //       {
-    //       var boEngineer = engineer.CopySimilarFields<DO.Engineer, Engineer>();
-    //       boEngineer.Task = getTaskInEngineer(boEngineer.Id);
-    //       return boEngineer;
-    //   }).Where(engineer => filter is null ? true : filter(engineer));
+
 }

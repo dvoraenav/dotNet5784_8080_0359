@@ -25,7 +25,7 @@ internal class Program
         {
             Console.WriteLine(
                 "to engineer action press 1\n" +
-                "to tak action press 2\n" +
+                "to taks action press 2\n" +
                 "to intialize the data press 3 \n" +
                 "EXIT press 4");
 
@@ -132,7 +132,7 @@ internal class Program
                 "Read all engineers press 3\n" +
                 "Update task press 4\n" +
                 "Delete task press 5\n" +
-                "Update date press 6" +
+                "Update date press 6\n" +
                 "Back to main press 7\n");
 
             int action = int.Parse(Console.ReadLine()!);
@@ -187,7 +187,7 @@ internal class Program
             catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
 
-    }
+    } 
 
     private static void Save(Task e)
     {

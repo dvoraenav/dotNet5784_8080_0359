@@ -80,7 +80,7 @@ internal class TaskImplementation : ITask
                 Id = engineer.Id,
             },
             Depndencies = (from dep in dependencies
-                           let task = _dal.Task.Read(x => x.Id == dep.CurrentTaskId)
+                           let task = _dal.Task.Read(x => x.Id == dep.LastTaskId)
                            select new BO.TaskInList()
                            {
                                Id = task.Id,
@@ -88,6 +88,7 @@ internal class TaskImplementation : ITask
                                Description = task.Description,
                                Status = SetStatus(task)
                            }).ToList()
+                           
         };
     }
 
@@ -158,7 +159,7 @@ internal class TaskImplementation : ITask
         }
         catch (Exception ex)
         { throw new Exception(ex.Message); }//TODO general exp
-
+        
     }
     private BO.TaskStatus SetStatus(DO.Task t)
     {

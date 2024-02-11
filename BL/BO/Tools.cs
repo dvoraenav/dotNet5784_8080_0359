@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections;
+using System.Reflection;
 
 namespace BO;
 
@@ -6,14 +7,28 @@ static class Tools
 {
     public static string ToStringProperty<T>(T? t)
     {
+        if (t == null) return string.Empty;
+
         string str = "";
         foreach (PropertyInfo item in t.GetType().GetProperties())
-            str += "\n" + item.Name
-
-            + ": " + item.GetValue(t, null);
+        {
+            object? value = item.GetValue(t, null);
+            if (value is IEnumerable enumerable && !(value is string))
+            {
+                foreach (var listItem in enumerable)
+                {
+                    str += "\n" + item.Name + ": " + listItem;
+                }
+            }
+            else
+            {
+                str += "\n" + item.Name + ": " + value;
+            }
+        }
 
         return str;
     }
+
 
     public static Target CopySimilarFields<Source, Target>(this Source source, object[] objects = null!) where Target : new()
     {

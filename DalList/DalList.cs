@@ -11,7 +11,7 @@ sealed internal class DalList : IDal
         set
         {
             if (StartDate == null || StartDate < value)
-                throw new Exception("");
+                throw new Exception("");// TODO
             endDate = value;
 
         }
