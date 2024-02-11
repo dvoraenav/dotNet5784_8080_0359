@@ -15,26 +15,31 @@ internal class EngineerImplementation : IEngineer
 
         try
         {
-            InputIntegrityCheck(item);
-            DO.Engineer _doengineer = new DO.Engineer(
+            InputIntegrityCheck(item);                    //if everything is ok,we can try add
+            DO.Engineer _doengineer = new DO.Engineer(   // create a new object with the item details
+                                                         // to add to  data leyer(casting from bo to do)
                          Id: item.Id,
                          FullName: item.FullName,
                          Mail: item.Mail!,
                          PayPerHour: item.PayPerHour,
                          Level: (DO.EngineerExpireance)item.Level);
 
-            if (item.Task is not null && item.Task.Id != 0)
+            if (item.Task is not null && item.Task.Id != 0) //If a task has been assigned to an engineer and the id of the task is not 0
             {
-                DO.Task task = _dal.Task.Read(x => x.Id == item.Task!.Id) ?? throw new BlDoesNotExistException($"Task with Id {item.Task!.Id} does not exist"); ;
+                DO.Task task = _dal.Task.Read(x => x.Id == item.Task!.Id) ?? throw new BlDoesNotExistException($"Task with Id {item.Task!.Id} does not exist");//look for the task in the data leyer
+                                                                                                                                                               //and if there is no this id,it means that the task is not exist so we cant give her to the engineer
+                                                                                                                                                               
 
-                if (task.EngineerId is not null && task.EngineerId != item.Id)
+                if (task.EngineerId is not null && task.EngineerId != item.Id)// If there is an engineer to whom this task has been assigned, and his ID is
+                                                                              // different from the engineer's id I created,its impossible because its already assigned to something else
+
                     throw new BlTaskAlreadyLinkToEngineerException($"Task is already link to an engineer");
 
-                task = task with { EngineerId = item.Id };
-                _dal.Task.Update(task);
+                task = task with { EngineerId = item.Id };                //Now this task is assigned to the new engineer
+                _dal.Task.Update(task);                                  //Updated the data layer in the task assigned to the engineer
             }
 
-            return _dal.Engineer.Create(_doengineer);
+            return _dal.Engineer.Create(_doengineer);//add to data leyer
 
         }
         catch (DO.DalAlreadyExistsException ex)
@@ -45,23 +50,23 @@ internal class EngineerImplementation : IEngineer
     }
     public void Update(BO.Engineer item)
     {
-        DO.Engineer _doEngineer = _dal.Engineer.Read(x => x.Id == item.Id) ?? throw new BO.BlDoesNotExistException($"Engeineer with ID {item.Id} does not exists");
-        InputIntegrityCheck(item);
-        if ((DO.EngineerExpireance)item.Level < _doEngineer.Level) { throw new BO.BlInvalidInputPropertyException("The new level of engineer too low"); }
+        DO.Engineer _doEngineer = _dal.Engineer.Read(x => x.Id == item.Id) ?? throw new BO.BlDoesNotExistException($"Engeineer with ID {item.Id} does not exists");//check if the engineer that i want to update,is exist in the data leyer
+        InputIntegrityCheck(item);         //if everything is ok we can try to update
+        if ((DO.EngineerExpireance)item.Level < _doEngineer.Level) { throw new BO.BlInvalidInputPropertyException("The new level of engineer too low"); }//we can make the level highest but not lower
         try
         {
-            if (item.Task is not null&& item.Task.Id != 0)
+            if (item.Task is not null)
             {
-                DO.Task task = _dal.Task.Read(x => x.Id == item.Task!.Id) ?? throw new BlDoesNotExistException($"Task with Id {item.Task!.Id} does not exist"); ;
+                DO.Task task = _dal.Task.Read(x => x.Id == item.Task!.Id) ?? throw new BlDoesNotExistException($"Task with Id {item.Task!.Id} does not exist");//check if the task that i want to assigned is really exist 
 
                 if (task.EngineerId is not null && task.EngineerId != item.Id)
                     throw new BlTaskAlreadyLinkToEngineerException($"Task is already link to an engineer");
 
                 task = task with { EngineerId = item.Id };
-                _dal.Task.Update(task);
+                _dal.Task.Update(task);             //update the task with engineer who are responsible for it
             }
 
-            _dal.Engineer.Update(_doEngineer);
+            _dal.Engineer.Update(_doEngineer);      //update the engineer with his task
         }
         catch (DO.DalAlreadyExistsException ex)
         {
@@ -71,13 +76,13 @@ internal class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
-        if (_dal.Task.ReadAll(task => task.EngineerId == id && (Tools.SetStatus(task) is TaskStatus.Done or TaskStatus.OnTrack)).Any())
+        if (_dal.Task.ReadAll(task => task.EngineerId == id && (Tools.SetStatus(task) is TaskStatus.Done or TaskStatus.OnTrack)).Any())//if the engineer with this id is exist but there is any task thet he finished or in the middle of-so we can't delete him
         {
             throw new BlCantBeEraseException($"Engeineer can not be erased");
         }
         try
         {
-            _dal.Engineer.Delete(id);
+            _dal.Engineer.Delete(id);// try to delete the engineer with this id
         }
 
         catch (DO.DalDoesNotExistException ex)
@@ -88,23 +93,23 @@ internal class EngineerImplementation : IEngineer
 
     public BO.Engineer? Read(int id)
     {
-        DO.Engineer _doEngineer = _dal.Engineer.Read(x => x.Id == id) ?? throw new BO.BlDoesNotExistException($"Engeineer with ID {id} does not exists");
+        DO.Engineer _doEngineer = _dal.Engineer.Read(x => x.Id == id) ?? throw new BO.BlDoesNotExistException($"Engeineer with ID {id} does not exists");//check if engineer with this id is exist
 
-        return new BO.Engineer()
+        return new BO.Engineer() //build new entity of engineer  and return it
         {
             Id = _doEngineer.Id,
             FullName = _doEngineer.FullName,
             Mail = _doEngineer.Mail,
             PayPerHour = _doEngineer.PayPerHour,
             Level = (BO.EngineerExpireance)_doEngineer.Level,
-            Task = getTaskInEngineer(id)
+            Task = getTaskInEngineer(id)// culculate the current task
         };
     }
 
     public IEnumerable<BO.Engineer> GetEngineerList(Func<BO.Engineer, bool> filter = null)
     {
 
-        return (from engineer in _dal.Engineer.ReadAll()
+        return (from engineer in _dal.Engineer.ReadAll()//going into the engineers list and build a new entitiy for everyone
                 select new BO.Engineer()
                 {
                     Id = engineer.Id,
@@ -114,13 +119,6 @@ internal class EngineerImplementation : IEngineer
                     Level = (BO.EngineerExpireance)engineer.Level,
                     Task = getTaskInEngineer(engineer.Id)
                 }).Where(engineer => filter is null ? true : filter(engineer));
-
-        //return _dal.Engineer.ReadAll().Select(engineer =>
-        //       {
-        //       var boEngineer = engineer.CopySimilarFields<DO.Engineer, Engineer>();
-        //       boEngineer.Task = getTaskInEngineer(boEngineer.Id);
-        //       return boEngineer;
-        //   }).Where(engineer => filter is null ? true : filter(engineer));
     }
 
     private void InputIntegrityCheck(BO.Engineer? item)
@@ -128,14 +126,15 @@ internal class EngineerImplementation : IEngineer
         if (item.Id <= 0)
             throw new BO.BlNegtivePropertyException($"Engeineer's Id can not be negative");
         if (item.FullName == "")
-            throw new BO.BlNullPropertyException($"Engeineer's name can not be negative");
+            throw new BO.BlNullPropertyException($"Engeineer's name can not be empty");
         if (item.PayPerHour <= 0)
             throw new BO.BlNegtivePropertyException($"Engeineer's cost can not be negative");
-        if (!new EmailAddressAttribute().IsValid(item.Mail))
+        if (!new EmailAddressAttribute().IsValid(item.Mail))// only return true if there is only 1 '@' character
+            // and it is neither the first nor the last character
             throw new BO.BlInvalidInputPropertyException($"Engeineer's mail address is not valid");
     }
 
-    private TaskInEngineer? getTaskInEngineer(int id)
+    private TaskInEngineer? getTaskInEngineer(int id)//return the task that assigned to the engineer if its exist
     {
         return _dal.Task.Read(task => task.EngineerId == id && Tools.SetStatus(task) is TaskStatus.OnTrack) is DO.Task task ?
                     new TaskInEngineer()
