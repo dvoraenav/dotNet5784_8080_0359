@@ -11,7 +11,7 @@ public interface ITask
     /// </summary>
     /// <param name="filter"> the filter we want</param>
     /// <returns> the filtered list of tasks</returns>
-    public IEnumerable<TaskInList> ReadAll(Func<BO.TaskInList, bool>? filter = null);
+    public IEnumerable<TaskInList> TaskList(Func<BO.TaskInList, bool>? filter = null);
     /// <summary>
     /// build a task's object
     /// </summary>

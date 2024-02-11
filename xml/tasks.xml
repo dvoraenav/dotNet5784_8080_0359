@@ -12,7 +12,7 @@
     <ScheduleStart xsi:nil="true" />
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
-    <EngineerId xsi:nil="true" />
+    <EngineerId>759</EngineerId>
   </Task>
   <Task>
     <Id>3</Id>
@@ -40,7 +40,7 @@
     <ScheduleStart xsi:nil="true" />
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
-    <EngineerId xsi:nil="true" />
+    <EngineerId>8</EngineerId>
   </Task>
   <Task>
     <Id>5</Id>

@@ -9,7 +9,8 @@ using Task = BO.Task;
 
 namespace BlTest;
 
-
+//I used XML files here.
+//Each time a change is made in the test file and a different test is performed
 internal class Program
 {
     static readonly IBl bl = BlApi.Factory.Get;
@@ -155,7 +156,7 @@ internal class Program
                         break;
 
                     case 3:
-                        foreach (var t in bl.Task.ReadAll())
+                        foreach (var t in bl.Task.TaskList())
                             Console.WriteLine(t);
                         break;
 

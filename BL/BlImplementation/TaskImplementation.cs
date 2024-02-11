@@ -7,6 +7,12 @@ namespace BlImplementation;
 internal class TaskImplementation : ITask
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
+    /// <summary>
+    /// creating a new object of entity
+    /// </summary>
+    /// <param name="item">the new BO object to create</param>
+    /// <returns>the id of the new object</returns>
+    /// <exception cref="BO.BlAlreadyExistsException"></exception>
     public int Create(BO.Task item)
     {
         try
@@ -37,6 +43,12 @@ internal class TaskImplementation : ITask
 
     }
 
+    /// <summary>
+    /// Deleting an entity object
+    /// </summary>
+    /// <param name="id">the id of the object to delete </param>
+    /// <exception cref="BO.BlCantBeEraseException">the object can not be erased</exception>
+    /// <exception cref="BO.BlDoesNotExistException">the object dose not exsit</exception>
     public void Delete(int id)
     {
 
@@ -53,6 +65,12 @@ internal class TaskImplementation : ITask
 
     }
 
+    /// <summary>
+    /// Returning an entity object
+    /// </summary>
+    /// <param name="id">the id of the object to return</param>
+    /// <returns>the object </returns>
+    /// <exception cref="BO.BlDoesNotExistException">if the object dose not exsite</exception>
     public BO.Task? ReadTask(int id)
     {
         DO.Task _doTask = _dal.Task.Read(x => x.Id == id) ?? throw new BO.BlDoesNotExistException($"Task with ID {id} does not exists");//look for the task with this id
@@ -92,7 +110,12 @@ internal class TaskImplementation : ITask
         };
     }
 
-    public IEnumerable<TaskInList> ReadAll(Func<TaskInList, bool>? filter = null)
+    /// <summary>
+    /// retuning a list of the entity objects
+    /// </summary>
+    /// <param name="filter">Filters which objects to return</param>
+    /// <returns>list of the entity objects by filter if exsit if not return all</returns>
+    public IEnumerable<TaskInList> TaskList(Func<TaskInList, bool>? filter = null)
     {
         return (from task in _dal.Task.ReadAll()
                 select new BO.TaskInList()
@@ -104,6 +127,11 @@ internal class TaskImplementation : ITask
                 }).Where(task => filter is null ? true : filter(task));
     }
 
+    /// <summary>
+    /// updating data of object
+    /// </summary>
+    /// <param name="item">>The updated object</param>
+    
     public void Update(BO.Task item)
     {
         try
@@ -143,11 +171,17 @@ internal class TaskImplementation : ITask
 
     }
 
-    public void UpdateStartingDate(int id, DateTime date)//update the date to start the task
+    /// <summary>
+    /// Update schedule date of an object
+    /// </summary>
+    /// <param name="id">the id of the object</param>
+    /// <param name="date">the date to update</param>
+    /// <exception cref="BO.BlEarlyDatePropertyException">the date invaild</exception>
+    public void UpdateStartingDate(int id, DateTime date)
     {
         try
         {
-            DO.Task task = _dal.Task.Read(x => x.Id == id) ?? throw new BO.BlAlreadyExistsException($"Task with ID {id} already exists");
+            DO.Task task = _dal.Task.Read(x => x.Id == id) ?? throw new BO.BlDoesNotExistException($"Task with ID {id} dose not exists");
             var tasks = from dep in _dal.Dependency.ReadAll(x => x.CurrentTaskId == id)
                         let lastTask = _dal.Task.Read(x => x.Id == dep.LastTaskId)
                         let endDependTask = CalcMaxDate(lastTask.StartTask, lastTask.ScheduleStart, lastTask.NumDays)
@@ -162,26 +196,47 @@ internal class TaskImplementation : ITask
         { throw new Exception(ex.Message); }//TODO general exp
         
     }
-    private BO.TaskStatus SetStatus(DO.Task t)
+
+    /// <summary>
+    /// setting status of task
+    /// </summary>
+    /// <param name="task">the task to set status to</param>
+    /// <returns> the Task Status</returns>
+    private BO.TaskStatus SetStatus(DO.Task task)
     {
-        if (t.EndTask.HasValue && t.EndTask < DateTime.Now)//we finishe the task
+        if (task.EndTask.HasValue && task.EndTask < DateTime.Now)//we finishe the task
             return BO.TaskStatus.Done;
-        if (!t.ScheduleStart.HasValue)// we  didnt create starting date
+        if (!task.ScheduleStart.HasValue)// we  didnt create starting date
             return BO.TaskStatus.Unscheduled;
-        if (t.ScheduleStart.HasValue && !t.StartTask.HasValue)//we created starting date whisout start work
+        if (task.ScheduleStart.HasValue && !task.StartTask.HasValue)//we created starting date whisout start work
             return BO.TaskStatus.Scheduled;
-        if (t.StartTask.HasValue && !t.EndTask.HasValue)//we started work but didnt finish=in the middle
+        if (task.StartTask.HasValue && !task.EndTask.HasValue)//we started work but didnt finish=in the middle
             return BO.TaskStatus.OnTrack;
         return BO.TaskStatus.Unscheduled;
 
     }
+
+    /// <summary>
+    /// Checking if the object field values ​​are valid
+    /// </summary>
+    /// <param name="item">the object to check</param>
+    /// <exception cref="BO.BlNegtivePropertyException"> if the id of task is negtive </exception>
+    /// <exception cref="BO.BlNullPropertyException">if the name is empty string</exception>
     private void InputIntegrityCheck(BO.Task item)
     {
         if (item.Id <= 0)
-            throw new BO.BlNegtivePropertyException($"Engeineer's Id can not be negative");
+            throw new BO.BlNegtivePropertyException($"Task's Id can not be negative");
         if (item.Name == "")
-            throw new BO.BlNullPropertyException($"Engeineer's name can not be negative");
+            throw new BO.BlNullPropertyException($"Task's name can not be negative");
     }
+
+    /// <summary>
+    /// Determining an estimated time to complete the task
+    /// </summary>
+    /// <param name="startTask">Time the engineer started the taskparam>
+    /// <param name="ScheduleStart">A time set for the start of the task</param>
+    /// <param name="numDays">The number of days the task should take</param>
+    /// <returns>the estimated time to complete the task</returns>
     private DateTime? CalcMaxDate(DateTime? startTask, DateTime? ScheduleStart, TimeSpan? numDays)
        => startTask > ScheduleStart ? startTask + numDays : ScheduleStart + numDays;
 }

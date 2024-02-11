@@ -1,17 +1,25 @@
 ﻿namespace Dal;
 using DalApi;
+using DO;
+
 sealed internal class DalList : IDal
 {
+    /// <summary>
+    /// The start date of the project
+    /// </summary>
     public DateTime? StartDate { get; set; }
 
+    /// <summary>
+    /// the end date of the program
+    /// </summary>
     private DateTime? endDate { get; set; }
     public DateTime? EndDate
     {
         get { return endDate; }
         set
         {
-            if (StartDate == null || StartDate < value)
-                throw new Exception("");// TODO
+            if (StartDate == null || StartDate > value)//if there is no start date or the end date date is befor the start date
+                throw new DalEarlyDatePropertyException("The end date of the project is not valid");
             endDate = value;
 
         }

@@ -1,4 +1,5 @@
 ﻿using DalApi;
+using DO;
 namespace Dal;
 
 
@@ -12,8 +13,8 @@ sealed internal class DalXml : IDal
         get { return endDate; }
         set
         {
-            if (StartDate == null || StartDate < value)
-                throw new Exception("");
+            if (StartDate == null || StartDate > value)
+                throw new DalEarlyDatePropertyException("The end date of the project is not valid");
             endDate = value;
 
         }

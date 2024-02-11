@@ -29,3 +29,7 @@ public class DalXMLFileLoadCreateException : Exception
 {
     public DalXMLFileLoadCreateException(string? message) : base(message) { }
 }
+public class DalEarlyDatePropertyException : Exception
+{
+    public DalEarlyDatePropertyException(string? message) : base(message) { }
+}

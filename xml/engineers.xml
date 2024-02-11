@@ -35,25 +35,5 @@
     <PayPerHour>35</PayPerHour>
     <Level>Beginner</Level>
   </Engineer>
-  <Engineer>
-    <Id>15</Id>
-    <FullName>bhsdfs</FullName>
-    <Mail>doron@gmail.com</Mail>
-    <PayPerHour>5.5</PayPerHour>
-    <Level>Intermediate</Level>
-  </Engineer>
-  <Engineer>
-    <Id>654</Id>
-    <FullName>bhsdfs</FullName>
-    <Mail>doron@gmail.com</Mail>
-    <PayPerHour>5.5</PayPerHour>
-    <Level>Intermediate</Level>
-  </Engineer>
-  <Engineer>
-    <Id>759</Id>
-    <FullName>bhsdfs</FullName>
-    <Mail>doron@gmail.com</Mail>
-    <PayPerHour>5.5</PayPerHour>
-    <Level>Intermediate</Level>
-  </Engineer>
+
 </ArrayOfEngineer>

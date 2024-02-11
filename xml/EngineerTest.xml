@@ -3,10 +3,10 @@
 	<Id>759</Id>
 	<FullName>bhsdfs</FullName>
 	<Mail>doron@gmail.com</Mail>
-	<PayPerHour>5.5</PayPerHour>
-	<Level>Intermediate</Level>
+	<PayPerHour>200</PayPerHour>
+	<Level>Advanced</Level>
 	<Task >
-		<Id>1</Id>
+		<Id>4</Id>
 		<Name >riki</Name>
 	</Task>
 	<!--<Task  xsi:nil="true"/>-->
