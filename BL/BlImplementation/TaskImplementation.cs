@@ -11,8 +11,8 @@ internal class TaskImplementation : ITask
     {
         try
         {
-            InputIntegrityCheck(item);
-            DO.Task _dotask = new DO.Task()
+            InputIntegrityCheck(item);//if everything is ok we can try add task
+            DO.Task _dotask = new DO.Task() //create new task
             {
                 Name = item.Name,
                 Description = item.Description,
@@ -22,15 +22,15 @@ internal class TaskImplementation : ITask
                 NewTask = item.NewTask
             };
 
-            int id = _dal.Task.Create(_dotask);
+            int id = _dal.Task.Create(_dotask);//keep the id of the task
 
-            if (item.Depndencies != null)
-                item.Depndencies.ForEach(x => _dal.Dependency.Create(new DO.Dependency()
+            if (item.Depndencies != null) // if the list of the dependancy is not empty
+                item.Depndencies.ForEach(x => _dal.Dependency.Create(new DO.Dependency()//go into the list of the dependent tasks
                 {
                     CurrentTaskId = id,
-                    LastTaskId = x.Id
+                    LastTaskId = x.Id  //update the tasks that i dependent in them
                 }));
-            return id;
+            return id; // return the id of the task
         }
         catch (DO.DalAlreadyExistsException ex)
         { throw new BO.BlAlreadyExistsException($"Task with ID {item.Id} already exists", ex); }
@@ -40,13 +40,13 @@ internal class TaskImplementation : ITask
     public void Delete(int id)
     {
 
-        if (_dal.Dependency.ReadAll(x => x.LastTaskId == id).Any())
+        if (_dal.Dependency.ReadAll(x => x.LastTaskId == id).Any())//if there is any task that dependent on me(befor other tasks) then i can't delete the task
             throw new BO.BlCantBeEraseException("The task cannot be deleted The task takes precedence over other tasks");
-        if (_dal.EndDate != null)
+        if (_dal.EndDate != null)// if we create the end date of the project then we can't delete the task
             throw new BO.BlCantBeEraseException("The task cannot be deleted after the project schedule has been created.");
         try
         {
-            _dal.Task.Delete(id);
+            _dal.Task.Delete(id); //try to delete the task
         }
         catch (Exception ex)
         { throw new BO.BlDoesNotExistException(ex.Message); }
@@ -55,9 +55,9 @@ internal class TaskImplementation : ITask
 
     public BO.Task? ReadTask(int id)
     {
-        DO.Task _doTask = _dal.Task.Read(x => x.Id == id) ?? throw new BO.BlDoesNotExistException($"Task with ID {id} does not exists"); ;
-        DO.Engineer? engineer = _dal.Engineer.Read(x => x.Id == _doTask.EngineerId);
-        IEnumerable<DO.Dependency> dependencies = _dal.Dependency.ReadAll(x => x.CurrentTaskId == id);
+        DO.Task _doTask = _dal.Task.Read(x => x.Id == id) ?? throw new BO.BlDoesNotExistException($"Task with ID {id} does not exists");//look for the task with this id
+        DO.Engineer? engineer = _dal.Engineer.Read(x => x.Id == _doTask.EngineerId);//look for the engineer of the task
+        IEnumerable<DO.Dependency> dependencies = _dal.Dependency.ReadAll(x => x.CurrentTaskId == id);//collection whis the current tasks
 
         return new BO.Task()
         {
@@ -111,9 +111,9 @@ internal class TaskImplementation : ITask
             DO.Task task = _dal.Task.Read(x => x.Id == item.Id) ?? throw new BO.BlAlreadyExistsException($"Task with ID {item.Id} already exists");
             if (_dal.Engineer.Read(x => x.Id == item.Engineer.Id) == null)
                 throw new BO.BlDoesNotExistException($"Engeineer with ID {item.Id} does not exists");
-            if (_dal.EndDate == null)
+            if (_dal.EndDate == null)//we didnt create the end date time of the task
             {
-                task = task with
+                task = task with//we can update everything
                 {
                     Name = item.Name,
                     Description = item.Description,
@@ -127,7 +127,7 @@ internal class TaskImplementation : ITask
             }
             else
             {
-                task = task with
+                task = task with//we can update only the textual fileds after created the end date
                 {
                     Name = item.Name,
                     Description = item.Description,
@@ -142,7 +142,7 @@ internal class TaskImplementation : ITask
 
     }
 
-    public void UpdateStartingDate(int id, DateTime date)
+    public void UpdateStartingDate(int id, DateTime date)//update the date to start the task
     {
         try
         {
@@ -150,11 +150,12 @@ internal class TaskImplementation : ITask
             var tasks = from dep in _dal.Dependency.ReadAll(x => x.CurrentTaskId == id)
                         let lastTask = _dal.Task.Read(x => x.Id == dep.LastTaskId)
                         let endDependTask = CalcMaxDate(lastTask.StartTask, lastTask.ScheduleStart, lastTask.NumDays)
-                        where lastTask.ScheduleStart == null || endDependTask > date
+                        where lastTask.ScheduleStart == null ||  date < endDependTask // if we didnt create the start time of  all the privios tasks
+                        //or the date of the starting task is before all the ending date of the privious tasks then we throw error
                         select lastTask;
             if (tasks.Any())
                 throw new BO.BlEarlyDatePropertyException($"The last end task date is {tasks.Max(x => CalcMaxDate(x.StartTask, x.ScheduleStart, x.NumDays))}");
-            _dal.Task.Update(task = task with { ScheduleStart = date });
+            _dal.Task.Update(task = task with { ScheduleStart = date });//if everything is ok we can updete the date starting task
         }
         catch (Exception ex)
         { throw new Exception(ex.Message); }//TODO general exp
@@ -162,13 +163,13 @@ internal class TaskImplementation : ITask
     }
     private BO.TaskStatus SetStatus(DO.Task t)
     {
-        if (t.EndTask.HasValue && t.EndTask < DateTime.Now)
+        if (t.EndTask.HasValue && t.EndTask < DateTime.Now)//we finishe the task
             return BO.TaskStatus.Done;
-        if (!t.ScheduleStart.HasValue)
+        if (!t.ScheduleStart.HasValue)// we  didnt create starting date
             return BO.TaskStatus.Unscheduled;
-        if (t.ScheduleStart.HasValue && !t.StartTask.HasValue)
+        if (t.ScheduleStart.HasValue && !t.StartTask.HasValue)//we created starting date whisout start work
             return BO.TaskStatus.Scheduled;
-        if (t.StartTask.HasValue && !t.EndTask.HasValue)
+        if (t.StartTask.HasValue && !t.EndTask.HasValue)//we started work but didnt finish=in the middle
             return BO.TaskStatus.OnTrack;
         return BO.TaskStatus.Unscheduled;
 
