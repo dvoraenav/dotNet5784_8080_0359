@@ -19,4 +19,8 @@
     <ProjectReference Include="..\DalTest\DalTest.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="pictures\" />
+  </ItemGroup>
+
 </Project>

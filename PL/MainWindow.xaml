@@ -5,8 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Background="#F8DCD3">
     <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="0,48,0.184,49"  >
+
+            <Button  HorizontalAlignment="Center"  VerticalAlignment="Center"  Width="170" Height="35" Background="White" Grid.Column="1" Grid.Row="2" Margin="20" BorderBrush="Black" Click="EngineerListWindow_Click"  >
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="7"/>
+                    </Style>
+                </Button.Resources>
+                <TextBlock Text="Admin" TextAlignment="Center" FontSize="20" Width="150" Height="35"/>
+            </Button>
+
+            <Button  HorizontalAlignment="Center"  VerticalAlignment="Top"  Width="170" Height="35" Background="White"   Margin="10">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="7"/>
+                    </Style>
+                </Button.Resources>
+
+                <TextBlock Text="Engineer" TextAlignment="Center" FontSize="20" Width="170" Height="35"/>
+            </Button>
+        </StackPanel>
+        <Button  Click="Initialization_Click"  Grid.Row="3" Height="45" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="50,0,150,50" >
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="7"/>
+                </Style>
+            </Button.Resources>
+            <TextBlock Text="Data Initialization" TextAlignment="Center" FontSize="20" Width="170" Height="23"/>
+        </Button>
+        <Image Source="/pictures/right.png"  Grid.Column="2" Grid.RowSpan="4"/>
+        <Image Source="/pictures/left.png" Grid.RowSpan="4"/>
+        <Image Source="/pictures/logo.png"  Grid.Column="1" Grid.Row="1"/>
 
     </Grid>
 </Window>
