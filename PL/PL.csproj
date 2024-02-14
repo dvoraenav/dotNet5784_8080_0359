@@ -15,12 +15,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="left.png" />
+    <None Remove="logo.png" />
+    <None Remove="right.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
     <ProjectReference Include="..\DalTest\DalTest.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="pictures\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="left.png" />
+    <Resource Include="logo.png" />
+    <Resource Include="right.png" />
   </ItemGroup>
 
 </Project>
