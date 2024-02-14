@@ -1120,4 +1120,284 @@
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
+  <Task>
+    <Id>83</Id>
+    <Name>Define</Name>
+    <Description>Define project goals and objectives</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:28.672894+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>84</Id>
+    <Name>Research</Name>
+    <Description>Research and analyze construction requirements</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:28.7725195+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>85</Id>
+    <Name>Scope</Name>
+    <Description>Scope the construction project</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:28.7961017+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>86</Id>
+    <Name>Plan</Name>
+    <Description>Develop a detailed construction plan</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:28.825187+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>87</Id>
+    <Name>Stakeholders</Name>
+    <Description>Identify stakeholders in the construction project</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:28.8509384+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>88</Id>
+    <Name>Resources</Name>
+    <Description>Allocate construction resources and budget</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:28.8757596+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>89</Id>
+    <Name>Risk</Name>
+    <Description>Assess and manage construction risks</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:28.8932353+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>90</Id>
+    <Name>Milestones</Name>
+    <Description>Define construction milestones</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:28.9179357+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>91</Id>
+    <Name>Team</Name>
+    <Description>Assemble a construction project team</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:28.943566+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>92</Id>
+    <Name>Communication</Name>
+    <Description>Develop a communication plan for construction</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:28.9681194+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>93</Id>
+    <Name>Design</Name>
+    <Description>Design the construction project architecture</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:28.990991+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>94</Id>
+    <Name>Infrastructure</Name>
+    <Description>Implement construction infrastructure</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:29.0168848+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>95</Id>
+    <Name>Coding</Name>
+    <Description>Execute construction activities and coding</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:29.0585961+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>96</Id>
+    <Name>Quality</Name>
+    <Description>Ensure construction quality and compliance</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:29.0838243+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>97</Id>
+    <Name>Testing</Name>
+    <Description>Conduct testing and inspection for construction</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:29.107166+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>98</Id>
+    <Name>Deployment</Name>
+    <Description>Deploy construction components</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:29.1351446+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>99</Id>
+    <Name>Monitor</Name>
+    <Description>Monitor construction progress</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:29.1641606+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>100</Id>
+    <Name>Issues</Name>
+    <Description>Address and resolve construction issues</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:29.192191+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>101</Id>
+    <Name>Review</Name>
+    <Description>Conduct construction review and evaluation</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:29.2184406+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
+  <Task>
+    <Id>102</Id>
+    <Name>Closure</Name>
+    <Description>Document and close the construction project</Description>
+    <Result>done</Result>
+    <NewTask>2024-02-14T13:02:29.2468838+02:00</NewTask>
+    <Comment>the task is completed</Comment>
+    <DifficultyLevel>Beginner</DifficultyLevel>
+    <NumDays xsi:nil="true" />
+    <ScheduleStart xsi:nil="true" />
+    <StartTask xsi:nil="true" />
+    <EndTask xsi:nil="true" />
+    <EngineerId xsi:nil="true" />
+  </Task>
 </ArrayOfTask>
