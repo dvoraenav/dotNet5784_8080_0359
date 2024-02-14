@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,24 +21,57 @@ namespace PL.Engineer;
     public partial class EngineerWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get;
-
     public EngineerWindow(int id = 0)
     {
+        
         InitializeComponent();
         if (id == 0)
-        { BO.Engineer engineer = new BO.Engineer(); }
+        { BO.Engineer engineer = new BO.Engineer();
+           CurrentEngineer=engineer;
+        }
         else
-        { BO.Engineer engineer1 = s_bl.Engineer.Read(id); }
-       
+        {
+            try
+            {
+                BO.Engineer engineer1 = s_bl.Engineer.Read(id);
+                CurrentEngineer = engineer1;
+            }
+            catch (Exception ex)//TODO what exception??
+            { }
+        }
     }
-        public IEnumerable<BO.Engineer> CurrentEngineer
+        public BO.Engineer CurrentEngineer
     {
-        get { return (IEnumerable<BO.Engineer>)GetValue(CurrentEngineerProperty); }
+        get { return (BO.Engineer)GetValue(CurrentEngineerProperty); }
         set { SetValue(CurrentEngineerProperty, value); }
     }
 
     public static readonly DependencyProperty CurrentEngineerProperty =
-        DependencyProperty.Register("CurrentEngineer", typeof(IEnumerable<BO.Engineer>), typeof(EngineerWindow), new PropertyMetadata(null));
+        DependencyProperty.Register("CurrentEngineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
 
+    public BO.EngineerExpireance Expireance { get; set; } = BO.EngineerExpireance.Beginner;
+    private void ExpirienceSelection(object sender, SelectionChangedEventArgs e)
+    {
+        CurrentEngineer.Level = Expireance;
 
     }
+
+    private void AddNewEngineer_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            s_bl.Engineer.Create(CurrentEngineer);
+        }
+        catch (Exception ex) { MessageBox.Show(ex.Message); }//TODO
+    }
+
+    private void UpdateEngineer_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            s_bl.Engineer.Update(CurrentEngineer);
+        }
+        catch(Exception ex) { MessageBox.Show(ex.Message); }
+
+    }
+}

@@ -23,12 +23,14 @@ public static class Initialization
             "sophia.jones@email.com",
             "david.brown@email.com"
         };
+        int[] tz =
+            {273044483,215191420,243229927,217756230,251117987};
         for (int i = 0; i < fullNames.Length; i++)//going through the array of names
         {
 
             try
-            {
-                int id = s_rand.Next(200000000, 400000000);// a random number for id
+            { //s_rand.Next(200000000, 400000000)
+                int id = tz[i];// a random number for id
                 string name = fullNames[i];//taking the name [i] in the arry 
                 string email = emails[i];//taking the email [i] in the arry 
                 int pay = 35; //pay pre hour is set the same for all 5 engineers

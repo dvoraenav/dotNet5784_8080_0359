@@ -5,12 +5,15 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <local:ExpirieanceCollection x:Key="ExpirieanceCollectionKey" />
+        <local:ConvertIdToVisibilityOfAdd x:Key="ConvertIdToVisibilityOfAdd"/>
+        <local:ConvertIdToVisibilityOfUpdate x:Key="ConvertIdToVisibilityOfUpdateKey"/>
         <Style TargetType="Button">
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Height" Value="40"/>
             <Setter Property="Width" Value="100"/>
+            <Setter Property="FontFamily" Value="Franklin Gothic"/>
         </Style>
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="20"/>
@@ -19,9 +22,6 @@
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="Margin" Value="10"/>
             <Setter Property="FontFamily" Value="Franklin Gothic Medium"/>
-            
-
-
         </Style>
         
     </Application.Resources>

@@ -28,7 +28,13 @@
                       Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="ExpirienceSelection"/>
         </Grid>
         <!---list view for the tasks-->
-        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList}"/>
-        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
+        <ListView Margin="5" Grid.Row="1" SelectedValue="{Binding Path=Selected_Engineer, Mode=TwoWay}" ItemsSource="{Binding Path=EngineerList}" SelectionChanged="ListView_SelectionChanged" />
+        <Button Content="Add Engineer" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="AddEngineer_Click" FontSize="15">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Window>

@@ -43,4 +43,21 @@ public partial class EngineerListWindow : Window
     s_bl.Engineer.GetEngineerList()! : s_bl?.Engineer.GetEngineerList(eg => eg.Level == Expireance)!;
 
     }
+
+    private void AddEngineer_Click(object sender, RoutedEventArgs e)
+    {
+        new EngineerWindow().Show();
+        EngineerList = s_bl?.Engineer.GetEngineerList()!;
+    }
+
+    public BO.Engineer Selected_Engineer { get; set; } 
+    private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+        //BO.Engineer? engineerlist = (sender as ListView)?.SelectedItem as BO.Engineer;
+        //new EngineerWindow(engineerlist.Id).ShowDialog();//TODO 
+        new EngineerWindow(Selected_Engineer.Id).ShowDialog();
+       // EngineerList = s_bl?.Engineer.GetEngineerList()!;
+    }
+
 }

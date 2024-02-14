@@ -82,8 +82,8 @@ internal class EngineerImplementation : IEngineer
                 task = task with { EngineerId = item.Id };
                 _dal.Task.Update(task);             //update the task with engineer who are responsible for it
             }
-
-            _dal.Engineer.Update(_doEngineer);      //update the engineer with his task
+            DO.Engineer UP = Tools.CopySimilarFields<BO.Engineer,DO.Engineer>(item);
+            _dal.Engineer.Update(UP);      //update the engineer with his task
         }
         catch (DO.DalAlreadyExistsException ex)
         {
