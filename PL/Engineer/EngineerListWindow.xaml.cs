@@ -25,4 +25,15 @@ public partial class EngineerListWindow : Window
     {
         InitializeComponent();
     }
+    //public IEnumerable<BO> EngineerList
+    //{
+    //    get { return (IEnumerable<BO.CourseInList>)GetValue(CourseListProperty); }
+    //    set { SetValue(CourseListProperty, value); }
+    //}
+
+    //public static readonly DependencyProperty CourseListProperty =
+    //    DependencyProperty.Register("CourseList", typeof(IEnumerable<BO.CourseInList>), typeof(CourseListWindow), new PropertyMetadata(null));
+
+
+
 }
