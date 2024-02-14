@@ -24,16 +24,23 @@ public partial class EngineerListWindow : Window
     public EngineerListWindow()
     {
         InitializeComponent();
+        EngineerList = s_bl?.Engineer.GetEngineerList()!;
     }
-    //public IEnumerable<BO> EngineerList
-    //{
-    //    get { return (IEnumerable<BO.CourseInList>)GetValue(CourseListProperty); }
-    //    set { SetValue(CourseListProperty, value); }
-    //}
+    public IEnumerable<BO.Engineer> EngineerList
+    {
+        get { return (IEnumerable<BO.Engineer>)GetValue(EngineerListProporty); }
+        set { SetValue(EngineerListProporty, value); }
+    }
 
-    //public static readonly DependencyProperty CourseListProperty =
-    //    DependencyProperty.Register("CourseList", typeof(IEnumerable<BO.CourseInList>), typeof(CourseListWindow), new PropertyMetadata(null));
+    public static readonly DependencyProperty EngineerListProporty =
+        DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
 
+    public BO.EngineerExpireance Expireance { get; set; } = BO.EngineerExpireance.All;
 
+    private void ExpirienceSelection (object sender, SelectionChangedEventArgs e)
+    {
+        EngineerList = (Expireance == BO.EngineerExpireance.All) ?
+    s_bl.Engineer.GetEngineerList()! : s_bl?.Engineer.GetEngineerList(eg => eg.Level == Expireance)!;
 
+    }
 }

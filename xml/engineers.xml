@@ -5,7 +5,7 @@
     <FullName>John Smith</FullName>
     <Mail>john.smith@email.com</Mail>
     <PayPerHour>35</PayPerHour>
-    <Level>Beginner</Level>
+    <Level>AdvancedBeginner</Level>
   </Engineer>
   <Engineer>
     <Id>389425114</Id>
@@ -19,7 +19,8 @@
     <FullName>Michael Williams</FullName>
     <Mail>michael.williams@email.com</Mail>
     <PayPerHour>35</PayPerHour>
-    <Level>Beginner</Level>
+    <Level>Intermediate
+	</Level>
   </Engineer>
   <Engineer>
     <Id>246832573</Id>

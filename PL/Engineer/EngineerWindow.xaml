@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
-        Title="EngineerWindow" Height="450" Width="800">
+       Title="EngineerWindow" Height="450" Width="800"
+    DataContext="{Binding CurrentEngineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="1" Content="Id:" Height="30" Width="70"/>
+        <Label Grid.Row="2" Content="Name:" Height="30" Width="70" />
+        <Label Grid.Row="3" Content="Email:" Height="30" Width="70" />
+        <Label Grid.Row="4" Content="Level:" Height="30" Width="70" />
+        <Label Grid.Row="5" Content="Cost:" Height="30" Width="70" />
+        <TextBox Grid.Row="1" Grid.Column="1" Height="25" Width="150" HorizontalAlignment="Left" Margin="10" Text="{Binding CurrentEngineer }" />
+        <TextBox Grid.Row="2" Grid.Column="1" Height="25" Width="150" HorizontalAlignment="Left" Margin="10"  />
+        <TextBox Grid.Row="3" Grid.Column="1" Height="25" Width="150" HorizontalAlignment="Left" Margin="10"  />
+        <ComboBox Grid.Row="4" Grid.Column="1" Height="25" Width="150" HorizontalAlignment="Left" Margin="10"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Height="25" Width="150" HorizontalAlignment="Left" Margin="10"  />
+
+
     </Grid>
 </Window>

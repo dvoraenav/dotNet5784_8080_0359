@@ -24,10 +24,11 @@
             <!---lable for filter selection-->
             <Label Grid.Column="0"/>
             <!---filter selection-->
-            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <ComboBox SelectedValue="{Binding Path=Expireance, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource ExpirieanceCollectionKey}}"
+                      Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="ExpirienceSelection"/>
         </Grid>
         <!---list view for the tasks-->
-        <ListView Grid.Row="1"/>
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList}"/>
         <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
     </Grid>
 </Window>

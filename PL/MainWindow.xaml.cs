@@ -22,6 +22,7 @@ public partial class MainWindow : Window
 
     private void Initialization_Click(object sender, RoutedEventArgs e)
     {
-        DalTest.Initialization.Do();
+        //add a message box
+        //TODO how to initializat data?
     }
 }
