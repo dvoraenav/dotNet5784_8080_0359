@@ -28,4 +28,10 @@
     <PayPerHour>55</PayPerHour>
     <Level>Beginner</Level>
   </Engineer>
+  <Engineer>
+    <Id>123</Id>
+    <FullName>dvora</FullName>
+    <PayPerHour>35</PayPerHour>
+    <Level>Expert</Level>
+  </Engineer>
 </ArrayOfEngineer>
