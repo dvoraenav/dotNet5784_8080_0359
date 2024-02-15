@@ -1,6 +1,10 @@
 ﻿namespace DalTest;
 using DalApi;
 using DO;
+using System.Xml.Linq;
+using Dal;
+using System.Runtime.CompilerServices;
+using System.Data.Common;
 
 public static class Initialization
 {
@@ -124,6 +128,20 @@ public static class Initialization
         createTask();
         createDependency();
     }
-    //public static void Reset()
-    //{ }
+    public static void Reset()
+    {
+        //resetting the serial numbers to 1
+        //XElement config = XMLTools.LoadListFromXMLElement("data-config");
+        //config.Element("NextTaskId")!.Value = "1";
+        //config.Element("NextLinkId")!.Value = "1";
+        //config.Element("startDate")?.SetValue("");
+        //config.Element("finishDate")?.SetValue("");
+        //XMLTools.SaveListToXMLElement(config, "data-config");
+
+        Factory.Get.Task.Clear();
+        Factory.Get.Engineer.Clear();
+        Factory.Get.Dependency.Clear();
+        //(The check for existing initial data is performed within the function "DeleteAll")
+
+    }
 }

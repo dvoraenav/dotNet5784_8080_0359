@@ -1,6 +1,7 @@
 ﻿namespace Dal;
 using DalApi;
 using DO;
+using System.Xml.Linq;
 
 sealed internal class DalList : IDal
 {
@@ -32,6 +33,5 @@ sealed internal class DalList : IDal
     public ITask Task => new TaskImplementation();
 
     public IDependency Dependency => new DependencyImplementation();
-
-
+  
 }

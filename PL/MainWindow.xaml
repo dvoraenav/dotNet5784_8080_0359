@@ -12,20 +12,22 @@
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Image Source="/right.png"  Grid.Column="2" Grid.RowSpan="4"/>
-        <Image Source="/left.png" Grid.RowSpan="4"/>
+        <Image Source="/left.png"  Grid.RowSpan="4" Grid.Column="0"/>
         <Image Source="/logo.png"  Grid.Column="1" Grid.Row="1"/>
 
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="0,48,0.184,49"  >
+        <Image Source="/right.png" Grid.Column="2" Grid.RowSpan="4" />
 
-            <Button  HorizontalAlignment="Center"  VerticalAlignment="Center"  Width="170" Height="35" Background="White" Grid.Column="1" Grid.Row="2" Margin="20" BorderBrush="Black" Click="EngineerListWindow_Click"  >
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" Margin="10"  >
+
+            <Button  HorizontalAlignment="Center"  VerticalAlignment="Center"  Width="200" Height="35" Background="White" Grid.Column="1" Grid.Row="2" Margin="20" BorderBrush="Black" Click="EngineerListWindow_Click"  >
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="7"/>
@@ -34,7 +36,7 @@
                 <TextBlock Text="Admin" TextAlignment="Center" FontSize="20" Width="150" Height="25"/>
             </Button>
 
-            <Button  HorizontalAlignment="Center"  VerticalAlignment="Top"  Width="170" Height="35" Background="White"   Margin="10">
+            <Button  HorizontalAlignment="Center"  VerticalAlignment="Top"  Width="200" Height="35" Background="White"   Margin="10">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="7"/>
@@ -43,6 +45,8 @@
 
                 <TextBlock Text="Engineer" TextAlignment="Center" FontSize="20" Width="170" Height="25"/>
             </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
             <Button  Click="Initialization_Click"  Grid.Row="3" Height="35" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10" >
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
@@ -50,6 +54,14 @@
                     </Style>
                 </Button.Resources>
                 <TextBlock Text="Data Initialization" TextAlignment="Center" FontSize="20" Width="170" Height="25"/>
+            </Button>
+            <Button Grid.Row="3" Height="35" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10" Click="Reset_Click" >
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="7"/>
+                    </Style>
+                </Button.Resources>
+                <TextBlock Text="Resest Data" TextAlignment="Center" FontSize="20" Width="170" Height="25"/>
             </Button>
         </StackPanel>
 
