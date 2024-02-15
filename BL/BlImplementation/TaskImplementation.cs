@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using System.Data;
 
 namespace BlImplementation;
 
@@ -40,6 +41,8 @@ internal class TaskImplementation : ITask
         }
         catch (DO.DalAlreadyExistsException ex)
         { throw new BO.BlAlreadyExistsException($"Task with ID {item.Id} already exists", ex); }
+        catch(BO.BlInvalidInputPropertyException ex)
+        { throw new BO.BlInvalidInputPropertyException(ex.Message); }
 
     }
 
@@ -137,7 +140,7 @@ internal class TaskImplementation : ITask
         try
         {
             InputIntegrityCheck(item);
-            DO.Task task = _dal.Task.Read(x => x.Id == item.Id) ?? throw new BO.BlAlreadyExistsException($"Task with ID {item.Id} already exists");
+            DO.Task task = _dal.Task.Read(x => x.Id == item.Id) ?? throw new BO.BlDoesNotExistException($"Task with ID {item.Id} dose not exists");
             if (_dal.Engineer.Read(x => x.Id == item.Engineer.Id) == null)
                 throw new BO.BlDoesNotExistException($"Engeineer with ID {item.Id} does not exists");
             if (_dal.EndDate == null)//we didnt create the end date time of the task
@@ -167,7 +170,7 @@ internal class TaskImplementation : ITask
             }
             _dal.Task.Update(task);
         }
-        catch (DO.DalAlreadyExistsException ex) { throw new BO.BlNullPropertyException(ex.Message); }
+        catch (DO.DalDoesNotExistException ex) { throw new BO.BlDoesNotExistException(ex.Message); }
 
     }
 
@@ -189,7 +192,7 @@ internal class TaskImplementation : ITask
                         //or the date of the starting task is before all the ending date of the privious tasks then we throw error
                         select lastTask;
             if (tasks.Any())
-                throw new BO.BlEarlyDatePropertyException($"The last end task date is {tasks.Max(x => CalcMaxDate(x.StartTask, x.ScheduleStart, x.NumDays))}");
+                throw new BO.BlGeneralExceptionException($"The last end task date is {tasks.Max(x => CalcMaxDate(x.StartTask, x.ScheduleStart, x.NumDays))}");
             _dal.Task.Update(task = task with { ScheduleStart = date });//if everything is ok we can updete the date starting task
         }
         catch (Exception ex)
@@ -225,9 +228,9 @@ internal class TaskImplementation : ITask
     private void InputIntegrityCheck(BO.Task item)
     {
         if (item.Id <= 0)
-            throw new BO.BlNegtivePropertyException($"Task's Id can not be negative");
+            throw new BO.BlInvalidInputPropertyException($"Task's Id can not be negative");
         if (item.Name == "")
-            throw new BO.BlNullPropertyException($"Task's name can not be negative");
+            throw new BO.BlInvalidInputPropertyException($"Task's name can not be negative");
     }
 
     /// <summary>

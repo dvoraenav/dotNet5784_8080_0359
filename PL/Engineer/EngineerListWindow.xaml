@@ -7,7 +7,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
-        Title="EngineerListWindow" Height="640" Width="800">
+        Title="EngineerListWindow" Height="640" Width="800" WindowState="Maximized">
     <!--Extrnal Grid-->
     <Grid>
         <Grid.RowDefinitions>
@@ -26,8 +26,8 @@
             <!---filter selection-->
                 <ComboBox SelectedValue="{Binding Path=Expireance, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource ExpirieanceCollectionKey}}"
                       Grid.Column="1"  VerticalAlignment="Center" SelectionChanged="ExpirienceSelection" Width="200" Height="35" FontSize="15" Margin="10"/>
-                <TextBlock Text="Search" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Height="30" Width="50" Margin="10,0,7,0"/>
-                <TextBox  VerticalAlignment="Center" FontSize="18" Height="35" Width="200" Margin="10"/>
+                <TextBlock Text="Search" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Height="30" Width="55" Margin="10,0,7,0"/>
+                <TextBox  VerticalAlignment="Center" FontSize="18" Height="35" Width="200" Margin="10" TextChanged="Srearch_TaskChanged"/>
                 <Button Content="Add Engineer" Grid.Column="2" HorizontalAlignment="Center" Height="50" Width="100" Click="AddEngineer_Click" FontSize="15" Margin="10">
                     <Button.Resources>
                         <Style TargetType="Border">

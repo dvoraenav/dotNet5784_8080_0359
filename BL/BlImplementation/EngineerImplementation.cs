@@ -31,28 +31,21 @@ internal class EngineerImplementation : IEngineer
                          Mail: item.Mail!,
                          PayPerHour: item.PayPerHour,
                          Level: (DO.EngineerExpireance)item.Level);
-
-            if (item.Task is not null && item.Task.Id != 0) //If a task has been assigned to an engineer and the id of the task is not 0
-            {
-                DO.Task task = _dal.Task.Read(x => x.Id == item.Task!.Id) ?? throw new BlDoesNotExistException($"Task with Id {item.Task!.Id} does not exist");//look for the task in the data leyer
-                                                                                                                                                               //and if there is no this id,it means that the task is not exist so we cant give her to the engineer
-
-
-                if (task.EngineerId is not null && task.EngineerId != item.Id)// If there is an engineer to whom this task has been assigned, and his ID is
-                                                                              // different from the engineer's id I created,its impossible because its already assigned to something else
-
-                    throw new BlTaskAlreadyLinkToEngineerException($"Task is already link to an engineer");
-
-                task = task with { EngineerId = item.Id };                //Now this task is assigned to the new engineer
-                _dal.Task.Update(task);                                  //Updated the data layer in the task assigned to the engineer
-            }
-
+            LinkTaskToEngineer(item);
             return _dal.Engineer.Create(_doengineer);//add to data leyer
 
         }
         catch (DO.DalAlreadyExistsException ex)
         {
             throw new BO.BlAlreadyExistsException($"Engeineer with ID {item.Id} already exists", ex);
+        }
+        catch (BO.BlInvalidInputPropertyException ex)
+        {
+            throw new BlInvalidInputPropertyException(ex.Message);
+        }
+        catch (BO.BlGeneralExceptionException ex)
+        {
+            throw new BO.BlGeneralExceptionException(ex.Message);
         }
 
     }
@@ -72,22 +65,21 @@ internal class EngineerImplementation : IEngineer
         if ((DO.EngineerExpireance)item.Level < _doEngineer.Level) { throw new BO.BlInvalidInputPropertyException("The new level of engineer too low"); }//we can make the level highest but not lower
         try
         {
-            if (item.Task is not null)
-            {
-                DO.Task task = _dal.Task.Read(x => x.Id == item.Task!.Id) ?? throw new BlDoesNotExistException($"Task with Id {item.Task!.Id} does not exist");//check if the task that i want to assigned is really exist 
-
-                if (task.EngineerId is not null && task.EngineerId != item.Id)
-                    throw new BlTaskAlreadyLinkToEngineerException($"Task is already link to an engineer");
-
-                task = task with { EngineerId = item.Id };
-                _dal.Task.Update(task);             //update the task with engineer who are responsible for it
-            }
-            DO.Engineer UP = Tools.CopySimilarFields<BO.Engineer,DO.Engineer>(item);
-            _dal.Engineer.Update(UP);      //update the engineer with his task
+            LinkTaskToEngineer(item);
+            DO.Engineer updated_enginner = Tools.CopySimilarFields<BO.Engineer,DO.Engineer>(item);
+            _dal.Engineer.Update(updated_enginner);      //update the engineer with his task
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BO.BlNullPropertyException(ex.Message);
+            throw new BO.BlAlreadyExistsException(ex.Message);
+        }
+        catch (BO.BlInvalidInputPropertyException ex)
+        {
+            throw new BlInvalidInputPropertyException(ex.Message);
+        }
+        catch (BO.BlGeneralExceptionException ex)
+        {
+            throw new BO.BlGeneralExceptionException(ex.Message);
         }
     }
 
@@ -166,11 +158,11 @@ internal class EngineerImplementation : IEngineer
     private void InputIntegrityCheck(BO.Engineer? item)
     {
         if (item.Id <= 0)
-            throw new BO.BlNegtivePropertyException($"Engeineer's Id can not be negative");
+            throw new BO.BlInvalidInputPropertyException($"Engeineer's Id can not be negative");
         if (item.FullName == "")
-            throw new BO.BlNullPropertyException($"Engeineer's name can not be empty");
+            throw new BO.BlInvalidInputPropertyException($"Engeineer's name can not be empty");
         if (item.PayPerHour <= 0)
-            throw new BO.BlNegtivePropertyException($"Engeineer's cost can not be negative");
+            throw new BO.BlInvalidInputPropertyException($"Engeineer's cost can not be negative");
         if (!new EmailAddressAttribute().IsValid(item.Mail))// only return true if there is only 1 '@' character
             // and it is neither the first nor the last character
             throw new BO.BlInvalidInputPropertyException($"Engeineer's mail address is not valid");
@@ -190,4 +182,16 @@ internal class EngineerImplementation : IEngineer
                     } : null;
     }
 
+    private void LinkTaskToEngineer (BO.Engineer? item)
+    {
+        if (item.Task is not null && item.Task.Id != 0) //If a task has been assigned to an engineer and the id of the task is not 0
+        {
+            DO.Task task = _dal.Task.Read(x => x.Id == item.Task!.Id) ?? throw new BlDoesNotExistException($"Task with Id {item.Task!.Id} does not exist");//look for the task in the data leyer
+            if (task.EngineerId is not null && task.EngineerId != item.Id)// If there is an engineer to whom this task has been assigned, and his ID is
+                throw new BlGeneralExceptionException($"Task is already link to an engineer");
+
+            task = task with { EngineerId = item.Id };                //Now this task is assigned to the new engineer
+            _dal.Task.Update(task);                                  //Updated the data layer in the task assigned to the engineer
+        }
+    }
 }

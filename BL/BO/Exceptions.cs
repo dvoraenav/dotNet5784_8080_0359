@@ -20,26 +20,13 @@ public class BlCantBeEraseException : Exception
     public BlCantBeEraseException(string message, Exception innerException)
                : base(message, innerException) { }
 }
-public class BlNullPropertyException : Exception
-{
-    public BlNullPropertyException(string? message) : base(message) { }
-}
-
-public class BlNegtivePropertyException : Exception
-{
-    public BlNegtivePropertyException(string? message) : base(message) { }
-}
 public class BlInvalidInputPropertyException : Exception
 {
     public BlInvalidInputPropertyException(string? message) : base(message) { }
 }
-public class BlEarlyDatePropertyException : Exception
+public class BlGeneralExceptionException : Exception
 {
-    public BlEarlyDatePropertyException(string? message) : base(message) { }
-}
-public class BlTaskAlreadyLinkToEngineerException : Exception
-{
-    public BlTaskAlreadyLinkToEngineerException(string? message) : base(message) { }
+    public BlGeneralExceptionException(string? message) : base(message) { }
 }
 
 

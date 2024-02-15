@@ -50,9 +50,10 @@ public partial class EngineerListWindow : Window
 
     private void AddEngineer_Click(object sender, RoutedEventArgs e)
     {
-        try { 
-        new EngineerWindow().Show();
-        EngineerList = s_bl?.Engineer.GetEngineerList()!; }
+       try { 
+        new EngineerWindow().ShowDialog();
+        EngineerList = s_bl?.Engineer.GetEngineerList()!; 
+        }
         catch (Exception ex){ MessageBox.Show(ex.Message); }
 
     }
@@ -67,6 +68,12 @@ public partial class EngineerListWindow : Window
             EngineerList = s_bl?.Engineer.GetEngineerList()!;
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
+
+    }
+
+    private void Srearch_TaskChanged(object sender, TextChangedEventArgs e)
+    {
+        EngineerList=s_bl?.Engineer.GetEngineerList()!.Where(X=>X.FullName.Contains((sender as TextBox)?.Text)).ToList();
 
     }
 }
