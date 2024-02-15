@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
-       Title="EngineerWindow" Height="450" Width="800"
+       Title="EngineerWindow" Height="450" Width="500" Background="#F8DCD3"
     DataContext="{Binding CurrentEngineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
     <Grid>
         <Grid.RowDefinitions>
@@ -21,6 +21,8 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="1.5*"/>
         </Grid.ColumnDefinitions>
+        <TextBlock Text="Engineer Details" Grid.ColumnSpan="2" FontSize="35" Height="45" Width="260" HorizontalAlignment="Center"
+                   Margin="0,0,200,0" FontFamily="Franklin Gothic Medium" Foreground="#FFEC9361"  />
         <Label Grid.Row="1" Content="Id:" Height="30" Width="70"/>
         <Label Grid.Row="2" Content="Name:" Height="30" Width="70" />
         <Label Grid.Row="3" Content="Email:" Height="30" Width="70" />

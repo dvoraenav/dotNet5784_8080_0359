@@ -37,7 +37,7 @@ namespace PL.Engineer;
                 CurrentEngineer = engineer1;
             }
             catch (Exception ex)//TODO what exception??
-            { }
+            { MessageBox.Show(ex.Message); }
         }
     }
         public BO.Engineer CurrentEngineer
@@ -53,7 +53,6 @@ namespace PL.Engineer;
     private void ExpirienceSelection(object sender, SelectionChangedEventArgs e)
     {
         CurrentEngineer.Level = Expireance;
-
     }
 
     private void AddNewEngineer_Click(object sender, RoutedEventArgs e)
@@ -61,8 +60,10 @@ namespace PL.Engineer;
         try
         {
             s_bl.Engineer.Create(CurrentEngineer);
+            this.Close();
         }
-        catch (Exception ex) { MessageBox.Show(ex.Message); }//TODO
+        catch (Exception ex) { MessageBox.Show(ex.Message); }
+       
     }
 
     private void UpdateEngineer_Click(object sender, RoutedEventArgs e)
@@ -70,8 +71,10 @@ namespace PL.Engineer;
         try
         {
             s_bl.Engineer.Update(CurrentEngineer);
+            this.Close();
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
+        
 
     }
 }

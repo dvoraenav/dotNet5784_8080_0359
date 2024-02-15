@@ -24,7 +24,11 @@ public partial class EngineerListWindow : Window
     public EngineerListWindow()
     {
         InitializeComponent();
-        EngineerList = s_bl?.Engineer.GetEngineerList()!;
+        try
+        {
+            EngineerList = s_bl?.Engineer.GetEngineerList()!;
+        }
+        catch (Exception ex) { MessageBox.Show(ex.Message); }
     }
     public IEnumerable<BO.Engineer> EngineerList
     {
@@ -37,7 +41,7 @@ public partial class EngineerListWindow : Window
 
     public BO.EngineerExpireance Expireance { get; set; } = BO.EngineerExpireance.All;
 
-    private void ExpirienceSelection (object sender, SelectionChangedEventArgs e)
+    private void ExpirienceSelection(object sender, SelectionChangedEventArgs e)
     {
         EngineerList = (Expireance == BO.EngineerExpireance.All) ?
     s_bl.Engineer.GetEngineerList()! : s_bl?.Engineer.GetEngineerList(eg => eg.Level == Expireance)!;
@@ -46,18 +50,24 @@ public partial class EngineerListWindow : Window
 
     private void AddEngineer_Click(object sender, RoutedEventArgs e)
     {
+        try { 
         new EngineerWindow().Show();
-        EngineerList = s_bl?.Engineer.GetEngineerList()!;
+        EngineerList = s_bl?.Engineer.GetEngineerList()!; }
+        catch (Exception ex){ MessageBox.Show(ex.Message); }
+
     }
 
-    public BO.Engineer Selected_Engineer { get; set; } 
-    private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    public BO.Engineer Selected_Engineer { get; set; } = new BO.Engineer();
+    private void EngineerSelection(object sender, MouseButtonEventArgs e)
     {
+        try
+        {
+            BO.Engineer? engineerlist = (sender as ListView)?.SelectedItem as BO.Engineer;
+            new EngineerWindow(engineerlist.Id).ShowDialog();//TODO 
+            EngineerList = s_bl?.Engineer.GetEngineerList()!;
+        }
+        catch(Exception ex) { MessageBox.Show(ex.Message); }
 
-        //BO.Engineer? engineerlist = (sender as ListView)?.SelectedItem as BO.Engineer;
-        //new EngineerWindow(engineerlist.Id).ShowDialog();//TODO 
-        new EngineerWindow(Selected_Engineer.Id).ShowDialog();
-       // EngineerList = s_bl?.Engineer.GetEngineerList()!;
     }
-
 }
+

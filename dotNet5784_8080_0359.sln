@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stage0", "Stage0\Stage0.csproj", "{7C2A904C-4F70-4603-B2FF-291C7A446594}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E00735D8-3188-419E-BE3B-66EB80B11A77}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
@@ -38,7 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{DF231E06
 		nuget\README.txt = nuget\README.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "PL\PL.csproj", "{FD727E0A-C3CA-4427-927B-7E477D1F0E89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PL\PL.csproj", "{FD727E0A-C3CA-4427-927B-7E477D1F0E89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,10 +44,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7C2A904C-4F70-4603-B2FF-291C7A446594}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C2A904C-4F70-4603-B2FF-291C7A446594}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C2A904C-4F70-4603-B2FF-291C7A446594}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C2A904C-4F70-4603-B2FF-291C7A446594}.Release|Any CPU.Build.0 = Release|Any CPU
 		{99069580-F5CD-49E7-9B56-3BA49F57F985}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{99069580-F5CD-49E7-9B56-3BA49F57F985}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99069580-F5CD-49E7-9B56-3BA49F57F985}.Release|Any CPU.ActiveCfg = Release|Any CPU
