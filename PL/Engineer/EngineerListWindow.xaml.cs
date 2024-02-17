@@ -93,11 +93,14 @@ public partial class EngineerListWindow : Window
         catch(Exception ex) { MessageBox.Show(ex.Message); }
 
     }
-
+    /// <summary>
+    /// filter the list by searching chars in the engineer's name
+    /// </summary>
+    /// <param name="sender"> textbox of search</param>
+    /// <param name="e">entering a text to search/filter </param>
     private void Srearch_TaskChanged(object sender, TextChangedEventArgs e)
     {
-        EngineerList=s_bl?.Engineer.GetEngineerList()!.Where(X=>X.FullName.Contains((sender as TextBox)?.Text)).ToList();
-
+        try { EngineerList = s_bl?.Engineer.GetEngineerList()!.Where(X => X.FullName!.Contains((sender as TextBox)!.Text))?.ToList()!; } catch (Exception ex) { MessageBox.Show(ex.Message); }
     }
 }
 

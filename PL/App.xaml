@@ -5,7 +5,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <local:ExpirieanceCollection x:Key="ExpirieanceCollectionKey" />
-        <local:ConvertIdToVisibilityOfAdd x:Key="ConvertIdToVisibilityOfAdd"/>
+        <local:ConvertIdToVisibilityOfAdd x:Key="ConvertIdToVisibilityOfAddKey"/>
         <local:ConvertIdToVisibilityOfUpdate x:Key="ConvertIdToVisibilityOfUpdateKey"/>
         <Style TargetType="Button">
             <Setter Property="Background" Value="White"/>
