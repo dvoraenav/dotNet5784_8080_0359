@@ -33,6 +33,19 @@
     <FullName>David Brown</FullName>
     <Mail>david.brown@email.com</Mail>
     <PayPerHour>35</PayPerHour>
+    <Level>Advanced</Level>
+  </Engineer>
+  <Engineer>
+    <Id>217756230</Id>
+    <FullName>Sophia Jones</FullName>
+    <Mail>sophia.jones@email.com</Mail>
+    <PayPerHour>55</PayPerHour>
     <Level>Beginner</Level>
+  </Engineer>
+  <Engineer>
+    <Id>123</Id>
+    <FullName>dvora</FullName>
+    <PayPerHour>35</PayPerHour>
+    <Level>Expert</Level>
   </Engineer>
 </ArrayOfEngineer>
