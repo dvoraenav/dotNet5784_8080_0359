@@ -8,6 +8,9 @@ using System.Windows;
 using System.Windows.Data;
 
 namespace PL;
+/// <summary>
+/// to show the text of add if this option selected and hide if not
+/// </summary>
 
 class ConvertIdToVisibilityOfAdd : IValueConverter
 {
@@ -21,7 +24,10 @@ class ConvertIdToVisibilityOfAdd : IValueConverter
         throw new NotImplementedException();
     }
 }
-class ConvertIdToVisibilityOfUpdate: IValueConverter
+/// <summary>
+/// to show the text of update if this option selected and hide if not
+/// </summary>
+class ConvertIdToVisibilityOfUpdate : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
