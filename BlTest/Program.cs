@@ -81,7 +81,7 @@ internal class Program
                 {
                     case 1:
                         Console.WriteLine("Enter the data to test xml and press Y");
-                        string accept = Console.ReadLine();
+                        string accept = Console.ReadLine()!;
                         //Save(engineer);
                         if (accept == "Y")
                         {
@@ -91,13 +91,13 @@ internal class Program
 
                     case 2:
                         Console.Write("Enter Engineer Id: ");
-                        Id = int.Parse(Console.ReadLine());
+                        Id = int.Parse(Console.ReadLine()!);
                         Console.WriteLine(bl.Engineer!.Read(Id));
                         break;
 
                     case 3:
                         Console.WriteLine("Enter the data to test xml and press Y");
-                        accept = Console.ReadLine();
+                        accept = Console.ReadLine()!;
                         if (accept == "Y")
                             bl.Engineer.Update(LoadTest<Engineer>(EngPath));
                         break;
@@ -107,7 +107,7 @@ internal class Program
                             Console.WriteLine(eng);
                         break;
                     case 5:
-                        Id = int.Parse(Console.ReadLine());
+                        Id = int.Parse(Console.ReadLine()!);
                         bl.Engineer.Delete(Id);
                         break;
                     case 6:
@@ -143,7 +143,7 @@ internal class Program
                 {
                     case 1:
                         Console.WriteLine("Enter the data to test xml and press Y");
-                        string accept = Console.ReadLine();
+                        string accept = Console.ReadLine()!;
                         //task = bl.Task.ReadTask(1)!;
                         //Save(task);
                         if (accept == "Y")
@@ -162,7 +162,7 @@ internal class Program
 
                     case 4:
                         Console.WriteLine("Enter the data to test xml and press Y");
-                        accept = Console.ReadLine();
+                        accept = Console.ReadLine()!;
                         if (accept == "Y")
                             bl.Task.Update(LoadTest<Task>(TaskPath));
                         break;
@@ -188,7 +188,7 @@ internal class Program
             catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
 
-    } 
+    }
 
     private static void Save(Task e)
     {
@@ -196,11 +196,11 @@ internal class Program
         new XmlSerializer(typeof(Task)).Serialize(file, e);
     }
 
-    private static Item LoadTest<Item>(string filePath) where Item : class
+    private static Item LoadTest<Item>(string filePath) where Item : class, new()
     {
         using FileStream file = new(filePath, FileMode.Open);
         XmlSerializer x = new(typeof(Item));
-        return x.Deserialize(file) as Item;
+        return x.Deserialize(file) as Item ?? new();
     }
 
 }

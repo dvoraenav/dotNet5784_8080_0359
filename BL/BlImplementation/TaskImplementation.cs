@@ -141,7 +141,7 @@ internal class TaskImplementation : ITask
         {
             InputIntegrityCheck(item);
             DO.Task task = _dal.Task.Read(x => x.Id == item.Id) ?? throw new BO.BlDoesNotExistException($"Task with ID {item.Id} dose not exists");
-            if (_dal.Engineer.Read(x => x.Id == item.Engineer.Id) == null)
+            if (_dal.Engineer.Read(x => x.Id == item.Engineer?.Id) == null)
                 throw new BO.BlDoesNotExistException($"Engeineer with ID {item.Id} does not exists");
             if (_dal.EndDate == null)//we didnt create the end date time of the task
             {

@@ -26,7 +26,7 @@ public interface IEngineer
     /// build a fit entity for every engineer
     /// </summary>
     /// <returns> the list was built</returns>
-    IEnumerable<Engineer> GetEngineerList(Func<Engineer, bool> filter = null);
+    IEnumerable<Engineer> GetEngineerList(Func<Engineer, bool>? filter = null);
 
     /// <summary>
     /// check the data and try to update

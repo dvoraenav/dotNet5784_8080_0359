@@ -18,7 +18,7 @@ internal class EngineerImplementation : IEngineer
     /// <exception cref="BlDoesNotExistException">if the task dosent exsit</exception>
     /// <exception cref="BlTaskAlreadyLinkToEngineerException"> the task is alrady linked to another engineer</exception>
     /// <exception cref="BO.BlAlreadyExistsException"> the engineer alresdy exsit</exception>
-    public int Create(BO.Engineer? item)
+    public int Create(BO.Engineer item)
     {
 
         try
@@ -27,7 +27,7 @@ internal class EngineerImplementation : IEngineer
             DO.Engineer _doengineer = new DO.Engineer(   // create a new object with the item details
                                                          // to add to  data leyer(casting from bo to do)
                          Id: item.Id,
-                         FullName: item.FullName,
+                         FullName: item.FullName!,
                          Mail: item.Mail!,
                          PayPerHour: item.PayPerHour,
                          Level: (DO.EngineerExpireance)item.Level);
@@ -157,7 +157,7 @@ internal class EngineerImplementation : IEngineer
     /// <exception cref="BO.BlInvalidInputPropertyException">if the email is Invalid </exception>
     private void InputIntegrityCheck(BO.Engineer? item)
     {
-        if (item.Id <= 0)
+        if (item!.Id <= 0)
             throw new BO.BlInvalidInputPropertyException($"Engeineer's Id can not be negative");
         if (item.FullName == "")
             throw new BO.BlInvalidInputPropertyException($"Engeineer's name can not be empty");
@@ -182,7 +182,7 @@ internal class EngineerImplementation : IEngineer
                     } : null;
     }
 
-    private void LinkTaskToEngineer (BO.Engineer? item)
+    private void LinkTaskToEngineer (BO.Engineer item)
     {
         if (item.Task is not null && item.Task.Id != 0) //If a task has been assigned to an engineer and the id of the task is not 0
         {

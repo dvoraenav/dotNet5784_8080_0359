@@ -61,7 +61,7 @@
                         <Setter Property="CornerRadius" Value="7"/>
                     </Style>
                 </Button.Resources>
-                <TextBlock Text="Resest Data" TextAlignment="Center" FontSize="20" Width="170" Height="25"/>
+                <TextBlock Text="Reset Data" TextAlignment="Center" FontSize="20" Width="170" Height="25"/>
             </Button>
         </StackPanel>
 

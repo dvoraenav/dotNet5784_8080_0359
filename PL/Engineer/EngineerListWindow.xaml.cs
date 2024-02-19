@@ -45,17 +45,17 @@ public partial class EngineerListWindow : Window
     /// <summary>
     /// add new field to select("all" means that we want to select all the engineer)
     /// </summary>
-    public BO.EngineerExpireance Expireance { get; set; } = BO.EngineerExpireance.All;
+    public BO.EngineerExpireance Experience { get; set; } = BO.EngineerExpireance.All;
     /// <summary>
     /// 
     /// </summary>
     /// <param name="sender">combobox </param>
     /// <param name="e">event of select option from all the expirience levels</param>
 
-    private void ExpirienceSelection(object sender, SelectionChangedEventArgs e)
+    private void ExperienceSelection(object sender, SelectionChangedEventArgs e)
     {
-        EngineerList = (Expireance == BO.EngineerExpireance.All) ?
-    s_bl.Engineer.GetEngineerList()! : s_bl?.Engineer.GetEngineerList(eg => eg.Level == Expireance)!;
+        EngineerList = (Experience == BO.EngineerExpireance.All) ?
+    s_bl.Engineer.GetEngineerList()! : s_bl?.Engineer.GetEngineerList(eg => eg.Level == Experience)!;
 
     }
     /// <summary>
@@ -65,11 +65,12 @@ public partial class EngineerListWindow : Window
     /// <param name="e">  event of add</param>
     private void AddEngineer_Click(object sender, RoutedEventArgs e)
     {
-       try { 
-        new EngineerWindow().ShowDialog();
-        EngineerList = s_bl?.Engineer.GetEngineerList()!; 
+        try
+        {
+            new EngineerWindow().ShowDialog();
+            EngineerList = s_bl?.Engineer.GetEngineerList()!;
         }
-        catch (Exception ex){ MessageBox.Show(ex.Message); }
+        catch (Exception ex) { MessageBox.Show(ex.Message); }
 
     }
     /// <summary>
@@ -87,10 +88,10 @@ public partial class EngineerListWindow : Window
         try
         {
             BO.Engineer? engineerlist = (sender as ListView)?.SelectedItem as BO.Engineer;
-            new EngineerWindow(engineerlist.Id).ShowDialog();// create new engineer window in adding condition and prevent return to the privius window until it is closed
+            new EngineerWindow(engineerlist!.Id).ShowDialog();// create new engineer window in adding condition and prevent return to the privius window until it is closed
             EngineerList = s_bl?.Engineer.GetEngineerList()!;
         }
-        catch(Exception ex) { MessageBox.Show(ex.Message); }
+        catch (Exception ex) { MessageBox.Show(ex.Message); }
 
     }
     /// <summary>
@@ -98,9 +99,13 @@ public partial class EngineerListWindow : Window
     /// </summary>
     /// <param name="sender"> textbox of search</param>
     /// <param name="e">entering a text to search/filter </param>
-    private void Srearch_TaskChanged(object sender, TextChangedEventArgs e)
+    private void Search_TaskChanged(object sender, TextChangedEventArgs e)
     {
-        try { EngineerList = s_bl?.Engineer.GetEngineerList()!.Where(X => X.FullName!.Contains((sender as TextBox)!.Text))?.ToList()!; } catch (Exception ex) { MessageBox.Show(ex.Message); }
+        try
+        {
+            EngineerList = s_bl?.Engineer.GetEngineerList()!.Where(X => X.FullName!.Contains((sender as TextBox)!.Text))?.ToList()!;
+        }
+        catch (Exception ex) { MessageBox.Show(ex.Message); }
     }
 }
 
