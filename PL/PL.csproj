@@ -30,10 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.UI.Xaml" Version="1.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="left.png" />
     <Resource Include="logo.png" />
     <Resource Include="right.png" />
