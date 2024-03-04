@@ -13,7 +13,7 @@ public record Engineer
    int Id, //id of the engineer
    string FullName, //the engineer's full name
    string Mail, //the engineer's mail
-   double PayPerHour, //the engineer's payment per hour
+   double Cost, //the engineer's payment per hour
    EngineerExpireance Level = EngineerExpireance.Beginner //the engineer's level of expiriance
 
 )

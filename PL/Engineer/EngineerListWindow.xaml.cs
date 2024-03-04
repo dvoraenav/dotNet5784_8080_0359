@@ -77,7 +77,7 @@ public partial class EngineerListWindow : Window
     /// return the selected engineer
     /// </summary>
 
-    public BO.Engineer Selected_Engineer { get; set; } = new BO.Engineer();
+    public BO.Task Selected_Engineer { get; set; } = new BO.Task();
     /// <summary>
     /// 
     /// </summary>

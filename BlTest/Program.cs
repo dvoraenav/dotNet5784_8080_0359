@@ -64,7 +64,7 @@ internal class Program
         int Id;
         while (true)
         {
-            Engineer engineer = new Engineer(); //{ Id = 15, FullName = "bhsdfs", Level = EngineerExpireance.Intermediate, Mail = "kfj", PayPerHour = 2.2, Task = new() };
+            Task engineer = new Task(); //{ Id = 15, FullName = "bhsdfs", Level = EngineerExpireance.Intermediate, Mail = "kfj", PayPerHour = 2.2, Task = new() };
             TaskInEngineer task = new TaskInEngineer();
             Console.WriteLine(
                 "Add engineer press 1\n" +
@@ -92,7 +92,7 @@ internal class Program
                     case 2:
                         Console.Write("Enter Engineer Id: ");
                         Id = int.Parse(Console.ReadLine()!);
-                        Console.WriteLine(bl.Engineer!.Read(Id));
+                        Console.WriteLine((object)bl.Engineer!.Read(Id));
                         break;
 
                     case 3:
