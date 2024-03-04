@@ -11,6 +11,7 @@ namespace DalApi;
     public DateTime? SetStartProject(DateTime startProject);
     public DateTime? SetEndProject(DateTime endProject);
     public DateTime? GetEndProject();
+    public DateTime? GetStartProject();
     public void resetTime();//reset project time
     }
 

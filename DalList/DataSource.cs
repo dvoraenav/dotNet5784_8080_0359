@@ -12,6 +12,9 @@ internal static class DataSource
         internal const int taskID = 1;
         private static int nextTaskID = taskID;
         internal static int NextTaskID { get => nextTaskID++; }
+        
+        internal static DateTime? StartDate=null;
+        internal static DateTime? EndDate=null;
     }
     internal static List<DO.Engineer> Engineers { get; } = new();//list of engineers
     internal static List<DO.Dependency> Dependencies { get; } = new();//list of dependency

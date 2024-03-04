@@ -33,5 +33,6 @@ sealed internal class DalList : IDal
     public ITask Task => new TaskImplementation();
 
     public IDependency Dependency => new DependencyImplementation();
-  
+
+    public IClock Clock => throw new NotImplementedException();
 }
