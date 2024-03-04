@@ -25,5 +25,6 @@ sealed internal class DalXml : IDal
     public IEngineer Engineer => new EngineerImplementation();
     public ITask Task => new TaskImplementation();
     public IDependency Dependency => new DependencyImplementation();
-    
+
+    public IClock Clock => throw new NotImplementedException();
 }
