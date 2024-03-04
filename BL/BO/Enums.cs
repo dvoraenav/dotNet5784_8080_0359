@@ -14,7 +14,8 @@ public enum TaskStatus
     Unscheduled,
     Scheduled,
     OnTrack,
-    Done
+    Done,
+    All
 }
 public enum EnginnerFilter
 {

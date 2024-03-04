@@ -50,26 +50,37 @@ public static class Initialization
     /// </summary>
     private static void createDependency()
     {
-        int[,] dep =
-            {
-                {1, 2}, {2, 3}, {3, 4}, {4, 5},
-                {5, 6}, {6, 7}, {7, 8}, {8, 9},
-                {9, 10}, {10, 11}, {11, 12}, {12, 13},
-                {13, 14}, {14, 15}, {15, 16}, {16, 17},
-                {17, 18}, {18, 19}, {19, 20}, {20, 21},
-                {21, 22}, {22, 23}, {23, 24}, {24, 25},
-                {25, 26}, {26, 27}, {27, 28}, {28, 29},
-                {29, 30}, {30, 31}, {31, 32}, {32, 33},
-                {33, 34}, {34, 35}, {35, 36}, {36, 37},
-                {37, 38}, {38, 39}, {39, 40}
-            };
+        int[,] taskDependencies =
+{
+    // CurrentTaskId, LastTaskId
+    {1, 0},  // Research depends on Define
+    {2, 0},  // Scope depends on Define
+    {3, 2},  // Plan depends on Scope
+    {5, 3},  // Resources depends on Plan
+    {6, 3},  // Risk depends on Plan
+    {7, 3},  // Milestones depends on Plan
+    {9, 5},  // Team depends on Resources
+    {9, 4},  // Team depends on Stakeholders
+    {10, 9}, // Communication depends on Team
+    {11, 3}, // Design depends on Plan
+    {12, 11}, // Infrastructure depends on Design
+    {13, 12}, // Coding depends on Infrastructure
+    {14, 13}, // Quality depends on Coding
+    {15, 14}, // Testing depends on Quality
+    {16, 15}, // Deployment depends on Testing
+    {17, 16}, // Monitor depends on Deployment
+    {18, 17}, // Issues depends on Monitor
+    {19, 18}, // Review depends on Issues
+    {20, 19}  // Closure depends on Review
+};
+
         //array of dependency while the first in
         //couple is the last id and second is current id
 
-        for (int i = 0; i < dep.GetLength(0); i++)
+        for (int i = 0; i < taskDependencies.GetLength(0); i++)
         {
-            int oldTID = dep[i, 0]; //last dependency
-            int currentTID = dep[i, 1];//cureent dependency
+            int oldTID = taskDependencies[i, 0]; //last dependency
+            int currentTID = taskDependencies[i, 1];//cureent dependency
             Dependency d = new Dependency(i, currentTID, oldTID);
             s_dal?.Dependency!.Create(d);
         }
@@ -82,30 +93,45 @@ public static class Initialization
     private static void createTask()
     {
         string[] tasks =
-        {
-            "Define","Research","Scope","Plan","Stakeholders","Resources","Risk",
-            "Milestones","Team","Communication","Design","Infrastructure","Coding",
-            "Quality","Testing","Deployment","Monitor","Issues","Review","Closure"
-        };//arry of tasks
+     {
+        "Define Goals","Research Needs","Scope Project","Plan Strategy","Engage Stakeholders",
+        "Allocate Resources","Manage Risks","Set Milestones","Build Team","Establish Communication",
+        "Design Architecture","Implement Infrastructure","Code Functionality",
+        "Ensure Quality","Perform Testing","Deploy Components","Monitor Progress",
+        "Address Issues","Conduct Review","Document Closure"
+    };
 
-        string[] taskDescriptions = {
-            "Define project goals and objectives","Research and analyze construction requirements",
-            "Scope the construction project","Develop a detailed construction plan",
-            "Identify stakeholders in the construction project","Allocate construction resources and budget",
-            "Assess and manage construction risks","Define construction milestones",
-            "Assemble a construction project team","Develop a communication plan for construction",
-            "Design the construction project architecture","Implement construction infrastructure",
-            "Execute construction activities and coding","Ensure construction quality and compliance",
-            "Conduct testing and inspection for construction","Deploy construction components",
-            "Monitor construction progress","Address and resolve construction issues",
-            "Conduct construction review and evaluation","Document and close the construction project"
-        };//arry of description of the tasks
+        string[] taskDescriptions =
+        {
+        "Define project goals", "Research construction requirements", "Scope the project",
+        "Develop detailed project plan", "Identify project stakeholders",
+        "Allocate project resources and budget", "Assess and manage project risks",
+        "Define project milestones", "Assemble project team", "Develop communication plan",
+        "Design project architecture", "Implement project infrastructure",
+        "Code project functionalities", "Ensure project quality standards",
+        "Conduct testing procedures", "Deploy project components", "Monitor project progress",
+        "Address and resolve project issues", "Conduct project review", "Document project closure"
+    };
+
+        string[] taskResults =
+        {
+        "Clear project goals defined", "Construction requirements analyzed",
+        "Project scope determined", "Detailed project plan created",
+        "Stakeholders identified", "Resources allocated and budget set",
+        "Risks assessed and managed", "Milestones defined",
+        "Project team assembled", "Communication plan developed",
+        "Architecture designed", "Infrastructure implemented",
+        "Functionalities coded", "Quality standards ensured",
+        "Testing conducted", "Components deployed",
+        "Progress monitored", "Issues addressed",
+        "Review conducted", "Closure documented"
+    };//arry of description of the tasks
         for (int i = 0; i < tasks.Length; i++)
         {
             string name = tasks[i];//name of the task
             string description = taskDescriptions[i];//description of the task
-            string result = "done";//result og the task
-            string comment = "the task is completed";//task comment
+            string result = taskResults[i];//result og the task
+            string comment = "the task is wating to start";//task comment
             DateTime? newT = DateTime.Now; //creation time
             Task newTask = new
                (

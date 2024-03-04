@@ -26,10 +26,10 @@ internal class EngineerImplementation : IEngineer
             InputIntegrityCheck(item);                    //if everything is ok,we can try add
             DO.Engineer _doengineer = new DO.Engineer(   // create a new object with the item details
                                                          // to add to  data leyer(casting from bo to do)
-                         Id: item.Id,
+                         Id: (int)item.Id,
                          FullName: item.FullName!,
                          Mail: item.Mail!,
-                         PayPerHour: item.PayPerHour,
+                         Cost: item.Cost,
                          Level: (DO.EngineerExpireance)item.Level);
             LinkTaskToEngineer(item);
             return _dal.Engineer.Create(_doengineer);//add to data leyer
@@ -66,7 +66,7 @@ internal class EngineerImplementation : IEngineer
         try
         {
             LinkTaskToEngineer(item);
-            DO.Engineer updated_enginner = Tools.CopySimilarFields<BO.Engineer,DO.Engineer>(item);
+            DO.Engineer updated_enginner = Tools.CopySimilarFields<BO.Engineer, DO.Engineer>(item);
             _dal.Engineer.Update(updated_enginner);      //update the engineer with his task
         }
         catch (DO.DalAlreadyExistsException ex)
@@ -121,7 +121,7 @@ internal class EngineerImplementation : IEngineer
             Id = _doEngineer.Id,
             FullName = _doEngineer.FullName,
             Mail = _doEngineer.Mail,
-            PayPerHour = _doEngineer.PayPerHour,
+            Cost = _doEngineer.Cost,
             Level = (BO.EngineerExpireance)_doEngineer.Level,
             Task = getTaskInEngineer(id)// culculate the current task
         };
@@ -142,7 +142,7 @@ internal class EngineerImplementation : IEngineer
                     Id = engineer.Id,
                     FullName = engineer.FullName,
                     Mail = engineer.Mail,
-                    PayPerHour = engineer.PayPerHour,
+                    Cost = engineer.Cost,
                     Level = (BO.EngineerExpireance)engineer.Level,
                     Task = getTaskInEngineer(engineer.Id)
                 }).Where(engineer => filter is null ? true : filter(engineer));
@@ -161,7 +161,7 @@ internal class EngineerImplementation : IEngineer
             throw new BO.BlInvalidInputPropertyException($"Engeineer's Id can not be negative");
         if (item.FullName == "")
             throw new BO.BlInvalidInputPropertyException($"Engeineer's name can not be empty");
-        if (item.PayPerHour <= 0)
+        if (item.Cost <= 0)
             throw new BO.BlInvalidInputPropertyException($"Engeineer's cost can not be negative");
         if (!new EmailAddressAttribute().IsValid(item.Mail))// only return true if there is only 1 '@' character
             // and it is neither the first nor the last character

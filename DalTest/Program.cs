@@ -414,7 +414,7 @@ internal class Program
                 expireance = EngineerExpireance.Beginner;
                 break;
         }
-        Engineer eg = new(Id: id, FullName: name!, Mail: mail!, PayPerHour: payPerHour, Level: expireance);
+        Engineer eg = new(Id: id, FullName: name!, Mail: mail!, Cost: payPerHour, Level: expireance);
         return eg;
     }
 
@@ -506,7 +506,7 @@ internal class Program
         Console.WriteLine("Enter new cost per hour");
         double payPerHour = 0;
         double.TryParse(Console.ReadLine(), out payPerHour);
-        if (payPerHour == 0) payPerHour = engineer.PayPerHour; // if the input is empty use the old value
+        if (payPerHour == 0) payPerHour = engineer.Cost; // if the input is empty use the old value
         int choice;
         Console.WriteLine(@"Please enter your new choice for level of expireance");
         Console.WriteLine(" 1: Beginner");
@@ -537,7 +537,7 @@ internal class Program
                 expireance = engineer.Level; // if the input is empty use the old value
                 break;
         }
-        Engineer eg = new(Id: id, FullName: name!, Mail: mail!, PayPerHour: payPerHour, Level: expireance);
+        Engineer eg = new(Id: id, FullName: name!, Mail: mail!, Cost: payPerHour, Level: expireance);
 
         return eg;//the update
     }
