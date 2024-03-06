@@ -28,7 +28,9 @@ internal class Program
                 "to engineer action press 1\n" +
                 "to taks action press 2\n" +
                 "to intialize the data press 3 \n" +
-                "EXIT press 4");
+                "to Enter Start Date Project press 4\n" +
+                "to Enter End Date Project press 5\n" +
+                "EXIT press 6\n");
 
             int action = int.Parse(Console.ReadLine()!);
 
@@ -48,8 +50,20 @@ internal class Program
                     //if (ans == "Y")
                     //    Initialization.Do();
                     break;
-
                 case 4:
+                    Console.WriteLine("Enter Date\n");
+                    DateTime.TryParse( Console.ReadLine(), out DateTime date);
+                    bl.StartDate= date;
+                    Console.WriteLine(bl.StartDate);
+                    break;
+
+                case 5:
+                    Console.WriteLine("Enter Date\n");
+                    DateTime.TryParse(Console.ReadLine(), out  date);
+                    bl.EndDate = date;
+                    break;
+
+                case 6:
                     return;
 
                 default:

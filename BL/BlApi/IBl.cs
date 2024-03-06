@@ -10,7 +10,9 @@ public interface IBl
     public void InitializeDB();
     public void ResetDB();
 
-    public IClock Clock { get; }
+    public DateTime? StartDate{set; get; }
+
+    public DateTime? EndDate { set; get; }  
 
 }
 

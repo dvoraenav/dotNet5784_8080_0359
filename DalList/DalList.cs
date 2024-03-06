@@ -8,22 +8,19 @@ sealed internal class DalList : IDal
     /// <summary>
     /// The start date of the project
     /// </summary>
-    public DateTime? StartDate { get; set; }
+    public DateTime? StartDate
+    {
+        get { return DataSource.Config.StartDate; }
+        set { DataSource.Config.StartDate = value; }
+    }
 
     /// <summary>
     /// the end date of the program
     /// </summary>
-    private DateTime? endDate { get; set; }
     public DateTime? EndDate
     {
-        get { return endDate; }
-        set
-        {
-            if (StartDate == null || StartDate > value)//if there is no start date or the end date date is befor the start date
-                throw new DalEarlyDatePropertyException("The end date of the project is not valid");
-            endDate = value;
-
-        }
+        get { return DataSource.Config.EndDate; }
+        set { DataSource.Config.EndDate = value; }
     }
 
     public static IDal Instance { get; } = new DalList();//create new object

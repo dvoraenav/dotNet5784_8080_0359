@@ -6,20 +6,21 @@ namespace Dal;
 
 sealed internal class DalXml : IDal
 {
-    public DateTime? StartDate { get; set; }
+    public DateTime? StartDate
+    {
+        get { return Config.StartDate; }
+        set { Config.StartDate = value; }
 
-    private DateTime? endDate { get; set; }
+    }
     public DateTime? EndDate
     {
-        get { return endDate; }
+        get { return Config.EndDate; }
         set
         {
-            if (StartDate == null || StartDate > value)
-                throw new DalEarlyDatePropertyException("The end date of the project is not valid");
-            endDate = value;
-
+            Config.EndDate = value;
         }
     }
+
     public static IDal Instance { get; } = new DalXml();
     private DalXml() { }
     public IEngineer Engineer => new EngineerImplementation();

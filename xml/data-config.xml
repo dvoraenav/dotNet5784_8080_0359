@@ -1,9 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<config>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <NextTaskId>183</NextTaskId>
   <NextDependencyId>352</NextDependencyId>
-	
-<StartProject></StartProject>
-<EndProject></EndProject>
-	
+  <StartProject xsi:nil="true"/>
+  <EndProject xsi:nil="true" />
 </config>
