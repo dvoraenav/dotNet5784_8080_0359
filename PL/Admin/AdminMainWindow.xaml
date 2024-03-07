@@ -8,43 +8,12 @@
         Title="AdminMainWindow" Height="450" Width="800">
     <Grid>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button  HorizontalAlignment="Center"  VerticalAlignment="Top"  Width="200" Height="35" Background="White"   Margin="10" Click="EngineerList_Click">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="7"/>
-                </Style>
-            </Button.Resources>
-
-            <TextBlock Text="Engineer" TextAlignment="Center" FontSize="20" Width="170" Height="25"/>
-            </Button>
-            <Button  HorizontalAlignment="Center"  VerticalAlignment="Top"  Width="200" Height="35" Background="White"   Margin="10" Click="TaskList_Click">
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="7"/>
-                    </Style>
-                </Button.Resources>
-
-                <TextBlock Text="tasks" TextAlignment="Center" FontSize="20" Width="170" Height="25"/>
-            </Button>
+            <Button Content="Engineers" HorizontalAlignment="Center"  VerticalAlignment="Top"   Margin="10" Click="EngineerList_Click"/>
+            <Button Content="Tasks" HorizontalAlignment="Center"  VerticalAlignment="Top"  Margin="10" Click="TaskList_Click"/>
+            <Button Content="Data Initialization" Click="Initialization_Click" Width="200" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10" />
+            <Button Content="Reset Data" Grid.Row="3" Height="35" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10" Click="Reset_Click"/>
+            <Button Content="Start Project" Margin="10" Click="StartProject_Click"/>
+            <Button Content="Gantt" Click="Gantt_window" Margin="10"/>
         </StackPanel>
-        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
-            <Button  Click="Initialization_Click"  Grid.Row="3" Height="35" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10" >
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="7"/>
-                    </Style>
-                </Button.Resources>
-                <TextBlock Text="Data Initialization" TextAlignment="Center" FontSize="20" Width="170" Height="25"/>
-            </Button>
-            <Button Grid.Row="3" Height="35" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10" Click="Reset_Click" >
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="7"/>
-                    </Style>
-                </Button.Resources>
-                <TextBlock Text="Reset Data" TextAlignment="Center" FontSize="20" Width="170" Height="25"/>
-            </Button>
-        </StackPanel>
-
     </Grid>
 </Window>

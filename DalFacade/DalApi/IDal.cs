@@ -9,7 +9,6 @@
         IEngineer Engineer { get; }
         ITask Task { get; }
         IDependency Dependency { get; }
-        IClock Clock { get; }
 
     }
 }

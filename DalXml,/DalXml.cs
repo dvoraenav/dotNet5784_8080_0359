@@ -15,10 +15,7 @@ sealed internal class DalXml : IDal
     public DateTime? EndDate
     {
         get { return Config.EndDate; }
-        set
-        {
-            Config.EndDate = value;
-        }
+        set { Config.EndDate = value; }
     }
 
     public static IDal Instance { get; } = new DalXml();
@@ -27,5 +24,4 @@ sealed internal class DalXml : IDal
     public ITask Task => new TaskImplementation();
     public IDependency Dependency => new DependencyImplementation();
 
-    public IClock Clock => throw new NotImplementedException();
 }

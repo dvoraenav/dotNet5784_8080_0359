@@ -23,8 +23,6 @@ public partial class MainWindow : Window
        
     }
 
-    private void Gantt_window(object sender, RoutedEventArgs e)=> new Gant().Show();
-
     /// <summary>
     /// "data intiization" click
     /// </summary>

@@ -1,5 +1,6 @@
 ﻿
 using BlApi;
+using BO;
 
 namespace BlImplementation;
 
@@ -13,7 +14,9 @@ internal class Bl : IBl
     public DateTime? StartDate
     {
         get { return dal.StartDate; }
-        set { dal.StartDate = value; }
+        set {if (StartDate == null)
+                throw new Exception("A new project cannot be created. There is an existing project in progress");//TODO
+             else dal.StartDate = value; }
     }
 
     /// <summary>
@@ -28,8 +31,7 @@ internal class Bl : IBl
                 StartDate > value ||
                 dal.Task.ReadAll(x => x.StartTask == null ||
                 (x.StartTask + x.NumDays) > value).Any())
-                throw new Exception();//TODO
-
+                throw new BlInvalidInputPropertyException("The Date is too early");//TODO
             dal.EndDate = value;
         }
     }
@@ -40,12 +42,12 @@ internal class Bl : IBl
     public void InitializeDB() => DalTest.Initialization.Do();
     public void ResetDB() => DalTest.Initialization.Reset();
     private static DateTime s_Clock = DateTime.Now.Date;
-    public DateTime Clock_ { get { return s_Clock; } private set { s_Clock = value; } }
-    public void AdvanceTimeByYear() { Clock_ = Clock_.AddYears(1); }
-    public void AdvanceTimeByMounse() { Clock_ = Clock_.AddSeconds(1); }
-    public void AdvanceTimeByDay() { Clock_ = Clock_.AddDays(1); }
-    public void AdvanceTimeByHour() { Clock_ = Clock_.AddHours(1); }
-    public void ResetTime_() { Clock_ = DateTime.Now.Date; }
+    public DateTime Clock { get { return s_Clock; } private set { s_Clock = value; } }
+    public void AdvanceTimeByYear() { Clock = Clock.AddYears(1); }
+    public void AdvanceTimeByMounse() { Clock = Clock.AddSeconds(1); }
+    public void AdvanceTimeByDay() { Clock = Clock.AddDays(1); }
+    public void AdvanceTimeByHour() { Clock = Clock.AddHours(1); }
+    public void ResetTime_() { Clock = DateTime.Now.Date; }
 
 
 }

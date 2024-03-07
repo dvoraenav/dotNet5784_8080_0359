@@ -51,5 +51,20 @@ namespace PL.Admin
             MessageBoxResult result = MessageBox.Show("Would you like to reset the data?", "Reset Data", MessageBoxButton.YesNoCancel);
             if (result == MessageBoxResult.Yes) { s_bl.ResetDB(); }//reset data if return yes
         }
+
+        private void StartProject_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (s_bl == null)
+                    s_bl!.StartDate = DateTime.Now;
+                else
+                    MessageBox.Show("A new project cannot be created. There is an existing project in progress");//TODO
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
+        }
+        private void Gantt_window(object sender, RoutedEventArgs e) => new Gant().Show();
+
     }
 }

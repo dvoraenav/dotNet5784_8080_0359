@@ -31,5 +31,5 @@ sealed internal class DalList : IDal
 
     public IDependency Dependency => new DependencyImplementation();
 
-    public IClock Clock => throw new NotImplementedException();
+   
 }
