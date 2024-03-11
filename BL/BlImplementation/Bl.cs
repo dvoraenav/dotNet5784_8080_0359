@@ -14,7 +14,7 @@ internal class Bl : IBl
     public DateTime? StartDate
     {
         get { return dal.StartDate; }
-        set {if (StartDate == null)
+        set {if (StartDate != null)
                 throw new Exception("A new project cannot be created. There is an existing project in progress");//TODO
              else dal.StartDate = value; }
     }
@@ -29,8 +29,8 @@ internal class Bl : IBl
         {
             if (StartDate is null ||
                 StartDate > value ||
-                dal.Task.ReadAll(x => x.StartTask == null ||
-                (x.StartTask + x.NumDays) > value).Any())
+                dal.Task.ReadAll(x => x.ScheduleStart == null ||
+                (x.ScheduleStart + x.NumDays) > value).Any())
                 throw new BlInvalidInputPropertyException("The Date is too early");//TODO
             dal.EndDate = value;
         }
