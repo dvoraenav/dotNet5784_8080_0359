@@ -6,7 +6,8 @@ namespace BlImplementation;
 
 internal class Bl : IBl
 {
-
+    
+   
     DalApi.IDal dal = DalApi.Factory.Get;
     /// <summary>
     /// The start date of the project
@@ -37,10 +38,11 @@ internal class Bl : IBl
     }
 
     public IEngineer Engineer => new EngineerImplementation();
-    public ITask Task => new TaskImplementation();
+    public ITask Task => new TaskImplementation(this);
 
     public void InitializeDB() => DalTest.Initialization.Do();
     public void ResetDB() => DalTest.Initialization.Reset();
+
     private static DateTime s_Clock = DateTime.Now.Date;
     public DateTime Clock { get { return s_Clock; } private set { s_Clock = value; } }
     public void AdvanceTimeByYear() { Clock = Clock.AddYears(1); }

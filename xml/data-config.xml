@@ -2,6 +2,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <NextTaskId>183</NextTaskId>
   <NextDependencyId>352</NextDependencyId>
-  <StartProject xsi:nil="true"/>
+  <StartProject xsi:nil="true">10/10/2010 00:00:00</StartProject>
   <EndProject xsi:nil="true" />
 </config>

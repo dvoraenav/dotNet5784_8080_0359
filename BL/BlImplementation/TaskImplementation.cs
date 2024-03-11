@@ -8,6 +8,9 @@ namespace BlImplementation;
 internal class TaskImplementation : ITask
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
+    private readonly IBl _bl;
+    internal TaskImplementation(IBl bl) => _bl = bl;
+
     /// <summary>
     /// creating a new object of entity
     /// </summary>
@@ -209,7 +212,7 @@ internal class TaskImplementation : ITask
     {
         if(task.Id==203)
             return BO.TaskStatus.Done; ;
-        if (task.EndTask.HasValue && task.EndTask < DateTime.Now)//we finishe the task
+        if (task.EndTask.HasValue && task.EndTask <DateTime.Now)//we finishe the task
             return BO.TaskStatus.Done;
         if (!task.ScheduleStart.HasValue)// we  didnt create starting date
             return BO.TaskStatus.Unscheduled;
