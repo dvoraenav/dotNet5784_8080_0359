@@ -16,6 +16,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         CurrentDate = DateTime.Now;
+        UpdateTime();
         InitializeComponent();
     }
     public DateTime CurrentDate
@@ -53,6 +54,17 @@ public partial class MainWindow : Window
                     return;
             }
         }
+    }
+    private void UpdateTime()
+    {
+        new Thread(() =>
+        {
+            while (true)
+            {
+                Application.Current.Dispatcher.Invoke(() => { CurrentDate = DateTime.Now; });
+                Thread.Sleep(1000);
+            }
+        }).Start();
     }
 
     /// <summary>
