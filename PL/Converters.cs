@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
+using static BO.TaskStatus;
 
 namespace PL;
 /// <summary>
@@ -32,6 +29,41 @@ class ConvertIdToVisibilityOfUpdate : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return (int)value == 0 ? Visibility.Hidden : Visibility.Visible;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertStatusToColor : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        try
+        {
+            if (value is BO.TaskStatus status)
+            {
+                switch (status)
+                {
+
+                    case BO.TaskStatus.Unscheduled:
+                        return Brushes.Blue;
+                    case BO.TaskStatus.Scheduled:
+                        return Brushes.Black;
+                    case BO.TaskStatus.OnTrack:
+                        return Brushes.Red;
+                    case BO.TaskStatus.Done:
+                        return Brushes.Green;
+                    default: return Brushes.Black;
+                }
+            }
+        }
+        catch { }
+
+        return Brushes.Black;
+
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

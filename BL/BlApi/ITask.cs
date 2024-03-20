@@ -43,5 +43,7 @@ public interface ITask
     /// <param name="id"></param>
     /// <param name="date"></param>
     public void UpdateStartingDate(int id, DateTime date);
+
+    public IEnumerable<BO.TaskInGantt> GanttList();
 }
 

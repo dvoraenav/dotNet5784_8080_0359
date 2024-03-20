@@ -44,7 +44,7 @@ internal class TaskImplementation : ITask
         }
         catch (DO.DalAlreadyExistsException ex)
         { throw new BO.BlAlreadyExistsException($"Task with ID {item.Id} already exists", ex); }
-        catch(BO.BlInvalidInputPropertyException ex)
+        catch (BO.BlInvalidInputPropertyException ex)
         { throw new BO.BlInvalidInputPropertyException(ex.Message); }
 
     }
@@ -85,7 +85,7 @@ internal class TaskImplementation : ITask
 
         return new BO.Task()
         {
-            Id = _doTask.Id,    
+            Id = _doTask.Id,
             Name = _doTask.Name,
             Description = _doTask.Description,
             Result = _doTask.Result,
@@ -112,7 +112,7 @@ internal class TaskImplementation : ITask
                                Description = task.Description,
                                Status = SetStatus(task)
                            }).ToList()
-                           
+
         };
     }
 
@@ -137,7 +137,6 @@ internal class TaskImplementation : ITask
     /// updating data of object
     /// </summary>
     /// <param name="item">>The updated object</param>
-    
     public void Update(BO.Task item)
     {
         try
@@ -191,7 +190,7 @@ internal class TaskImplementation : ITask
             var tasks = from dep in _dal.Dependency.ReadAll(x => x.CurrentTaskId == id)
                         let lastTask = _dal.Task.Read(x => x.Id == dep.LastTaskId)
                         let endDependTask = CalcMaxDate(lastTask.StartTask, lastTask.ScheduleStart, lastTask.NumDays)
-                        where lastTask.ScheduleStart == null ||  date < endDependTask // if we didnt create the start time of  all the privios tasks
+                        where lastTask.ScheduleStart == null || date < endDependTask // if we didnt create the start time of  all the privios tasks
                         //or the date of the starting task is before all the ending date of the privious tasks then we throw error
                         select lastTask;
             if (tasks.Any())
@@ -200,8 +199,21 @@ internal class TaskImplementation : ITask
         }
         catch (Exception ex)
         { throw new Exception(ex.Message); }//TODO general exp
-        
+
     }
+
+    public IEnumerable<BO.TaskInGantt> GanttList()
+    {
+        return from task in _dal.Task.ReadAll()
+               select new BO.TaskInGantt()
+               {
+                   Id = task.Id,
+                   StartOffset = (int)(task.ScheduleStart - _dal.StartDate).Value.TotalDays,
+                   TaskLenght = (int)task.NumDays.Value.TotalDays,
+                   Status = SetStatus(task)
+               };
+    }
+
 
     /// <summary>
     /// setting status of task
@@ -210,9 +222,9 @@ internal class TaskImplementation : ITask
     /// <returns> the Task Status</returns>
     private BO.TaskStatus SetStatus(DO.Task task)
     {
-        if(task.Id==203)
+        if (task.Id == 203)
             return BO.TaskStatus.Done; ;
-        if (task.EndTask.HasValue && task.EndTask <DateTime.Now)//we finishe the task
+        if (task.EndTask.HasValue && task.EndTask < DateTime.Now)//we finishe the task
             return BO.TaskStatus.Done;
         if (!task.ScheduleStart.HasValue)// we  didnt create starting date
             return BO.TaskStatus.Unscheduled;

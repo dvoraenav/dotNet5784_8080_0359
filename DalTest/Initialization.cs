@@ -133,6 +133,9 @@ public static class Initialization
             string result = taskResults[i];//result og the task
             string comment = "the task is wating to start";//task comment
             DateTime? newT = DateTime.Now; //creation time
+            DateTime? StartDate = newT.Value.AddDays(12*i); //creation time
+            TimeSpan? numDays = TimeSpan.FromDays(5*i); //creation time
+
             Task newTask = new
                (
                 Id: i,
@@ -140,7 +143,9 @@ public static class Initialization
                 Description: description,
                 Result: result,
                 Comment: comment,
-                NewTask: newT
+                NewTask: newT,
+                ScheduleStart: StartDate,
+                NumDays:numDays
                );
             if (s_dal is not null) s_dal.Task!.Create(newTask);
         }
