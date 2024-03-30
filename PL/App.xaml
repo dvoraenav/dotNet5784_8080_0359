@@ -17,9 +17,9 @@
             <Setter Property="FontFamily" Value="Franklin Gothic"/>
             <Setter Property="FontSize" Value="20"/>
         </Style>
-        <Style TargetType="{x:Type Border}">
+        <!--<Style TargetType="{x:Type Border}">
             <Setter Property="CornerRadius" Value="7"/>
-        </Style>
+        </Style>-->
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="Foreground" Value="Black"/>

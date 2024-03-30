@@ -1,5 +1,6 @@
 ﻿using PL.Admin;
 using PL.Engineer;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -13,9 +14,12 @@ namespace PL;
 public partial class MainWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get;
+
+    bool isClose {  get; set; }
     public MainWindow()
     {
-        CurrentDate = DateTime.Now;
+        isClose = true;
+        CurrentDate = s_bl.Clock;
         UpdateTime();
         InitializeComponent();
     }
@@ -39,16 +43,16 @@ public partial class MainWindow : Window
             switch (button.Content)
             {
                 case "Add Day":
-                    CurrentDate = CurrentDate.AddDays(1);
+                    s_bl.AdvanceTimeByDay();
                     break;
                 case "Add Hour":
-                    CurrentDate = CurrentDate.AddHours(1);
+                    s_bl.AdvanceTimeByHour();
                     break;
                 case "Add Month":
-                    CurrentDate = CurrentDate.AddMonths(1);
+                    s_bl.AdvanceTimeByMounse();
                     break;
                 case "Add Year":
-                    CurrentDate = CurrentDate.AddYears(1);
+                    s_bl.AdvanceTimeByYear();
                     break;
                 default:
                     return;
@@ -59,19 +63,18 @@ public partial class MainWindow : Window
     {
         new Thread(() =>
         {
-            while (true)
+            while (isClose)
             {
-                Application.Current.Dispatcher.Invoke(() => { CurrentDate = DateTime.Now; });
+                Application.Current.Dispatcher.Invoke(() => { CurrentDate = CurrentDate.AddSeconds(1); });
                 Thread.Sleep(1000);
             }
         }).Start();
     }
+    protected override void OnClosing(CancelEventArgs e)
+    {
+        isClose = false;
 
-    /// <summary>
-    /// "data intiization" click
-    /// </summary>
-    /// <param name="sender"> button</param>
-    /// <param name="e"> click</param>
-    /// 
+        base.OnClosing(e);
+    }
 
 }

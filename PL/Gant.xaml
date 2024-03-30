@@ -16,13 +16,12 @@
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"/>
                     <GridViewColumn Header="Dependecies" DisplayMemberBinding="{Binding}"/>
-                    <GridViewColumn Width="850">
+                    <GridViewColumn Width="700">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Background="Transparent" Width="{Binding StartOffset}"/>
-                                    <ProgressBar Background="{Binding Status , Converter={StaticResource ConvertStatusToColorKey}}"
-                                                 Value="100" Width="{Binding TaskLenght}"/>
+                                    <ProgressBar Value="{Binding CompliteValue}" Background="{Binding Status , Converter={StaticResource ConvertStatusToColorKey}}" Width="{Binding TaskLenght}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

@@ -49,10 +49,20 @@ namespace PL.Task
         /// 
         /// </summary>
         public static readonly DependencyProperty CurrentTaskProperty =
-            DependencyProperty.Register("CurrentEngineer", typeof(BO.Task), typeof(TaskWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("CurrentTask", typeof(BO.Task), typeof(TaskWindow), new PropertyMetadata(null));
         /// <summary>
         ///create the level of expiriance
         /// </summary>
+
+        public IEnumerable<BO.TaskInList> DependencyList
+        {
+            get { return (IEnumerable<BO.TaskInList>)GetValue(DependencyListProporty); }
+            set { SetValue(DependencyListProporty, value); }
+        }
+
+        public static readonly DependencyProperty DependencyListProporty =
+            DependencyProperty.Register("TasksList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskForListWindow), new PropertyMetadata(null));
+        /// <summary>
         public BO.EngineerExpireance Difficulty { get; set; } = BO.EngineerExpireance.Beginner;//defult level is begineer
         /// <summary>
         /// 

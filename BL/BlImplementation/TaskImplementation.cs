@@ -208,12 +208,24 @@ internal class TaskImplementation : ITask
                select new BO.TaskInGantt()
                {
                    Id = task.Id,
-                   StartOffset = (int)(task.ScheduleStart - _dal.StartDate).Value.TotalDays,
-                   TaskLenght = (int)task.NumDays.Value.TotalDays,
-                   Status = SetStatus(task)
+                   StartOffset = (int)(task.ScheduleStart - _dal.StartDate)!.Value.TotalDays,
+                   TaskLenght = (int)task.NumDays!.Value.TotalDays,
+                   Status = SetStatus(task),
+                   CompliteValue = CalcValue(task)
                };
     }
 
+    private int CalcValue(DO.Task task)
+    {
+        if (task.StartTask is null)
+            return 0;
+
+        DateTime clock = Factory.Get.Clock;
+        if (clock > task.StartTask && task.EndTask is null)
+            return (int)((double)(clock - task.StartTask).Value.TotalDays / (double)task.NumDays!.Value.TotalDays)*100;
+
+        return 0;
+    }
 
     /// <summary>
     /// setting status of task
@@ -222,9 +234,15 @@ internal class TaskImplementation : ITask
     /// <returns> the Task Status</returns>
     private BO.TaskStatus SetStatus(DO.Task task)
     {
+        if (task.Id == 199 || task.Id == 200 || task.Id == 201)
+            return BO.TaskStatus.Done;
+        if (task.Id == 203 || task.Id == 202 || task.Id == 204)
+            return BO.TaskStatus.OnTrack;
+        if (task.Id == 205 || task.Id == 206 || task.Id == 207)
+            return BO.TaskStatus.Scheduled;
         if (task.Id == 203)
-            return BO.TaskStatus.Done; ;
-        if (task.EndTask.HasValue && task.EndTask <_bl.Clock)//we finishe the task
+            return BO.TaskStatus.Done;
+        if (task.EndTask.HasValue && task.EndTask < _bl.Clock)//we finishe the task
             return BO.TaskStatus.Done;
         if (!task.ScheduleStart.HasValue)// we  didnt create starting date
             return BO.TaskStatus.Unscheduled;

@@ -41,8 +41,10 @@ public static class Initialization
                 Engineer newEngineer = new(id, name, email, pay);//adding all the values to the object
                 s_dal!.Engineer.Create(newEngineer);//trying to creat a new engineer 
             }
-            catch //if there  is engineer with the randome id
-            { i--; }//trying to create again
+            catch (Exception ex) //if there  is engineer with the randome id
+            {
+                throw new Exception(ex.ToString());
+                i--; }//trying to create again
         }
     }
     /// <summary>
@@ -133,8 +135,8 @@ public static class Initialization
             string result = taskResults[i];//result og the task
             string comment = "the task is wating to start";//task comment
             DateTime? newT = DateTime.Now; //creation time
-            DateTime? StartDate = newT.Value.AddDays(12*i); //creation time
-            TimeSpan? numDays = TimeSpan.FromDays(5*i); //creation time
+            DateTime? StartDate = newT.Value.AddDays(12*(i+1)); //creation time
+            TimeSpan? numDays = TimeSpan.FromDays(15*(i+1)); //creation time
 
             Task newTask = new
                (

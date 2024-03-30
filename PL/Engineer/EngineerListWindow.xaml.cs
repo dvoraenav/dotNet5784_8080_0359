@@ -77,7 +77,7 @@ public partial class EngineerListWindow : Window
     /// return the selected engineer
     /// </summary>
 
-    public BO.Task Selected_Engineer { get; set; } = new BO.Task();
+    public BO.Engineer Selected_Engineer { get; set; } = new BO.Engineer();
     /// <summary>
     /// 
     /// </summary>
@@ -108,4 +108,6 @@ public partial class EngineerListWindow : Window
         catch (Exception ex) { MessageBox.Show(ex.Message); }
     }
 }
+
+  
 

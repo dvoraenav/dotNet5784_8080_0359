@@ -15,9 +15,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Task\TaskForListWindow.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="left.png" />
     <None Remove="logo.png" />
     <None Remove="right.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Task\TaskForListWindow.xaml" />
   </ItemGroup>
 
   <ItemGroup>

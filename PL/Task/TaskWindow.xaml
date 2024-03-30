@@ -5,8 +5,90 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
-        Title="TaskWindow" Height="450" Width="800">
+        Title="TaskWindow" Height="450" Width="800"
+        DataContext="{Binding CurrentTask, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Task Details" Grid.ColumnSpan="2" FontSize="35" Height="45" Width="260" HorizontalAlignment="Center"
+                Margin="0,0,200,0" FontFamily="Franklin Gothic Medium" Foreground="#FFEC9361"  />
+        <Label Grid.Row="1" Content="Id:" Height="40" Width="120"/>
+        <Label Grid.Row="2" Content="Name:" Height="40" Width="120" />
+        <Label Grid.Row="3" Content="Description:" Height="40" Width="120" />
+        <Label Grid.Row="4" Content="Level:" Height="40" Width="120" />
+        <Label Grid.Row="5" Content="Result:" Height="40" Width="120" />
+        <Label Grid.Row="6" Content="Comment:" Height="40" Width="120" />
+        <Label Grid.Row="7" Content="Number of days:" Height="40" Width="160" />
+        <Label Grid.Row="9" Content="Schedule date to start:" Height="40" Width="270"  Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+        <Label Grid.Row="10" Content="Forcast date to end:" Height="40" Width="270" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Height="25" Width="150" HorizontalAlignment="Left" Margin="10" Text="{Binding Id,Mode=TwoWay,NotifyOnValidationError=False}" />
+        <TextBox Grid.Row="2" Grid.Column="1" Height="25" Width="150" HorizontalAlignment="Left" Margin="10"  Text="{Binding Name,Mode=TwoWay,NotifyOnValidationError=False}"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Height="25" Width="150" HorizontalAlignment="Left" Margin="10"  Text="{Binding Description,Mode=TwoWay,NotifyOnValidationError=False}"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" Height="25" Width="150" HorizontalAlignment="Left" Margin="10" 
+             ItemsSource="{Binding Source={StaticResource ExpirieanceCollectionKey}}"
+               SelectedValue="{Binding Path=DifficultyLevel, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Height="25" Width="150" HorizontalAlignment="Left" Margin="10"  Text="{Binding Result,Mode=TwoWay,NotifyOnValidationError=False}"/>
+        <TextBox Grid.Row="6" Grid.Column="1" Height="25" Width="150" HorizontalAlignment="Left" Margin="10"  Text="{Binding Comment,Mode=TwoWay,NotifyOnValidationError=False}"/>
+        <TextBox Grid.Row="7" Grid.Column="1" Height="25" Width="150" HorizontalAlignment="Left" Margin="10"  Text="{Binding NumDays,Mode=TwoWay,NotifyOnValidationError=False}"/>
+        <!--<DatePickerTextBox Grid.Row="9" Grid.Column="1" Height="25" Width="150" HorizontalAlignment="Right" Margin="10"  Text="{Binding ScheduleStart,Mode=TwoWay,NotifyOnValidationError=False}"/>
+        <DatePickerTextBox Grid.Row="10" Grid.Column="1" Height="25" Width="150" HorizontalAlignment="Right" Margin="10"  Text="{Binding ForecastDate,Mode=TwoWay,NotifyOnValidationError=False}"/>-->
+        <ListView Margin="10" Grid.Row="2" FlowDirection="LeftToRight" Grid.Column="3" Grid.RowSpan="6" ItemsSource="{Binding Path=TasksList}">
+            <ListView.View >
+                <GridView>
+                    <GridViewColumn Header="Id" Width="35" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ,Mode=TwoWay,NotifyOnValidationError=False}" TextAlignment="Left" Width="400"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="תיאור רשימה" Width="600"  >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding  List_discription}" TextAlignment="Left" Width="500" TextWrapping="Wrap" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="מחיקה" Width="150" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="erase"  HorizontalAlignment="Center" Margin="20" VerticalAlignment="Bottom" Width="80" Height="35" Grid.Row="2" Click="erase_Click">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="10"/>
+                                        </Style>
+                                    </Button.Resources>
+                                    <StackPanel>
+                                        <TextBlock x:Name="e" Text="מחק" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Height="25" Width="45"/>
+
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </Grid>
-</Window>
+   </Window>
+

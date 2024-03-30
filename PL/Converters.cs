@@ -47,15 +47,14 @@ class ConvertStatusToColor : IValueConverter
             {
                 switch (status)
                 {
-
                     case BO.TaskStatus.Unscheduled:
-                        return Brushes.Blue;
+                        return Brushes.LightBlue;
                     case BO.TaskStatus.Scheduled:
-                        return Brushes.Black;
+                        return Brushes.Blue;
                     case BO.TaskStatus.OnTrack:
-                        return Brushes.Red;
+                        return Brushes.Turquoise;
                     case BO.TaskStatus.Done:
-                        return Brushes.Green;
+                        return Brushes.DarkTurquoise;
                     default: return Brushes.Black;
                 }
             }
