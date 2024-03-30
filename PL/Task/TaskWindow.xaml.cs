@@ -61,7 +61,7 @@ namespace PL.Task
         }
 
         public static readonly DependencyProperty DependencyListProporty =
-            DependencyProperty.Register("TasksList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskForListWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("TasksList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskWindow), new PropertyMetadata(null));
         /// <summary>
         public BO.EngineerExpireance Difficulty { get; set; } = BO.EngineerExpireance.Beginner;//defult level is begineer
         /// <summary>
