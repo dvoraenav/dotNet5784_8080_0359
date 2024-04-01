@@ -1,5 +1,6 @@
 ﻿using PL.Admin;
 using PL.Engineer;
+using PL.Engineers;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -43,16 +44,16 @@ public partial class MainWindow : Window
             switch (button.Content)
             {
                 case "Add Day":
-                    s_bl.AdvanceTimeByDay();
+                    CurrentDate = CurrentDate.AddDays(1);
                     break;
                 case "Add Hour":
-                    s_bl.AdvanceTimeByHour();
+                    CurrentDate = CurrentDate.AddHours(1);
                     break;
                 case "Add Month":
-                    s_bl.AdvanceTimeByMounse();
+                    CurrentDate = CurrentDate.AddMonths(1);
                     break;
                 case "Add Year":
-                    s_bl.AdvanceTimeByYear();
+                    CurrentDate = CurrentDate.AddYears(1);
                     break;
                 default:
                     return;
@@ -70,6 +71,7 @@ public partial class MainWindow : Window
             }
         }).Start();
     }
+
     protected override void OnClosing(CancelEventArgs e)
     {
         isClose = false;
@@ -77,4 +79,8 @@ public partial class MainWindow : Window
         base.OnClosing(e);
     }
 
+    private void EngineersMainW_click(object sender, RoutedEventArgs e)
+    {
+        new EngineersMainW().Show();
+    }
 }

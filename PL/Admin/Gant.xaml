@@ -11,17 +11,21 @@
         <local:ConvertStatusToColor x:Key="ConvertStatusToColorKey"/>
     </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <ListView ItemsSource="{Binding GanttList}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"/>
-                    <GridViewColumn Header="Dependecies" DisplayMemberBinding="{Binding}"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name }"/>
                     <GridViewColumn Width="700">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Background="Transparent" Width="{Binding StartOffset}"/>
-                                    <ProgressBar Value="{Binding CompliteValue}" Background="{Binding Status , Converter={StaticResource ConvertStatusToColorKey}}" Width="{Binding TaskLenght}"/>
+                                    <ProgressBar Value="{Binding CompliteValue}" Background="{Binding Status , Converter={StaticResource ConvertStatusToColorKey}}" Width="{Binding TaskLenght}" Height="25"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -29,5 +33,12 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <Label Content="Status:"  FontSize="18"/>
+            <Label Content="Unscheduled"  FontSize="18" Background="LightGray"/>
+            <Label Content="Scheduled"  FontSize="18" Background="LightGoldenrodYellow" />
+            <Label Content="OnTrack"  FontSize="18" Background="Yellow"/>
+            <Label Content="Done"  FontSize="18" Background="Orange"/>
+        </StackPanel>
     </Grid>
 </Window>

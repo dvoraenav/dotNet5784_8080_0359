@@ -112,16 +112,16 @@ static class XMLTools
             throw new DalXMLFileLoadCreateException($"fail to load xml file: {path}, {ex.Message}");
         }
     }
-    public static DateTime? GetDate( string path, string entity)
+    public static DateTime? GetDate(string path, string entity)
     {
         try
         {
             XElement root = LoadListFromXMLElement(path);
-            XElement? child = root.Element(entity);
-            if (child == null)
+            string child = root.Element(entity).Value;
+            if (string.IsNullOrEmpty(child))
                 return null;
 
-            DateTime.TryParse(child.Value, out DateTime date);
+            DateTime.TryParse(child, out DateTime date);
 
             return date;
         }

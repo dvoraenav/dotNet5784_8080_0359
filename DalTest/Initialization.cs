@@ -137,6 +137,12 @@ public static class Initialization
             DateTime? newT = DateTime.Now; //creation time
             DateTime? StartDate = newT.Value.AddDays(12*(i+1)); //creation time
             TimeSpan? numDays = TimeSpan.FromDays(15*(i+1)); //creation time
+            DateTime? end = null;
+            DateTime? start = null;
+            if (i < 3)
+              end = newT.Value.AddDays(12 * (i + 3));
+            if (i < 5)
+                start = StartDate.Value;
 
             Task newTask = new
                (
@@ -147,8 +153,11 @@ public static class Initialization
                 Comment: comment,
                 NewTask: newT,
                 ScheduleStart: StartDate,
-                NumDays:numDays
-               );
+                NumDays: numDays,
+                EndTask: end,
+                StartTask: start
+
+               ) ;
             if (s_dal is not null) s_dal.Task!.Create(newTask);
         }
     }

@@ -18,6 +18,8 @@ sealed internal class DalXml : IDal
         set { Config.EndDate = value; }
     }
 
+    public DateTime Clock { set; get; } = DateTime.Now;
+
     public static IDal Instance { get; } = new DalXml();
     private DalXml() { }
     public IEngineer Engineer => new EngineerImplementation();

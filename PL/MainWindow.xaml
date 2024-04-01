@@ -6,32 +6,37 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
-        Title="MainWindow" Height="450" Width="800" Background="#F8DCD3" WindowState="Maximized">
+        Icon="/civil-engineering.png"
+
+        Title="MainWindow" Height="450" Width="800" WindowState="Maximized">
+    <Window.Background>
+        <ImageBrush ImageSource="/logo.png"/>
+    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Image Source="/left.png"  Grid.RowSpan="4" Grid.Column="0"/>
-            <Image Source="/logo.png"  Grid.Column="1" Grid.Row="1"/>
-            <Image Source="/right.png" Grid.Column="2" Grid.RowSpan="4" />
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="1" Margin="10"  >
-                <Button  Content="Admin" HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="10"  Click="AdminMainWindow_Click" />
-                <Button Content="Engineer" HorizontalAlignment="Center"  VerticalAlignment="Center"  Margin="10"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <Label Content="Welcome" FontSize="75" HorizontalAlignment="Center" Foreground="White"/>
+            <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,30,10,30" >
+                <Button  Content="Admin" HorizontalAlignment="Center"  VerticalAlignment="Center"  Height="50" Width="150" FontSize="25" Margin="10"  Click="AdminMainWindow_Click" />
+                <Button Content="Engineer" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="50" Width="150" FontSize="25" Margin="10" Click="EngineersMainW_click"/>
             </StackPanel >
-        </Grid>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Text="{Binding CurrentDate,ConverterCulture=en-GB}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10"/>
-            <Button  Content="Add Hour" HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="5" Click="ChangeDate" />
-            <Button Content="Add Day" HorizontalAlignment="Center"  VerticalAlignment="Center"  Margin="5" Click="ChangeDate" />
-            <Button  Content="Add Month" HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="5" Click="ChangeDate" />
-            <Button  Content="Add Year" HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="5" Click="ChangeDate" />
+            
+            <TextBlock Text="{Binding CurrentDate,ConverterCulture=en-GB}" FontSize="25" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20,0,20" FontFamily="Franklin Gothic Book"  />
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button  Content="Add Hour" HorizontalAlignment="Center" Width="100" Height="30" FontSize="15"  VerticalAlignment="Center" Margin="5" Click="ChangeDate" />
+                <Button Content="Add Day" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="30" FontSize="15" Margin="5" Click="ChangeDate" />
+                <Button  Content="Add Month" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="30" FontSize="15" Margin="5" Click="ChangeDate" />
+                <Button  Content="Add Year" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="30" FontSize="15" Margin="5" Click="ChangeDate" />
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>

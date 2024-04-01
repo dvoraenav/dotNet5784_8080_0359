@@ -10,22 +10,25 @@
 	  <OutputPath>$(SolutionDir)\bin\</OutputPath>
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	  <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-	  <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
+	  <UseCommonOutputDirectory>false</UseCommonOutputDirectory>
 
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Task\TaskForListWindow.xaml.cs" />
+    <Compile Remove="Admin\Task\TaskForListWindow.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="left.png" />
+    <None Remove="Admin\engineer.png" />
+    <None Remove="Admin\logo.png" />
+    <None Remove="civil-engineering.png" />
+    <None Remove="Admin\Engineer\worker.png" />
+    <None Remove="Engineers\logo.png" />
     <None Remove="logo.png" />
-    <None Remove="right.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Page Remove="Task\TaskForListWindow.xaml" />
+    <Page Remove="Admin\Task\TaskForListWindow.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,9 +41,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="left.png" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Admin\engineer.png" />
+    <Resource Include="Admin\logo.png" />
+    <Resource Include="civil-engineering.png" />
+    <Resource Include="Admin\Engineer\worker.png" />
+    <Resource Include="Engineers\logo.png" />
     <Resource Include="logo.png" />
-    <Resource Include="right.png" />
   </ItemGroup>
 
 </Project>

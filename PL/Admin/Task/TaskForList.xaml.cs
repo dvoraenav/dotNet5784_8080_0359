@@ -21,6 +21,7 @@ namespace PL.Task
     public partial class TaskForListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get;
+        public BO.Task Selected_Task { get; set; } = new BO.Task();
 
         public TaskForListWindow()
         {
@@ -41,7 +42,7 @@ namespace PL.Task
         }
 
         public static readonly DependencyProperty TaskListProporty =
-            DependencyProperty.Register("TasksList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskForListWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("TasksList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskForListWindow));
         /// <summary>
         /// add new field to select("all" means that we want to select all the engineer)
         /// </summary>
@@ -74,7 +75,6 @@ namespace PL.Task
 
         }
 
-        public BO.Task Selected_Task { get; set; } = new BO.Task();
 
 
         /// <summary>

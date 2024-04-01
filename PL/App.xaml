@@ -4,29 +4,38 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <local:ExpirieanceCollection x:Key="ExpirieanceCollectionKey" />
-        <local:StatusCollection x:Key="StatusCollectionKey"/>
-        <local:ConvertIdToVisibilityOfAdd x:Key="ConvertIdToVisibilityOfAddKey"/>
-        <local:ConvertIdToVisibilityOfUpdate x:Key="ConvertIdToVisibilityOfUpdateKey"/>
-        <Style TargetType="Button">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="Width" Value="100"/>
-            <Setter Property="FontFamily" Value="Franklin Gothic"/>
-            <Setter Property="FontSize" Value="20"/>
-        </Style>
-        <!--<Style TargetType="{x:Type Border}">
+        <ResourceDictionary>
+
+            <local:ExpirieanceCollection x:Key="ExpirieanceCollectionKey" />
+            <local:StatusCollection x:Key="StatusCollectionKey"/>
+            <local:ConvertIdToVisibilityOfAdd x:Key="ConvertIdToVisibilityOfAddKey"/>
+            <local:ConvertIdToVisibilityOfUpdate x:Key="ConvertIdToVisibilityOfUpdateKey"/>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Width" Value="100"/>
+                <Setter Property="FontFamily" Value="Franklin Gothic"/>
+                <Setter Property="FontSize" Value="20"/>
+            </Style>
+            <!--<Style TargetType="{x:Type Border}">
             <Setter Property="CornerRadius" Value="7"/>
         </Style>-->
-        <Style TargetType="Label">
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="FontFamily" Value="Franklin Gothic Medium"/>
-        </Style>
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="FontFamily" Value="Franklin Gothic Medium"/>
+            </Style>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

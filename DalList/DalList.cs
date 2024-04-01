@@ -23,6 +23,7 @@ sealed internal class DalList : IDal
         set { DataSource.Config.EndDate = value; }
     }
 
+    public DateTime Clock { set; get; } = DateTime.Now;
     public static IDal Instance { get; } = new DalList();//create new object
     private DalList() { }// private empty ctr
     public IEngineer Engineer => new EngineerImplementation();

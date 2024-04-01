@@ -43,13 +43,5 @@ internal class Bl : IBl
     public void InitializeDB() => DalTest.Initialization.Do();
     public void ResetDB() => DalTest.Initialization.Reset();
 
-    private static DateTime s_Clock = DateTime.Now.Date;
-    public DateTime Clock { get { return s_Clock; } private set { s_Clock = value; } }
-    public void AdvanceTimeByYear() { Clock = Clock.AddYears(1); }
-    public void AdvanceTimeByMounse() { Clock = Clock.AddSeconds(1); }
-    public void AdvanceTimeByDay() { Clock = Clock.AddDays(1); }
-    public void AdvanceTimeByHour() { Clock = Clock.AddHours(1); }
-    public void ResetTime_() { Clock = DateTime.Now.Date; }
-
-
-}
+    public DateTime Clock { get { return dal.Clock; }  set { dal.Clock = value; } }
+ }

@@ -25,8 +25,20 @@ namespace PL.Admin
 
         public AdminMainWindow()
         {
+            ProjectStart = s_bl.StartDate is not null;
+
             InitializeComponent();
         }
+
+        public bool ProjectStart
+        {
+            get { return (bool)GetValue(ProjectStartProp); }
+            set { SetValue(ProjectStartProp, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for OpenDialoge.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ProjectStartProp =
+            DependencyProperty.Register("ProjectStart", typeof(bool), typeof(TaskWindow));
 
         private void EngineerList_Click(object sender, RoutedEventArgs e)
         {
@@ -56,7 +68,7 @@ namespace PL.Admin
         {
             try
             {
-                if (s_bl == null)
+                if (s_bl != null)
                     s_bl!.StartDate = DateTime.Now;
                 else
                     MessageBox.Show("A new project cannot be created. There is an existing project in progress");//TODO

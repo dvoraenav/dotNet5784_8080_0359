@@ -17,16 +17,3 @@ public enum TaskStatus
     Done,
     All
 }
-public enum EnginnerFilter
-{
-    None,
-    FilterByExpireance,
-    FilterByTask
-}
-public enum TaskFilter
-{
-    None,
-    FilterByExpireance,
-    FilterByEngineer,
-    FilterByAvailability
-}

@@ -17,7 +17,7 @@ public partial class Gant : Window
         set { SetValue(MyPropertyProperty, value); }
     }
 
-    // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+    // Using a DependencyProperty as the backing store for OpenDialoge.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty MyPropertyProperty =
         DependencyProperty.Register("GanttList", typeof(IEnumerable<TaskInGantt>), typeof(Gant));
 

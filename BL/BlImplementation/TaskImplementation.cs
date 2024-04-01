@@ -143,8 +143,8 @@ internal class TaskImplementation : ITask
         {
             InputIntegrityCheck(item);
             DO.Task task = _dal.Task.Read(x => x.Id == item.Id) ?? throw new BO.BlDoesNotExistException($"Task with ID {item.Id} dose not exists");
-            if (_dal.Engineer.Read(x => x.Id == item.Engineer?.Id) == null)
-                throw new BO.BlDoesNotExistException($"Engeineer with ID {item.Id} does not exists");
+          
+
             if (_dal.EndDate == null)//we didnt create the end date time of the task
             {
                 task = task with//we can update everything
@@ -158,6 +158,21 @@ internal class TaskImplementation : ITask
                     Result = item.Result,
                     EngineerId = item.Engineer?.Id,
                 };
+
+                IEnumerable<DO.Dependency?> dependencies = _dal.Dependency.ReadAll(x => x.CurrentTaskId == item.Id) ?? new List<DO.Dependency>();
+
+                if (item.Depndencies is null)
+                    return;
+
+                item.Depndencies.Where(_new => !dependencies.Any(old => old.LastTaskId == _new.Id)).ToList().
+                    ForEach(_new => _dal.Dependency.Create(new DO.Dependency
+                    {
+                        CurrentTaskId = task.Id,
+                        LastTaskId = _new.Id
+                    }));
+
+                dependencies.Where(old => !item.Depndencies.Any(_new => _new.Id == old!.LastTaskId)).ToList().
+                    ForEach(old => _dal.Dependency.Delete(old!.Id));
             }
             else
             {
@@ -170,6 +185,8 @@ internal class TaskImplementation : ITask
                     EngineerId = item.Engineer?.Id,
                 };
             }
+            if ( item.Engineer.Id != 0 && _dal.Engineer.Read(x => x.Id == item.Engineer?.Id) == null)
+                throw new BO.BlDoesNotExistException($"Engeineer with ID {item.Id} does not exists");
             _dal.Task.Update(task);
         }
         catch (DO.DalDoesNotExistException ex) { throw new BO.BlDoesNotExistException(ex.Message); }
@@ -208,6 +225,7 @@ internal class TaskImplementation : ITask
                select new BO.TaskInGantt()
                {
                    Id = task.Id,
+                   Name = task.Name!,
                    StartOffset = (int)(task.ScheduleStart - _dal.StartDate)!.Value.TotalDays,
                    TaskLenght = (int)task.NumDays!.Value.TotalDays,
                    Status = SetStatus(task),
@@ -234,23 +252,20 @@ internal class TaskImplementation : ITask
     /// <returns> the Task Status</returns>
     private BO.TaskStatus SetStatus(DO.Task task)
     {
-        if (task.Id == 199 || task.Id == 200 || task.Id == 201)
-            return BO.TaskStatus.Done;
-        if (task.Id == 203 || task.Id == 202 || task.Id == 204)
-            return BO.TaskStatus.OnTrack;
-        if (task.Id == 205 || task.Id == 206 || task.Id == 207)
-            return BO.TaskStatus.Scheduled;
-        if (task.Id == 203)
-            return BO.TaskStatus.Done;
-        if (task.EndTask.HasValue && task.EndTask < _bl.Clock)//we finishe the task
-            return BO.TaskStatus.Done;
-        if (!task.ScheduleStart.HasValue)// we  didnt create starting date
-            return BO.TaskStatus.Unscheduled;
-        if (task.ScheduleStart.HasValue && !task.StartTask.HasValue)//we created starting date whisout start work
-            return BO.TaskStatus.Scheduled;
-        if (task.StartTask.HasValue && !task.EndTask.HasValue)//we started work but didnt finish=in the middle
-            return BO.TaskStatus.OnTrack;
-        return BO.TaskStatus.Unscheduled;
+        return task.ScheduleStart is null ? BO.TaskStatus.Unscheduled :
+               task.StartTask is null ? BO.TaskStatus.Scheduled :
+               task.EndTask is null ? BO.TaskStatus.OnTrack :
+               BO.TaskStatus.Done;
+
+        //if (task.EndTask.HasValue && task.EndTask < _bl.Clock)//we finishe the task
+        //    return BO.TaskStatus.Done;
+        //if (!task.ScheduleStart.HasValue)// we  didnt create starting date
+        //    return BO.TaskStatus.Unscheduled;
+        //if (task.ScheduleStart.HasValue && !task.StartTask.HasValue)//we created starting date whisout start work
+        //    return BO.TaskStatus.Scheduled;
+        //if (task.StartTask.HasValue && !task.EndTask.HasValue)//we started work but didnt finish=in the middle
+        //    return BO.TaskStatus.OnTrack;
+        //return BO.TaskStatus.Unscheduled;
 
     }
 
@@ -262,8 +277,7 @@ internal class TaskImplementation : ITask
     /// <exception cref="BO.BlNullPropertyException">if the name is empty string</exception>
     private void InputIntegrityCheck(BO.Task item)
     {
-        if (item.Id <= 0)
-            throw new BO.BlInvalidInputPropertyException($"Task's Id can not be negative");
+        
         if (item.Name == "")
             throw new BO.BlInvalidInputPropertyException($"Task's name can not be negative");
     }
