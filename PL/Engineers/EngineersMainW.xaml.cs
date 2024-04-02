@@ -40,11 +40,12 @@ namespace PL.Engineers
         /// <summary>
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            // 
+            //try
+            //{
                
-            }
-            catch(Exception ex) { }
+            //}
+            //catch(Exception ex) { }
         }
 
         private void CurrentTask_click(object sender, RoutedEventArgs e)

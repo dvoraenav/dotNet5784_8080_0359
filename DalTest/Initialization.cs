@@ -44,7 +44,8 @@ public static class Initialization
             catch (Exception ex) //if there  is engineer with the randome id
             {
                 throw new Exception(ex.ToString());
-                i--; }//trying to create again
+                 i--; 
+            }//trying to create again
         }
     }
     /// <summary>

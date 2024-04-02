@@ -1,5 +1,4 @@
-﻿using PL.Task;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,18 +15,13 @@ using System.Windows.Shapes;
 namespace PL.Engineers
 {
     /// <summary>
-    /// Interaction logic for CurrentTask.xaml
+    /// Interaction logic for TaskList.xaml
     /// </summary>
-    public partial class CurrentTask : Window
+    public partial class TaskList : Window
     {
-        public CurrentTask()
+        public TaskList()
         {
             InitializeComponent();
         }
     }
-
-
-
-
-
 }
