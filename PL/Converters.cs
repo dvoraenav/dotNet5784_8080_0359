@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using BO;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -66,6 +67,30 @@ class ConvertStatusToColor : IValueConverter
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class ConvertDependencyTocColor : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        try
+        {
+            IEnumerable<TaskInList> dependencies = (IEnumerable<TaskInList>)values[0];
+            TaskInList task = (TaskInList)values[1];
+
+            if (dependencies is null)
+                return Brushes.Transparent;
+            if (dependencies.Any(x => x.Id == task.Id))
+                return Brushes.Green;
+            return Brushes.Transparent;
+        }
+        catch { } return Brushes.Transparent;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }

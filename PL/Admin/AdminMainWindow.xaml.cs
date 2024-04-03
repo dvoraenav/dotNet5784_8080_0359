@@ -38,7 +38,7 @@ namespace PL.Admin
 
         // Using a DependencyProperty as the backing store for OpenDialoge.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ProjectStartProp =
-            DependencyProperty.Register("ProjectStart", typeof(bool), typeof(TaskWindow));
+            DependencyProperty.Register("ProjectStart", typeof(bool), typeof(AdminMainWindow));
 
         private void EngineerList_Click(object sender, RoutedEventArgs e)
         {

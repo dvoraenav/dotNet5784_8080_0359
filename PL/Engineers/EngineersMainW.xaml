@@ -5,30 +5,83 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineers"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="EngineersMainW" Height="450" Width="800">
-    <Window.Background>
-        <ImageBrush ImageSource="/Engineers/logo.png"/>
-    </Window.Background>
-    <Grid >
+
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="4*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*"/>
-
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Welcome!" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="60" Grid.Column="1"/>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center"  Grid.Row="1" VerticalAlignment="Center" Grid.Column="1">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="Password" FontSize="25" Height="35" Foreground="White" FontFamily="Franklin Gothic Demi Cond" />
-                <PasswordBox Height="25" Width="150" Background="White" Margin="10,0" PasswordChar="*" PasswordChanged="PasswordBox_PasswordChanged" />
-            </StackPanel>
-           
+        <Grid Grid.ColumnSpan="3" Background="#FFB1B1B1" >
+            <TextBlock Text="Engineer's Details" FontSize="35" Height="45" Width="300" HorizontalAlignment="Left" VerticalAlignment="Center"
+            Margin="45,0,0,0" FontFamily="Franklin Gothic Medium" Foreground="#FFFFDE87"  />
+        </Grid>
+        <TextBlock Text="plese choose a task from thr list" Height="70" Width="200" FontSize="20" TextWrapping="Wrap"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2"
+                                       Visibility="{Binding Messege,RelativeSource={RelativeSource AncestorType={x:Type local:EngineersMainW}}}"/>
+
+        <Label Content="Personal Information"  Grid.Row="1" Foreground="#FFFFDE87" HorizontalContentAlignment="Left"/>
+        <Label Content="Current Task"  Grid.Row="1" Grid.Column="1" Foreground="#FFFFDE87" HorizontalContentAlignment="Left"/>
+        <StackPanel Grid.Row="2">
+            <Label  Content="Id:" Height="30" Width="70" HorizontalAlignment="Right" />
+            <Label  Content="Name:" Height="30" Width="70" HorizontalAlignment="Right" />
+            <Label  Content="Email:" Height="30" Width="70" HorizontalAlignment="Right" />
+            <Label  Content="Level:" Height="30" Width="70" HorizontalAlignment="Right" />
+            <Label  Content="Cost:" Height="30" Width="70" HorizontalAlignment="Right" />
         </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="2" DataContext="{Binding CurrentEngineer}">
+            <TextBox  Height="30"  Width="150" HorizontalAlignment="Left"  Margin="10" Text="{Binding Id,Mode=TwoWay,NotifyOnValidationError=False}" />
+            <TextBox  Height="30" Width="150" HorizontalAlignment="Left" Margin="10" Text="{Binding FullName,Mode=TwoWay,NotifyOnValidationError=False}"/>
+            <TextBox  Height="30"  Width="150" HorizontalAlignment="Left" Margin="10"  Text="{Binding Mail,Mode=TwoWay,NotifyOnValidationError=False}"/>
+            <TextBlock Grid.Row="5" Grid.Column="1" Width="150" HorizontalAlignment="Left" Margin="10"  Text="{Binding Level,Mode=TwoWay,NotifyOnValidationError=False}"/>
+            <TextBlock Grid.Row="5" Grid.Column="1" Width="150" HorizontalAlignment="Left" Margin="10"  Text="{Binding Cost,Mode=TwoWay,NotifyOnValidationError=False}"/>
+        </StackPanel>
+       
+        <Button Grid.Row="3" Content="Update Info" Width="120" Grid.ColumnSpan="2" Click="UpdateInfo_Click" VerticalAlignment="Top"/>
+        <Button Grid.Column="2" Grid.Row="6"  Content="Update Task Details" Click="UpdateTask_Click" VerticalAlignment="Top"/>
+        <StackPanel  Grid.Column="2" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
+                     Visibility="{Binding Busy,RelativeSource={RelativeSource AncestorType={x:Type local:EngineersMainW}}}">
+            <StackPanel Grid.Row="1" Orientation="Vertical"  >
+                <Label Content="Id:" Height="35" Width="150"  Margin="0,20,0,0"/>
+                <Label Content="Name:" Height="35" Width="150"   Margin="0,20,0,0"/>
+                <Label Content="Description:" Height="35" Width="150"  Margin="0,20,0,0"/>
+                <Label Content="Result:" Height="35" Width="150"  Margin="0,20,0,0"/>
+                <Label Content="Comment:" Height="35" Width="150"  Margin="0,20,0,0"/>
+                <Label Content="Number of days:" Height="35" Width="150" Margin="0,20,0,0"/>
+                <Label Content="Starting date:" Height="40" Width="150"   Margin="0,20,0,0"/>
+                <Label Content="Ending date:" Height="40" Width="150"   Margin="0,20,0,0"/>
+            </StackPanel>
+            <StackPanel  Orientation="Vertical"   DataContext="{Binding CurrentTask}" >
+
+                <TextBlock Height="35" Width="150" HorizontalAlignment="Left"  
+                           Margin="0,20,0,0" Text="{Binding Id,Mode=TwoWay,NotifyOnValidationError=False}" />
+                <TextBlock  Height="35" Width="150" HorizontalAlignment="Left" 
+                            Margin="0,20,0,0" Text="{Binding Name,Mode=TwoWay,NotifyOnValidationError=False}"/>
+                <TextBlock  Height="35" Width="150" HorizontalAlignment="Left"  Margin="0,20,0,0" 
+                            Text="{Binding Description,Mode=TwoWay,NotifyOnValidationError=False}"/>
+                <TextBlock  Height="35"  Margin="0,20,0,0" Width="150" HorizontalAlignment="Left"  
+                            Text="{Binding Result,Mode=TwoWay,NotifyOnValidationError=False}"/>
+                <TextBox   Height="35"  Margin="0,20,0,0" Width="150" HorizontalAlignment="Left"  
+                           Text="{Binding Comment,Mode=TwoWay,NotifyOnValidationError=False}"/>
+                <TextBlock  Height="35"  Margin="0,20,0,0" Width="150" HorizontalAlignment="Left" 
+                            Text="{Binding NumDays,StringFormat='{}{0:dd}',Mode=TwoWay,NotifyOnValidationError=False}"/>
+                <DatePicker  Height="40" Width="150" HorizontalAlignment="Right" Margin="0,20,0,0" 
+         Text="{Binding StartTask,Mode=TwoWay}" />
+                <DatePicker  Height="40" Width="150" HorizontalAlignment="Right" Margin="0,20,0,0" 
+         Text="{Binding EndTask,Mode=TwoWay,NotifyOnValidationError=True,ValidatesOnExceptions=true}" 
+                      IsEnabled="{Binding TaskOnTrack,RelativeSource={RelativeSource AncestorType={x:Type local:EngineersMainW}}}"  />
+            </StackPanel>
+            
+        </StackPanel>
+        <Button Content="See more tasks" Width="150" Click="TaskList_click" Grid.Column="3" Grid.Row="2"/>
     </Grid>
-    
 </Window>

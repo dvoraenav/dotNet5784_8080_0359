@@ -123,7 +123,7 @@ internal class EngineerImplementation : IEngineer
             Mail = _doEngineer.Mail,
             Cost = _doEngineer.Cost,
             Level = (BO.EngineerExpireance)_doEngineer.Level,
-            Task = getTaskInEngineer(id)// culculate the current task
+            Task = GetTaskInEngineer(id)// culculate the current task
         };
     }
 
@@ -144,7 +144,7 @@ internal class EngineerImplementation : IEngineer
                     Mail = engineer.Mail,
                     Cost = engineer.Cost,
                     Level = (BO.EngineerExpireance)engineer.Level,
-                    Task = getTaskInEngineer(engineer.Id)
+                    Task = GetTaskInEngineer(engineer.Id)
                 }).Where(engineer => filter is null ? true : filter(engineer));
     }
 
@@ -155,7 +155,7 @@ internal class EngineerImplementation : IEngineer
     /// <exception cref="BO.BlNegtivePropertyException"> if the id or cost is negtive </exception>
     /// <exception cref="BO.BlNullPropertyException">if the name is an empty string</exception>
     /// <exception cref="BO.BlInvalidInputPropertyException">if the email is Invalid </exception>
-    private void InputIntegrityCheck(BO.Engineer? item)
+    private static void InputIntegrityCheck(BO.Engineer? item)
     {
         if (item!.Id <= 0)
             throw new BO.BlInvalidInputPropertyException($"Engeineer's Id can not be negative");
@@ -172,9 +172,11 @@ internal class EngineerImplementation : IEngineer
     /// </summary>
     /// <param name="id">the id of the task</param>
     /// <returns>an entity object </returns>
-    private TaskInEngineer? getTaskInEngineer(int id)
+    public TaskInEngineer? GetTaskInEngineer(int id)
     {
-        return _dal.Task.Read(task => task.EngineerId == id && Tools.SetStatus(task) is TaskStatus.OnTrack) is DO.Task task ?
+        return _dal.Task.Read(task => task.EngineerId == id && 
+        (Tools.SetStatus(task) is TaskStatus.OnTrack||
+        Tools.SetStatus(task) is TaskStatus.Scheduled)) is DO.Task task ?
                     new TaskInEngineer()
                     {
                         Id = task.Id,

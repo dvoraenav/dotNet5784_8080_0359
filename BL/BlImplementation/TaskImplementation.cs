@@ -1,11 +1,12 @@
 ﻿using BlApi;
 using BO;
+using DO;
 using System.Data;
+using System.Security.Cryptography;
 
 namespace BlImplementation;
 
-
-internal class TaskImplementation : ITask
+public class TaskImplementation : ITask
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
     private readonly IBl _bl;
@@ -143,7 +144,7 @@ internal class TaskImplementation : ITask
         {
             InputIntegrityCheck(item);
             DO.Task task = _dal.Task.Read(x => x.Id == item.Id) ?? throw new BO.BlDoesNotExistException($"Task with ID {item.Id} dose not exists");
-          
+
 
             if (_dal.EndDate == null)//we didnt create the end date time of the task
             {
@@ -185,7 +186,7 @@ internal class TaskImplementation : ITask
                     EngineerId = item.Engineer?.Id,
                 };
             }
-            if ( item.Engineer.Id != 0 && _dal.Engineer.Read(x => x.Id == item.Engineer?.Id) == null)
+            if (item.Engineer.Id != 0 && _dal.Engineer.Read(x => x.Id == item.Engineer?.Id) == null)
                 throw new BO.BlDoesNotExistException($"Engeineer with ID {item.Id} does not exists");
             _dal.Task.Update(task);
         }
@@ -233,6 +234,26 @@ internal class TaskImplementation : ITask
                };
     }
 
+    public IEnumerable<TaskInList> TaskForEngineer(int id)
+    {
+        DO.Engineer eng = _dal.Engineer.Read(x => x.Id == id)!;
+
+        IEnumerable<DO.Task> tasks = _dal.Task.ReadAll(x => x.EngineerId is null && x.DifficultyLevel <= eng.Level);
+        IEnumerable<Dependency> dependencies = _dal.Dependency.ReadAll();
+
+        return from task in tasks
+               from dep in dependencies
+               let t = _dal.Task.Read(x => x.Id == dep.LastTaskId)
+               where t.EndTask is null
+               select new TaskInList()
+               {
+                   Id = task.Id,
+                   Description = task.Description,
+                   Name = task.Name,
+                   Status = SetStatus(task)
+               };
+    }
+
     private int CalcValue(DO.Task task)
     {
         if (task.StartTask is null)
@@ -240,7 +261,7 @@ internal class TaskImplementation : ITask
 
         DateTime clock = Factory.Get.Clock;
         if (clock > task.StartTask && task.EndTask is null)
-            return (int)((double)(clock - task.StartTask).Value.TotalDays / (double)task.NumDays!.Value.TotalDays)*100;
+            return (int)((double)(clock - task.StartTask).Value.TotalDays / (double)task.NumDays!.Value.TotalDays) * 100;
 
         return 0;
     }
@@ -277,9 +298,14 @@ internal class TaskImplementation : ITask
     /// <exception cref="BO.BlNullPropertyException">if the name is empty string</exception>
     private void InputIntegrityCheck(BO.Task item)
     {
-        
+
         if (item.Name == "")
-            throw new BO.BlInvalidInputPropertyException($"Task's name can not be negative");
+            throw new BO.BlInvalidInputPropertyException($"Task's name can not be empty");
+        if (item.StartTask < item.ScheduleStart)
+            throw new BO.BlInvalidInputPropertyException($"Starting can't be earlier then {item.ScheduleStart}");
+        if (item.EndTask < item.StartTask)
+            throw new BO.BlInvalidInputPropertyException($"Starting can't be earlier then {item.StartTask}");
+
     }
 
     /// <summary>

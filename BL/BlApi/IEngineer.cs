@@ -41,7 +41,8 @@ public interface IEngineer
     /// </summary>
     /// <param name="id">the identity of the engineer</param>
      void Delete(int id);
- 
+    TaskInEngineer? GetTaskInEngineer(int id);
+
 
 }
 

@@ -1,0 +1,33 @@
+﻿<Window x:Class="PL.Engineers.TasksForEngineer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Engineers"
+        mc:Ignorable="d"
+        Title="TasksForEngineer" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="6*"/>
+        </Grid.RowDefinitions>
+        <!--Internal, Upper Grid-->
+        <Grid  Height="auto" Grid.Row="0"  Width="auto" Background="#FFB1B1B1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Tasks" Grid.ColumnSpan="2" FontSize="50" Height="60" Width="230" HorizontalAlignment="Left"
+      Margin="100,0,0,0" FontFamily="Franklin Gothic Medium" Foreground="#FFFFDE87"  />
+            <!---lable for filter selection-->
+            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right" >
+                 <TextBlock Text="Search" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Height="30" Width="55" Margin="10,0,7,0"/>
+                <TextBox  VerticalAlignment="Center" FontSize="18" Height="35" Width="200" Margin="10" TextChanged="Search_TaskChanged"/>
+               
+            </StackPanel>
+        </Grid>
+        <!---list view for the tasks-->
+        <ListView Margin="5" Grid.Row="1" SelectedValue="{Binding Path=Selected_Task, Mode=TwoWay}" ItemsSource="{Binding Path=TasksList}" MouseDoubleClick="TaskSelection"  FontSize="15"/>
+
+    </Grid>
+</Window>

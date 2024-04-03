@@ -1,4 +1,5 @@
 ﻿using PL.Engineer;
+using PL.Task;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,42 @@ namespace PL.Engineers
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get;//static field
 
-        public EngineersMainW()
-        {
+        public EngineersMainW(int id=0)
+        { 
             InitializeComponent();
+            if (id == 0)//it means that we are in adding condition
+            {
+                CurrentEngineer = new BO.Engineer();//create new engineer
+            }
+            else
+            {
+                try
+                {
+                    BO.Engineer engineer1 = s_bl.Engineer.Read(id);//all the details of this id
+                    CurrentEngineer = engineer1;
+                    BO.TaskInEngineer? t = s_bl.Engineer.GetTaskInEngineer(id);
+                    if (t != null)
+                    {
+                        CurrentTask = s_bl.Task.ReadTask(t.Id);
+                        Busy = "Visible";
+                        Messege = "Hidden";
+                        if (CurrentTask!.StartTask != null)
+                            TaskOnTrack = true;
+                        else
+                            TaskOnTrack = false;
+                    }
+                    else
+                    {
+                        Busy = "Hidden";
+                        Messege = "Visible";
+                    }
+
+
+
+                    }
+                catch (Exception ex)//TODO what exception??
+                { MessageBox.Show(ex.Message); }
+            }
         }
 
         public BO.Engineer CurrentEngineer
@@ -32,30 +66,78 @@ namespace PL.Engineers
             get { return (BO.Engineer)GetValue(CurrentEngineerProperty); }
             set { SetValue(CurrentEngineerProperty, value); }
         }
-        /// <summary>
-        /// 
-        /// </summary>
+      
         public static readonly DependencyProperty CurrentEngineerProperty =
-            DependencyProperty.Register("CurrentEngineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
-        /// <summary>
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+            DependencyProperty.Register("CurrentEngineer", typeof(BO.Engineer), typeof(EngineersMainW), new PropertyMetadata(null));
+
+        public BO.Task? CurrentTask
         {
-            // 
-            //try
-            //{
-               
-            //}
-            //catch(Exception ex) { }
+            get { return (BO.Task)GetValue(CurrentTaskProperty); }
+            set { SetValue(CurrentTaskProperty, value); }
+        }
+       
+        public static readonly DependencyProperty CurrentTaskProperty =
+            DependencyProperty.Register("CurrentTask", typeof(BO.Task), typeof(EngineersMainW));
+        public bool TaskOnTrack
+        {
+            get { return (bool)GetValue(TaskOnTrackProp); }
+            set { SetValue(TaskOnTrackProp, value); }
         }
 
-        private void CurrentTask_click(object sender, RoutedEventArgs e)
+        // Using a DependencyProperty as the backing store for OpenDialoge.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TaskOnTrackProp =
+            DependencyProperty.Register("TaskOnTrack", typeof(bool), typeof(EngineersMainW));
+
+        public string Busy
         {
-            
+            get { return (string)GetValue(BusyProp); }
+            set { SetValue(BusyProp, value); }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
+        public static readonly DependencyProperty BusyProp =
+            DependencyProperty.Register("Busy", typeof(string), typeof(EngineersMainW));
 
+        public string Messege
+        {
+            get { return (string)GetValue(MessegeProp); }
+            set { SetValue(MessegeProp, value); }
+        }
+
+        public static readonly DependencyProperty MessegeProp =
+            DependencyProperty.Register("Messege", typeof(string), typeof(EngineersMainW));
+
+
+
+        private void UpdateInfo_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                s_bl.Engineer.Update(CurrentEngineer);
+                MessageBox.Show("The details have been successfully updated");
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
+        }
+
+        private void UpdateTask_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                s_bl.Task.Update(CurrentTask);//calling to the update method
+                this.Close();//auto closing window
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
+
+        }
+        private void TaskList_click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                new TasksForEngineer(CurrentEngineer.Id).Show();
+            }
+            catch(Exception ex)
+            { MessageBox.Show(ex.Message); }
         }
     }
 }

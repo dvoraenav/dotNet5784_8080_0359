@@ -2,6 +2,7 @@
 using PL.Engineer;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,17 @@ namespace PL.Task
         public static readonly DependencyProperty ProjectStartProp =
             DependencyProperty.Register("ProjectStart", typeof(bool), typeof(TaskWindow));
 
+
+        public bool AddMode
+        {
+            get { return (bool)GetValue(AddModeProp); }
+            set { SetValue(AddModeProp, value); }
+        }
+
+        public static readonly DependencyProperty AddModeProp =
+            DependencyProperty.Register("AddMode", typeof(bool), typeof(TaskWindow));
+
+
         public IEnumerable<TaskInList> TaskList
         {
             get { return (IEnumerable<TaskInList>)GetValue(ListProp); }
@@ -52,6 +64,19 @@ namespace PL.Task
         // Using a DependencyProperty as the backing store for TasksList.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ListProp =
             DependencyProperty.Register("TaskList", typeof(IEnumerable<TaskInList>), typeof(TaskWindow));
+
+
+
+        public ObservableCollection<TaskInList> DepList
+        {
+            get { return (ObservableCollection<TaskInList>)GetValue(DepListPro); }
+            set { SetValue(DepListPro, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DepListPro =
+            DependencyProperty.Register("DepList", typeof(ObservableCollection<TaskInList>), typeof(TaskInList));
+
 
 
         public IEnumerable<string> Engineers
@@ -80,6 +105,7 @@ namespace PL.Task
 
         public TaskWindow(int id = 0)
         {
+            AddMode = id == 0;
             ProjectStart = s_bl.StartDate is not null;
             OpenDialoge = false;
             TaskList = s_bl.Task.TaskList();
@@ -106,25 +132,17 @@ namespace PL.Task
                 CurrentTask.Engineer = new();
 
             Engineers = s_bl.Engineer.GetEngineerList(x => x.Level >= CurrentTask.DifficultyLevel).Select(x => x.FullName + " " + x.Id);
-
+            DepList = new(CurrentTask.Depndencies);
         }
 
 
         /*****************************   Function  **************************/
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"> combobox</param>
-        /// <param name="e">select level </param>
+
         private void ExpirienceSelection(object sender, SelectionChangedEventArgs e)
         {
             CurrentTask.DifficultyLevel = Difficulty;//the level that selected
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"> button of add engineer</param>
-        /// <param name="e">Contains state information and event data associated with the adding</param>
+
         private void AddNewTask_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -135,11 +153,7 @@ namespace PL.Task
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
         }
-        /// <summary>
-        /// update the engineer
-        /// </summary>
-        /// <param name="sender"> button of update</param>
-        /// <param name="e">Contains state information and event data associated with the update </param>
+
         private void UpdateTask_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -152,43 +166,50 @@ namespace PL.Task
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            // new NewDependency().ShowDialog(CurrentTask);
-        }
 
         private void ChangeDependencies(object sender, RoutedEventArgs e) => OpenDialoge = true;
 
-        private void Deleteclick_Button(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (sender is Button button)
-                {
-                    TaskInList selected = (TaskInList)button.Tag;
-                    CurrentTask.Depndencies.RemoveAll(dep => dep.Id == selected.Id);
-                    BO.Task tmp = CurrentTask;
-                    CurrentTask = null;
-                    CurrentTask = tmp;
-                }
-            }
-            catch { }
-        }
+        //private void Deleteclick_Button(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (sender is Button button)
+        //        {
+        //            TaskInList selected = (TaskInList)button.Tag;
+        //            CurrentTask.Depndencies.RemoveAll(dep => dep.Id == selected.Id);
+        //            BO.Task tmp = CurrentTask;
+        //            CurrentTask = null;
+        //            CurrentTask = tmp;
+        //        }
+        //    }
+        //    catch (Exception ex) { MessageBox.Show(ex.Message); }
+        //}
 
         private void AddDependency(object sender, MouseButtonEventArgs e)
         {
             try
             {
-                if (sender is ListView listView)
+
+                if (sender is Label label)
                 {
-                    TaskInList selected = listView.SelectedItem as TaskInList;
-                    CurrentTask.Depndencies.Add(selected);
-                    BO.Task tmp = CurrentTask;
-                    CurrentTask = null;
-                    CurrentTask = tmp;
+                    if (label.Background == Brushes.Transparent)
+                    {
+                        TaskInList selected = label.Content as TaskInList;
+                        CurrentTask.Depndencies.Add(selected);
+                        DepList.Add(selected);
+                        label.Background = Brushes.Green;
+                    }
+                    else
+                    {
+                        TaskInList selected = label.Content as TaskInList;
+                        CurrentTask.Depndencies.Remove(selected);
+                        DepList.Remove(selected);
+                        label.Background = Brushes.Transparent;
+                    }
+
                 }
             }
-            catch { }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void AddEngineer(object sender, SelectionChangedEventArgs e)
@@ -202,7 +223,7 @@ namespace PL.Task
                     CurrentTask.Engineer!.Id = id;
                 }
             }
-            catch { }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 }

@@ -4,11 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Task"
+        xmlns:converter="clr-namespace:PL"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" 
         Title="TaskWindow" Height="450" Width="800" WindowState="Maximized"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
+    <Window.Resources>
+        <converter:ConvertDependencyTocColor x:Key="ConvertDependencyToColorKey"/>
+    </Window.Resources>
     <Grid DataContext="{Binding CurrentTask}">
         <Grid>
             <Grid.RowDefinitions>
@@ -44,7 +48,7 @@
                     <TextBox  Height="35" Width="200" HorizontalAlignment="Left"  Margin="0,20,0,0" Text="{Binding Description,Mode=TwoWay,NotifyOnValidationError=False}"/>
                     <ComboBox  Height="35" Width="200" HorizontalAlignment="Left"  Margin="0,20,0,0"
                 ItemsSource="{Binding Source={StaticResource ExpirieanceCollectionKey}}"
-                SelectedValue="{Binding Path=DifficultyLevel, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                SelectedValue="{Binding Path=DifficultyLevel, Mode=TwoWay}"/>
                     <TextBox Grid.Row="5" Grid.Column="1" Height="35"  Margin="0,20,0,0" Width="200" HorizontalAlignment="Left"   Text="{Binding Result,Mode=TwoWay,NotifyOnValidationError=False}"/>
                     <TextBox Grid.Row="6" Grid.Column="1" Height="35"  Margin="0,20,0,0" Width="200" HorizontalAlignment="Left"  Text="{Binding Comment,Mode=TwoWay,NotifyOnValidationError=False}"/>
 
@@ -58,75 +62,67 @@
                            IsEnabled="{Binding ProjectStart ,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"/>
                     <Label Content="Ending date:" Height="40" Width="210"   Margin="0,20,0,0"
                            IsEnabled="{Binding ProjectStart ,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"/>
-                  
+
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <TextBox Grid.Row="7" Grid.Column="1" Height="35"  Margin="0,20,0,0" Width="150" HorizontalAlignment="Left"  Text="{Binding NumDays,StringFormat='{}{0:dd}',Mode=TwoWay,NotifyOnValidationError=False}"/>
                     <ComboBox Text="{Binding Engineer.Name, Mode=OneWay}" Margin="0,20,0,0" Width="150"  SelectionChanged="AddEngineer"
                               ItemsSource="{Binding  Engineers,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"/>
                     <DatePicker  Height="40" Width="150" HorizontalAlignment="Right" Margin="0,20,0,0" 
-                                 Text="{Binding ScheduleStart,Mode=TwoWay,NotifyOnValidationError=False}"
+                                 Text="{Binding ScheduleStart,Mode=TwoWay}"
                                  IsEnabled="{Binding ProjectStart ,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"/>
                     <DatePicker  Height="40" Width="150" HorizontalAlignment="Right" Margin="0,20,0,0" 
-                                 Text="{Binding StartTask,Mode=TwoWay,NotifyOnValidationError=False}"
+                                 Text="{Binding StartTask,Mode=TwoWay}"
                                  IsEnabled="{Binding ProjectStart ,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"/>
                     <DatePicker  Height="40" Width="150" HorizontalAlignment="Right" Margin="0,20,0,0" 
                                  Text="{Binding EndTask,Mode=TwoWay,NotifyOnValidationError=False}"
                                  IsEnabled="{Binding ProjectStart ,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"/>
-        
+
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" FlowDirection="LeftToRight" Margin="60,0,0,0">
                     <Label  Content="Depndencies Tasks:" HorizontalAlignment="Left"  Margin="5"/>
-                    <ListView Margin="10" Grid.Row="1" FlowDirection="LeftToRight" Grid.Column="2"  ItemsSource="{Binding Depndencies}">
+                    <ListView Margin="10" Grid.Row="1" FlowDirection="LeftToRight" Grid.Column="2" 
+                              ItemsSource="{Binding DepList, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow }}}">
                         <ListView.View >
                             <GridView>
                                 <GridViewColumn Header="Id" Width="35"  DisplayMemberBinding="{Binding Id}"/>
                                 <GridViewColumn Header="Name" Width="150"  DisplayMemberBinding="{Binding Name}"/>
                                 <GridViewColumn Header="Description" Width="150"  DisplayMemberBinding="{Binding Description}"/>
-                                <GridViewColumn Header="Delete" Width="100" >
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button Content="Delete"   HorizontalAlignment="Center" Margin="0" VerticalAlignment="Bottom" Width="65" 
-                                                    Height="20" Grid.Row="2" Click="Deleteclick_Button" FontSize="14"  />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-
                             </GridView>
                         </ListView.View>
                     </ListView>
                     <Button Content="Add New Dependency" Width="150" Height="35" FontSize="15" Click="ChangeDependencies" Margin="35"/>
                 </StackPanel>
             </StackPanel>
-            <Button Grid.Column="1" Grid.Row="6" FontSize="15" Content="Add" Click="AddNewTask_Click" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityOfAddKey}}" >
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-
-            </Button>
-            <Button Grid.Column="1" Grid.Row="6" FontSize="15" Content="Update" Click="UpdateTask_Click" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityOfUpdateKey}}" 
-                    >
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-
-            </Button>
+            <Button Grid.Column="1" Grid.Row="6" FontSize="15" Content="Add" Click="AddNewTask_Click"
+                    Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityOfAddKey}}"/>
+            <Button Grid.Column="1" Grid.Row="6" FontSize="15" Content="Update" Click="UpdateTask_Click"
+                     Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityOfUpdateKey}}"/>
         </Grid>
         <materialDesign:DialogHost Height="500" CloseOnClickAway="True" IsOpen="{Binding OpenDialoge}"
                                    DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}">
             <materialDesign:DialogHost.DialogContent >
-                <Grid Grid.Column="1">
-                    <ListView ItemsSource="{Binding TaskList}" Tag="{Binding}" MouseDoubleClick="AddDependency">
-                        <!--<ListView.View>
+                <Grid Grid.Column="1" Width="350">
+                    <ListView ItemsSource="{Binding TaskList}" >
+                        <ListView.View>
                             <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding }"/>
+                                <GridViewColumn>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding}" MouseDoubleClick="AddDependency" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,-500,0">
+                                                <Label.Background>
+                                                    <MultiBinding Converter="{StaticResource ConvertDependencyToColorKey}">
+                                                        <Binding Path="CurrentTask.Depndencies" RelativeSource="{RelativeSource AncestorType={x:Type local:TaskWindow}}"/>
+                                                        <Binding ElementName="Label" Path="Content"/>
+                                                    </MultiBinding>
+                                                </Label.Background>
+                                            </Label>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                             </GridView>
-                        </ListView.View>-->
+                        </ListView.View>
                     </ListView>
                 </Grid>
             </materialDesign:DialogHost.DialogContent>

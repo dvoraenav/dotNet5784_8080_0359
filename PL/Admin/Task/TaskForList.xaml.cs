@@ -21,7 +21,6 @@ namespace PL.Task
     public partial class TaskForListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get;
-        public BO.Task Selected_Task { get; set; } = new BO.Task();
 
         public TaskForListWindow()
         {
@@ -74,14 +73,7 @@ namespace PL.Task
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
         }
-
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"> combobox</param>
-        /// <param name="e"> mouse button</param>
+        
         private void TaskSelection(object sender, MouseButtonEventArgs e)
         {
             try
@@ -93,11 +85,7 @@ namespace PL.Task
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
         }
-        /// <summary>
-        /// filter the list by searching chars in the engineer's name
-        /// </summary>
-        /// <param name="sender"> textbox of search</param>
-        /// <param name="e">entering a text to search/filter </param>
+      
         private void Search_TaskChanged(object sender, TextChangedEventArgs e)
         {
             try
