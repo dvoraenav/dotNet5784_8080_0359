@@ -14,40 +14,38 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.Engineers
-{
+namespace PL.Engineers;
+
     /// <summary>
     /// Interaction logic for EngineersMainW.xaml
     /// </summary>
     public partial class EngineersMainW : Window
     {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get;//static field
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get;     //static field
 
         public EngineersMainW(int id=0)
         {
-
             ProjectStart = s_bl.StartDate is not null;
             InitializeComponent();
-            if (id == 0)//it means that we are in adding condition
-            {
-                CurrentEngineer = new BO.Engineer();//create new engineer
-            }
-            else
+
+            if (id == 0)       //it means that we are in adding condition
+                CurrentEngineer = new BO.Engineer();   //create new engineer
+
+            else//in update condition
             {
                 try
                 {
-                    BO.Engineer engineer1 = s_bl.Engineer.Read(id);//all the details of this id
+                    BO.Engineer engineer1 = s_bl.Engineer.Read(id);   //all the details of this id
                     CurrentEngineer = engineer1;
                     BO.TaskInEngineer? t = s_bl.Engineer.GetTaskInEngineer(id);
                     if (t != null)
                     {
                         TaskStart = CurrentTask!.StartTask is not null;
-                        
                         CurrentTask = s_bl.Task.ReadTask(t.Id);
                         Busy = "Visible";
                         Messege = "Hidden";
                         if (CurrentTask!.StartTask != null)
-                            TaskOnTrack = true;
+                            TaskOnTrack = true; //we start the task
                         else
                             TaskOnTrack = false;
                     }
@@ -167,4 +165,4 @@ namespace PL.Engineers
             //TODO
         }
     }
-}
+
