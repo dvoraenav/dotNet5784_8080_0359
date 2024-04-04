@@ -95,4 +95,39 @@
     <CurrentTaskId>19</CurrentTaskId>
     <LastTaskId>20</LastTaskId>
   </Dependency>
+  <Dependency>
+    <Id>20</Id>
+    <CurrentTaskId>21</CurrentTaskId>
+    <LastTaskId>3</LastTaskId>
+  </Dependency>
+  <Dependency>
+    <Id>21</Id>
+    <CurrentTaskId>21</CurrentTaskId>
+    <LastTaskId>4</LastTaskId>
+  </Dependency>
+  <Dependency>
+    <Id>22</Id>
+    <CurrentTaskId>21</CurrentTaskId>
+    <LastTaskId>5</LastTaskId>
+  </Dependency>
+  <Dependency>
+    <Id>23</Id>
+    <CurrentTaskId>21</CurrentTaskId>
+    <LastTaskId>6</LastTaskId>
+  </Dependency>
+  <Dependency>
+    <Id>24</Id>
+    <CurrentTaskId>21</CurrentTaskId>
+    <LastTaskId>19</LastTaskId>
+  </Dependency>
+  <Dependency>
+    <Id>25</Id>
+    <CurrentTaskId>21</CurrentTaskId>
+    <LastTaskId>17</LastTaskId>
+  </Dependency>
+  <Dependency>
+    <Id>26</Id>
+    <CurrentTaskId>2</CurrentTaskId>
+    <LastTaskId>5</LastTaskId>
+  </Dependency>
 </ArrayOfDependency>
