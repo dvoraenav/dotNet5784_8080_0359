@@ -25,6 +25,7 @@ public partial class Gant : Window
     public Gant() 
     {
         GanttList = bl.Task.GanttList();
+      
         InitializeComponent();
     }
 }

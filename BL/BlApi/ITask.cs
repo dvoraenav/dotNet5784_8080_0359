@@ -45,5 +45,6 @@ public interface ITask
     public void UpdateStartingDate(int id, DateTime date);
     public IEnumerable<TaskInList> TaskForEngineer(int id);
     public IEnumerable<BO.TaskInGantt> GanttList();
+    public void ScheduleTasks(DateTime startDate);
 }
 

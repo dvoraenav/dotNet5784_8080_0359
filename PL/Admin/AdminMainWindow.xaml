@@ -5,33 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Admin"
         mc:Ignorable="d"
-        
+        xmlns:Design="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="AdminMainWindow" Height="450" Width="800" Icon="/Admin/engineer.png">
     <Window.Background>
         <ImageBrush ImageSource="/Admin/logo.png"/>
     </Window.Background>
     <Grid>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel  Margin="0,0,75,0">
-            <Button Content="Engineers" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="60" Width="200" FontSize="30" Margin="10" Click="EngineerList_Click"/>
-                    <Button Content="Tasks" HorizontalAlignment="Center"  VerticalAlignment="Center"  Margin="0,25,0,0" Height="60" Width="200" FontSize="30" Click="TaskList_Click"/>
-            </StackPanel>
-                <StackPanel Margin="0">
-                    <Button Content="Start Project" Margin="10" Click="StartProject_Click" Height="60" Width="200" FontSize="30" />
-                    <Button Content="Gantt" Click="Gantt_window"  Margin="0,25,0,0" Height="60" Width="200" FontSize="30"
-                             IsEnabled="{Binding ProjectEnd ,RelativeSource={RelativeSource AncestorType={x:Type local:AdminMainWindow}}}"/>
+        <Grid>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel  Margin="0,0,75,0">
+                        <Button Content="Engineers" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="60" Width="200" FontSize="30" Margin="10" Click="EngineerList_Click"/>
+                        <Button Content="Tasks" HorizontalAlignment="Center"  VerticalAlignment="Center"  Margin="0,25,0,0" Height="60" Width="200" FontSize="30" Click="TaskList_Click"/>
+                    </StackPanel>
+                    <StackPanel Margin="0">
+                        <Button Content="Start Project" Margin="10" Click="StartProject_Click" Height="60" Width="200" FontSize="30" 
+                         IsEnabled="{Binding ProjectStart,RelativeSource={RelativeSource AncestorType={x:Type local:AdminMainWindow}}}"/>
+                        <Button Content="Gantt" Click="Gantt_window"  Margin="0,25,0,0" Height="60" Width="200" FontSize="30"
+                          IsEnabled="{Binding ProjectEnd,RelativeSource={RelativeSource AncestorType={x:Type local:AdminMainWindow}}}"/>
+
+                    </StackPanel>
                 </StackPanel>
-        </StackPanel>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
-                <Button Content="Data Initialization" Click="Initialization_Click"  Height="60" Width="250" FontSize="30" 
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
+                    <Button Content="Data Initialization" Click="Initialization_Click"  Height="60" Width="250" FontSize="30" 
                         Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="15"
-                                 IsEnabled="{Binding ProjectStart ,RelativeSource={RelativeSource AncestorType={x:Type local:AdminMainWindow}}}"/>
-                <Button Content="Reset Data" Grid.Row="3"  Height="60" Width="250" FontSize="30" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="15" Click="Reset_Click"
-                    IsEnabled="{Binding ProjectStart ,RelativeSource={RelativeSource AncestorType={x:Type local:AdminMainWindow}}}"/>
-
+                               IsEnabled="{Binding ProjectStart,RelativeSource={RelativeSource AncestorType={x:Type local:AdminMainWindow}}}"/>
+                    <Button Content="Reset Data" Grid.Row="3"  Height="60" Width="250" FontSize="30" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="15" Click="Reset_Click"          
+                            IsEnabled="{Binding ProjectStart,RelativeSource={RelativeSource AncestorType={x:Type local:AdminMainWindow}}}"/>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
+        </Grid>
+        <Design:DialogHost CloseOnClickAway="True"  DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:AdminMainWindow}}}" IsOpen="{Binding OpenDialoge }">
+            <Design:DialogHost.DialogContent>
+                <DatePicker DisplayDateStart="{Binding Clock}" Height="150" Width="150" SelectedDateChanged="CreateSchedule"/>
+            </Design:DialogHost.DialogContent>
+        </Design:DialogHost>
     </Grid>
 </Window>

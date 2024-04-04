@@ -8,7 +8,7 @@ public class Task
     public string? Description { get; init; } //the task's descripation
     public string? Result { get; init; } //a description of the result of the task
     public TimeSpan? NumDays { get; set; } //the amount of days it takes to finish the task
-    public DateTime? NewTask { get; init; } //the time the task was created
+    public DateTime? NewTask { get; set; } //the time the task was created
     public TaskStatus Status { get; set; }
     public string? Comment { get; set; } //comments on the task
     public EngineerExpireance DifficultyLevel { get; set; } //the task's difficulty Level

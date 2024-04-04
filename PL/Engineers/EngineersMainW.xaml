@@ -46,8 +46,8 @@
             <TextBlock Height="40"  Width="150" HorizontalAlignment="Left" Margin="10" Text="{Binding Cost,Mode=TwoWay,NotifyOnValidationError=False}"/>
             <Button Grid.Row="3" Content="Update Info" Width="120" Grid.ColumnSpan="2" Click="UpdateInfo_Click" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         </StackPanel>
-       
-        
+
+
         <Button Grid.Column="2" Grid.Row="6"  Width="200" Content="Update Task Details" Click="UpdateTask_Click" VerticalAlignment="Top"
                  Visibility="{Binding Busy,RelativeSource={RelativeSource AncestorType={x:Type local:EngineersMainW}}}"/>
         <StackPanel  Grid.Column="2" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"
@@ -58,7 +58,8 @@
                 <Label Content="Description:" Height="35" Width="150"  Margin="0,20,0,0"/>
                 <Label Content="Result:" Height="35" Width="150"  Margin="0,20,0,0"/>
                 <Label Content="Comment:" Height="35" Width="150"  Margin="0,20,0,0"/>
-                <Label Content="Number of days:" Height="35" Width="150" Margin="0,20,0,0"/>
+                <Label Content="Schedule Date:" Height="35" Width="150" Margin="0,20,0,0"/>
+                <Label Content="Forecast Date:" Height="35" Width="150" Margin="0,20,0,0"/>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Starting date:" Height="40" Width="130"   Margin="0,20,0,0"
                IsEnabled="{Binding ProjectStart ,RelativeSource={RelativeSource AncestorType={x:Type local:EngineersMainW}}}"/>
@@ -85,14 +86,16 @@
                 <TextBox   Height="35"  Margin="0,20,0,0" Width="150" HorizontalAlignment="Left"  
                            Text="{Binding Comment,Mode=TwoWay,NotifyOnValidationError=False}"/>
                 <TextBlock  Height="35"  Margin="0,20,0,0" Width="150" HorizontalAlignment="Left" 
-                            Text="{Binding NumDays,StringFormat='{}{0:dd}',Mode=TwoWay,NotifyOnValidationError=False}"/>
+                     Text="{Binding ScheduleStart,Mode=TwoWay,NotifyOnValidationError=False}"/>
+                <TextBlock  Height="35"  Margin="0,20,0,0" Width="150" HorizontalAlignment="Left" 
+                            Text="{Binding ForecastDate,Mode=TwoWay,NotifyOnValidationError=False}"/>
                 <TextBlock  Height="40" Width="150" HorizontalAlignment="Right" Margin="0,20,0,0" 
          Text="{Binding StartTask,Mode=TwoWay}" />
                 <TextBlock  Height="40" Width="150" HorizontalAlignment="Right" Margin="0,20,0,0" 
          Text="{Binding EndTask,Mode=TwoWay,NotifyOnValidationError=True,ValidatesOnExceptions=true}" 
                       IsEnabled="{Binding TaskOnTrack,RelativeSource={RelativeSource AncestorType={x:Type local:EngineersMainW}}}"  />
             </StackPanel>
-            
+
         </StackPanel>
         <Button Content="See more tasks" Width="150" Click="TaskList_click" Grid.Column="3" Grid.Row="2"/>
     </Grid>

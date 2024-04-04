@@ -25,8 +25,10 @@ namespace PL.Admin
 
         public AdminMainWindow()
         {
-            ProjectStart = s_bl.StartDate is not null;
-            ProjectEnd=s_bl.EndDate is not null;
+            OpenDialoge = false;
+            Clock = s_bl.Clock;
+            ProjectStart = s_bl.StartDate is null;
+            ProjectEnd = s_bl.EndDate is not null;
             InitializeComponent();
         }
 
@@ -51,6 +53,29 @@ namespace PL.Admin
         /// </summary>
         /// <param name="sender"> button</param>
         /// <param name="e"> click</param>
+
+        public bool OpenDialoge
+        {
+            get { return (bool)GetValue(OpenDialogeProp); }
+            set { SetValue(OpenDialogeProp, value); }
+        }
+
+        public static readonly DependencyProperty OpenDialogeProp =
+            DependencyProperty.Register("OpenDialoge", typeof(bool), typeof(AdminMainWindow));
+
+
+
+        public DateTime Clock
+        {
+            get { return (DateTime)GetValue(ClockProperty); }
+            set { SetValue(ClockProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Clock.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ClockProperty =
+            DependencyProperty.Register("Clock", typeof(DateTime), typeof(AdminMainWindow));
+
+
 
         private void EngineerList_Click(object sender, RoutedEventArgs e)
         {
@@ -93,18 +118,24 @@ namespace PL.Admin
 
         private void StartProject_Click(object sender, RoutedEventArgs e)
         {
+            OpenDialoge = true;
+        }
+        private void Gantt_window(object sender, RoutedEventArgs e) => new Gant().Show();
+
+        private void CreateSchedule(object sender, SelectionChangedEventArgs e)
+        {
             try
             {
-                
-                if (s_bl!.StartDate == null) // there is no starting date still
-                    s_bl!.StartDate = DateTime.Now; 
-                else
-                    MessageBox.Show("A new project cannot be created. There is an existing project in progress");//TODO
+
+                if (sender is DatePicker picker)
+                {
+
+                    s_bl.Task.ScheduleTasks((DateTime)picker.SelectedDate);
+                }
+                //MessageBox.Show("A new project cannot be created. There is an existing project in progress");//TODO
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }
         }
-        private void Gantt_window(object sender, RoutedEventArgs e) => new Gant().Show();
-
     }
 }

@@ -2,6 +2,7 @@
 using BO;
 using DO;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace BlImplementation;
 
@@ -183,6 +184,8 @@ public class TaskImplementation : ITask
                     Comment = item.Comment,
                     Result = item.Result,
                     EngineerId = item.Engineer?.Id,
+                    StartTask = item.StartTask,
+                    EndTask = item.EndTask,
                 };
             }
             if (item.Engineer.Id != 0 && _dal.Engineer.Read(x => x.Id == item.Engineer?.Id) == null)
@@ -221,7 +224,7 @@ public class TaskImplementation : ITask
 
     public IEnumerable<BO.TaskInGantt> GanttList()
     {
-        return from task in _dal.Task.ReadAll()
+        return (from task in _dal.Task.ReadAll()
                select new BO.TaskInGantt()
                {
                    Id = task.Id,
@@ -230,7 +233,7 @@ public class TaskImplementation : ITask
                    TaskLenght = (int)task.NumDays!.Value.TotalDays,
                    Status = SetStatus(task),
                    CompliteValue = CalcValue(task)
-               };
+               }).OrderBy(T=>T.StartOffset).ThenBy(t=>t.TaskLenght);
     }
 
     public IEnumerable<TaskInList> TaskForEngineer(int id)
@@ -253,6 +256,62 @@ public class TaskImplementation : ITask
                };
     }
 
+    public void ScheduleTasks(DateTime startDate)
+    {
+        Dictionary<int, DO.Task> tasks = _dal.Task.ReadAll().ToList().ToDictionary(task => task.Id);
+        List<Dependency> dependencies = _dal.Dependency.ReadAll().ToList();
+
+
+        // Initialize the schedule with tasks that have no dependencies
+        Dictionary<int, DO.Task> schedule = tasks.Where(task => !dependencies.Any(dep => dep.CurrentTaskId == task.Key)).
+            Select(task => task.Value).ToList().ToDictionary(task => task.Id);
+
+        foreach (int key in schedule.Keys)
+        {
+            DO.Task old = schedule[key];
+            old = old with { ScheduleStart = startDate };
+            schedule[key] = old;
+            tasks.Remove(key);
+        }
+
+        while (tasks.Count > 0)
+        {
+            foreach (int newTask in tasks.Keys)
+            {
+                bool canSchedule = true;
+
+                foreach (Dependency dep in dependencies.Where(dep => dep.CurrentTaskId == newTask))
+                {
+                    if (!schedule.ContainsKey(dep.LastTaskId))
+                    {
+                        canSchedule = false;
+                        break;
+                    }
+                }
+
+                if (canSchedule)
+                {
+                    DateTime? earlyStart = DateTime.MinValue;
+                    DateTime? lastDepDate = DateTime.MinValue;
+
+                    foreach (Dependency dep in dependencies.Where(dep => dep.CurrentTaskId == newTask))
+                    {
+                        lastDepDate = schedule[dep.LastTaskId].ScheduleStart + schedule[dep.LastTaskId].NumDays;
+                        if (lastDepDate > earlyStart)
+                            earlyStart = lastDepDate;
+                    }
+                    tasks[newTask] = tasks[newTask] with { ScheduleStart = earlyStart};
+
+                    schedule.Add(newTask, tasks[newTask]);
+                    tasks.Remove(newTask);
+                }
+            }
+        }
+
+        schedule.Values.ToList().ForEach(task => { _dal.Task.Update(task); });
+        _dal.StartDate = startDate;
+        _dal.EndDate = schedule.Values.Max(t => t.ScheduleStart + t.NumDays);
+    }
     private int CalcValue(DO.Task task)
     {
         if (task.StartTask is null)
@@ -275,6 +334,7 @@ public class TaskImplementation : ITask
         return task.ScheduleStart is null ? BO.TaskStatus.Unscheduled :
                task.StartTask is null ? BO.TaskStatus.Scheduled :
                task.EndTask is null ? BO.TaskStatus.OnTrack :
+               task.EndTask<_bl.Clock ? BO.TaskStatus.Late:
                BO.TaskStatus.Done;
 
     }
@@ -295,7 +355,7 @@ public class TaskImplementation : ITask
             throw new BO.BlInvalidInputPropertyException($"Schedule date can't be earlier then {_dal.StartDate}");
         if (item.EndTask < item.StartTask)
             if (item.StartTask < item.ScheduleStart)
-            throw new BO.BlInvalidInputPropertyException($"Starting date can't be earlier then {item.ScheduleStart}");
+                throw new BO.BlInvalidInputPropertyException($"Starting date can't be earlier then {item.ScheduleStart}");
         if (item.EndTask < item.StartTask)
             throw new BO.BlInvalidInputPropertyException($"Ending date can't be earlier then {item.StartTask}");
 
@@ -310,5 +370,7 @@ public class TaskImplementation : ITask
     /// <returns>the estimated time to complete the task</returns>
     private DateTime? CalcMaxDate(DateTime? startTask, DateTime? ScheduleStart, TimeSpan? numDays)
        => startTask > ScheduleStart ? startTask + numDays : ScheduleStart + numDays;
+
+
 }
 

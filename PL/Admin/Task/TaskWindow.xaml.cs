@@ -160,6 +160,7 @@ namespace PL.Task
         {
             try
             {
+                CurrentTask.NewTask = s_bl.Clock;
                 s_bl.Task.Create(CurrentTask);
                 this.Close();
             }
@@ -236,12 +237,33 @@ namespace PL.Task
 
         private void EndTask_click(object sender, RoutedEventArgs e)
         {
-            //TODO
+            try
+            {
+                if(CurrentTask.EndTask != null) { MessageBox.Show("The task already finished"); }
+                CurrentTask.EndTask = s_bl.Clock;
+                s_bl.Task.Update(CurrentTask);
+                MessageBox.Show("The ending date was updated succesfully");
+                this.Close();
+            }
+            catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void StratTask_click(object sender, RoutedEventArgs e)
         {
-            //TODO
+            try
+            {
+                if (CurrentTask.StartTask != null)
+                    MessageBox.Show("The task already started");
+                else
+                {
+                    CurrentTask.StartTask = s_bl.Clock;
+                    s_bl.Task.Update(CurrentTask);
+                    MessageBox.Show("The starting date was updated succesfully");
+
+                    this.Close();
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 }

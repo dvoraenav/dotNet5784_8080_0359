@@ -15,5 +15,6 @@ public enum TaskStatus
     Scheduled,
     OnTrack,
     Done,
+    Late,
     All
 }
