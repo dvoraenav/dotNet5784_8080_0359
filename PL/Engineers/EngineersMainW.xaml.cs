@@ -51,7 +51,7 @@ namespace PL.Engineers;
                     }
                     else
                     {
-                        Busy = "Hidden";
+                        Busy = "Hidden"; // he cant select more tasks
                         Messege = "Visible";
                     }
                   
@@ -61,6 +61,9 @@ namespace PL.Engineers;
                 { MessageBox.Show(ex.Message); }
             }
         }
+    /// <summary>
+    /// bring the engineer's details according to the id the user put
+    /// </summary>
 
         public BO.Engineer CurrentEngineer
         {
@@ -70,7 +73,9 @@ namespace PL.Engineers;
       
         public static readonly DependencyProperty CurrentEngineerProperty =
             DependencyProperty.Register("CurrentEngineer", typeof(BO.Engineer), typeof(EngineersMainW), new PropertyMetadata(null));
-
+    /// <summary>
+    /// bring the task details the engineer work on it
+    /// </summary>
         public BO.Task? CurrentTask
         {
             get { return (BO.Task)GetValue(CurrentTaskProperty); }
@@ -79,6 +84,9 @@ namespace PL.Engineers;
        
         public static readonly DependencyProperty CurrentTaskProperty =
             DependencyProperty.Register("CurrentTask", typeof(BO.Task), typeof(EngineersMainW));
+    /// <summary>
+    /// tell us the task  started
+    /// </summary>
         public bool TaskOnTrack
         {
             get { return (bool)GetValue(TaskOnTrackProp); }
@@ -88,7 +96,9 @@ namespace PL.Engineers;
         // Using a DependencyProperty as the backing store for OpenDialoge.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TaskOnTrackProp =
             DependencyProperty.Register("TaskOnTrack", typeof(bool), typeof(EngineersMainW));
-
+    /// <summary>
+    /// the engineer in the middle of task so he must finish it before select anouther task
+    /// </summary>
         public string Busy
         {
             get { return (string)GetValue(BusyProp); }
@@ -97,7 +107,9 @@ namespace PL.Engineers;
 
         public static readonly DependencyProperty BusyProp =
             DependencyProperty.Register("Busy", typeof(string), typeof(EngineersMainW));
-
+    /// <summary>
+    ///  when the engineer does not have task  so the message: "select a task from the list" will be up
+    /// </summary>
         public string Messege
         {
             get { return (string)GetValue(MessegeProp); }
@@ -106,6 +118,9 @@ namespace PL.Engineers;
 
         public static readonly DependencyProperty MessegeProp =
             DependencyProperty.Register("Messege", typeof(string), typeof(EngineersMainW));
+    /// <summary>
+    /// we have a starting date to project 
+    /// </summary>
 
         public bool ProjectStart
         {
@@ -115,6 +130,9 @@ namespace PL.Engineers;
 
         public static readonly DependencyProperty ProjectStartProp =
             DependencyProperty.Register("ProjectStart", typeof(bool), typeof(TaskWindow));
+    /// <summary>
+    /// boolian field tell us the task started
+    /// </summary>
         public bool TaskStart
         {
             get { return (bool)GetValue(TaskStartProp); }
@@ -123,6 +141,11 @@ namespace PL.Engineers;
 
         public static readonly DependencyProperty TaskStartProp =
             DependencyProperty.Register("TaskStart", typeof(bool), typeof(TaskWindow));
+    /// <summary>
+    /// button that update the information of the engineer
+    /// </summary>
+    /// <param name="sender">button</param>
+    /// <param name="e"> click</param>
 
         private void UpdateInfo_Click(object sender, RoutedEventArgs e)
         {
@@ -146,6 +169,11 @@ namespace PL.Engineers;
 
 
         }
+    /// <summary>
+    /// to see more tasks to select
+    /// </summary>
+    /// <param name="sender">button</param>
+    /// <param name="e">click</param>
         private void TaskList_click(object sender, RoutedEventArgs e)
         {
             try
@@ -155,10 +183,20 @@ namespace PL.Engineers;
             catch(Exception ex)
             { MessageBox.Show(ex.Message); }
         }
+    /// <summary>
+    /// to click this button when the engineer finished his task
+    /// </summary>
+    /// <param name="sender"> button</param>
+    /// <param name="e"> click</param>
         private void EndTask_click(object sender, RoutedEventArgs e)
         {
             //TODO
         }
+    /// <summary>
+    /// start the task
+    /// </summary>
+    /// <param name="sender">button</param>
+    /// <param name="e">click</param>
 
         private void StratTask_click(object sender, RoutedEventArgs e)
         {

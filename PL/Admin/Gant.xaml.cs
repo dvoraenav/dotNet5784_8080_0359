@@ -22,8 +22,7 @@ public partial class Gant : Window
         DependencyProperty.Register("GanttList", typeof(IEnumerable<TaskInGantt>), typeof(Gant));
 
 
-
-    public Gant()
+    public Gant() 
     {
         GanttList = bl.Task.GanttList();
         InitializeComponent();

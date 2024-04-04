@@ -46,15 +46,30 @@ namespace PL.Admin
 
         public static readonly DependencyProperty ProjectEndProp =
             DependencyProperty.Register("ProjectEnd", typeof(bool), typeof(AdminMainWindow));
+        /// <summary>
+        /// to add engineers or update the details
+        /// </summary>
+        /// <param name="sender"> button</param>
+        /// <param name="e"> click</param>
 
         private void EngineerList_Click(object sender, RoutedEventArgs e)
         {
             new EngineerListWindow().Show();
         }
+        /// <summary>
+        /// add or update tasks and watch the list of all the tasks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TaskList_Click(object sender, RoutedEventArgs e)
         {
             new TaskForListWindow().Show();
         }
+        /// <summary>
+        /// to initilize data
+        /// </summary>
+        /// <param name="sender"> button</param>
+        /// <param name="e"> click</param>
         private void Initialization_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Would you like to create Initial data?", "Data Initialization", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly);
@@ -70,14 +85,19 @@ namespace PL.Admin
             MessageBoxResult result = MessageBox.Show("Would you like to reset the data?", "Reset Data", MessageBoxButton.YesNoCancel);
             if (result == MessageBoxResult.Yes) { s_bl.ResetDB(); }//reset data if return yes
         }
+        /// <summary>
+        /// to create starting date to project will be the current time
+        /// </summary>
+        /// <param name="sender"> button</param>
+        /// <param name="e"> click</param>
 
         private void StartProject_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 
-                if (s_bl!.StartDate == null)
-                    s_bl!.StartDate = DateTime.Now;//TODO
+                if (s_bl!.StartDate == null) // there is no starting date still
+                    s_bl!.StartDate = DateTime.Now; 
                 else
                     MessageBox.Show("A new project cannot be created. There is an existing project in progress");//TODO
             }

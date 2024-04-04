@@ -48,23 +48,21 @@ namespace PL.Engineer;
         get { return (BO.Engineer)GetValue(CurrentEngineerProperty); }
         set { SetValue(CurrentEngineerProperty, value); }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+   
     public static readonly DependencyProperty CurrentEngineerProperty =
         DependencyProperty.Register("CurrentEngineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
     /// <summary>
-    ///create the level of expiriance
+    ///return the level of expiriance
     /// </summary>
     public BO.EngineerExpireance Expireance { get; set; } = BO.EngineerExpireance.Beginner;//defult level is begineer
     /// <summary>
-    /// 
+    /// to select the level of the engineer
     /// </summary>
     /// <param name="sender"> combobox</param>
     /// <param name="e">select level </param>
     private void ExpirienceSelection(object sender, SelectionChangedEventArgs e)
     {
-        CurrentEngineer.Level = Expireance;//the level that selected
+        CurrentEngineer.Level = Expireance;   //the level that selected
     }
     /// <summary>
     /// 
@@ -82,7 +80,7 @@ namespace PL.Engineer;
        
     }
     /// <summary>
-    /// update the engineer
+    /// update the engineer details
     /// </summary>
     /// <param name="sender"> button of update</param>
     /// <param name="e">Contains state information and event data associated with the update </param>
@@ -96,6 +94,11 @@ namespace PL.Engineer;
         catch(Exception ex) { MessageBox.Show(ex.Message); }
 
     }
+    /// <summary>
+    /// to delete engineer
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     
     private void Delete_click(object sender, RoutedEventArgs e)
     {
@@ -107,6 +110,9 @@ namespace PL.Engineer;
         { MessageBox.Show(ex.Message); }
     }
 
+    /// <summary>
+    /// to know if we add engineer or update it because we don't allow to adit the id
+    /// </summary>
     public bool UpdateId 
     {
         get { return (bool)GetValue(changeId); }
