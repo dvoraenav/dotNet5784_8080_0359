@@ -81,16 +81,16 @@ public partial class MainWindow : Window
 
     private void EngineersMainW_click(object sender, RoutedEventArgs e)
     {
-        
-        string userInput = Microsoft.VisualBasic.Interaction.InputBox("Please enter your Id:", "Enter Id", "273044483");
-
-        
-        if (!string.IsNullOrEmpty(userInput))
+        try
         {
-            try { new EngineersMainW(int.Parse(userInput)).Show(); }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-          
+            string userInput = Microsoft.VisualBasic.Interaction.InputBox("Please enter your Id:", "Enter Id", "273044483");
+            int result = int.Parse(userInput);
+            BO.Engineer engineer = s_bl.Engineer.Read(result);
+            new EngineersMainW(result).Show();
         }
+        catch (Exception ex) { MessageBox.Show(ex.Message); }
+          
+        
        
     }
 }
