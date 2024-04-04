@@ -31,13 +31,8 @@
                       Grid.Column="1"  VerticalAlignment="Center" SelectionChanged="ExperienceSelection" Width="200" Height="35" FontSize="15" Margin="10"/>
                 <TextBlock Text="Search" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Height="30" Width="55" Margin="10,0,7,0"/>
                 <TextBox  VerticalAlignment="Center" FontSize="18" Height="35" Width="200" Margin="10" TextChanged="Search_TaskChanged"/>
-                <Button Content="Add Engineer" Grid.Column="2" HorizontalAlignment="Center" Height="50" Width="100" Click="AddEngineer_Click" FontSize="15" Margin="10">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="10"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                <Button Content="Add Engineer" Grid.Column="2" HorizontalAlignment="Center" Height="50" Width="100" Click="AddEngineer_Click" FontSize="15" Margin="10"/>
+
             </StackPanel>
         </Grid>
         <!---list view for the tasks-->

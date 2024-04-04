@@ -27,6 +27,7 @@ namespace PL.Task
             InitializeComponent();
             try
             {
+                AddMode = s_bl.StartDate is null;
                 TasksList = s_bl?.Task.TaskList()!;
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -42,6 +43,15 @@ namespace PL.Task
 
         public static readonly DependencyProperty TaskListProporty =
             DependencyProperty.Register("TasksList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskForListWindow));
+        public bool AddMode
+        {
+            get { return (bool)GetValue(AddModeProp); }
+            set { SetValue(AddModeProp, value); }
+        }
+
+        public static readonly DependencyProperty AddModeProp =
+            DependencyProperty.Register("AddMode", typeof(bool), typeof(TaskForListWindow));
+
         /// <summary>
         /// add new field to select("all" means that we want to select all the engineer)
         /// </summary>

@@ -40,9 +40,16 @@ namespace PL.Task
             set { SetValue(ProjectStartProp, value); }
         }
 
-        // Using a DependencyProperty as the backing store for OpenDialoge.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ProjectStartProp =
             DependencyProperty.Register("ProjectStart", typeof(bool), typeof(TaskWindow));
+        public bool TaskStart
+        {
+            get { return (bool)GetValue(TaskStartProp); }
+            set { SetValue(TaskStartProp, value); }
+        }
+
+        public static readonly DependencyProperty TaskStartProp =
+            DependencyProperty.Register("TaskStart", typeof(bool), typeof(TaskWindow));
 
 
         public bool AddMode
@@ -105,35 +112,41 @@ namespace PL.Task
 
         public TaskWindow(int id = 0)
         {
-            AddMode = id == 0;
-            ProjectStart = s_bl.StartDate is not null;
-            OpenDialoge = false;
-            TaskList = s_bl.Task.TaskList();
+            try
+            {
+                AddMode = id == 0;
+                ProjectStart = s_bl.StartDate is not null;
 
-            InitializeComponent();
-            if (id == 0)//it means that we are in adding condition
-            {
-                CurrentTask = new BO.Task();//create new engineer
-                CurrentTask.Depndencies = new();
-            }
-            else//we want to update
-            {
-                try
+                OpenDialoge = false;
+                TaskList = s_bl.Task.TaskList();
+
+                InitializeComponent();
+                if (id == 0)//it means that we are in adding condition
                 {
-                    CurrentTask = s_bl.Task.ReadTask(id)!;//all the details of this id
-                    TaskList = s_bl.Task.TaskList(x => x.Id != id);
+                    CurrentTask = new BO.Task();//create new engineer
+                    CurrentTask.Depndencies = new();
                 }
-                catch (Exception ex)//TODO what exception??
-                { MessageBox.Show(ex.Message); }
-            }
-            if (CurrentTask.Depndencies is null)
-                CurrentTask.Depndencies = new();
-            if (CurrentTask.Engineer is null)
-                CurrentTask.Engineer = new();
+                else//we want to update
+                {
+                    try
+                    {
+                        CurrentTask = s_bl.Task.ReadTask(id)!;//all the details of this id
+                        TaskList = s_bl.Task.TaskList(x => x.Id != id);
+                    }
+                    catch (Exception ex)//TODO what exception??
+                    { MessageBox.Show(ex.Message); }
+                }
+                if (CurrentTask.Depndencies is null)
+                    CurrentTask.Depndencies = new();
+                if (CurrentTask.Engineer is null)
+                    CurrentTask.Engineer = new();
 
-            Engineers = s_bl.Engineer.GetEngineerList(x => x.Level >= CurrentTask.DifficultyLevel).Select(x => x.FullName + " " + x.Id);
-            DepList = new(CurrentTask.Depndencies);
-        }
+                Engineers = s_bl.Engineer.GetEngineerList(x => x.Level >= CurrentTask.DifficultyLevel).Select(x => x.FullName + " " + x.Id);
+                DepList = new(CurrentTask.Depndencies);
+                TaskStart = CurrentTask.StartTask is not null;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            }
 
 
         /*****************************   Function  **************************/
@@ -169,22 +182,7 @@ namespace PL.Task
 
         private void ChangeDependencies(object sender, RoutedEventArgs e) => OpenDialoge = true;
 
-        //private void Deleteclick_Button(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (sender is Button button)
-        //        {
-        //            TaskInList selected = (TaskInList)button.Tag;
-        //            CurrentTask.Depndencies.RemoveAll(dep => dep.Id == selected.Id);
-        //            BO.Task tmp = CurrentTask;
-        //            CurrentTask = null;
-        //            CurrentTask = tmp;
-        //        }
-        //    }
-        //    catch (Exception ex) { MessageBox.Show(ex.Message); }
-        //}
-
+       
         private void AddDependency(object sender, MouseButtonEventArgs e)
         {
             try
@@ -224,6 +222,26 @@ namespace PL.Task
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+        private void Delete_click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Would you like to delete this engineer?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly);
+                if (result == MessageBoxResult.Yes) { s_bl.Task.Delete(CurrentTask.Id); }
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message); }
+        }
+
+        private void EndTask_click(object sender, RoutedEventArgs e)
+        {
+            //TODO
+        }
+
+        private void StratTask_click(object sender, RoutedEventArgs e)
+        {
+            //TODO
         }
     }
 }

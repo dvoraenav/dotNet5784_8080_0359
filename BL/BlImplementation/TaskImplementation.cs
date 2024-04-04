@@ -2,7 +2,6 @@
 using BO;
 using DO;
 using System.Data;
-using System.Security.Cryptography;
 
 namespace BlImplementation;
 
@@ -278,16 +277,6 @@ public class TaskImplementation : ITask
                task.EndTask is null ? BO.TaskStatus.OnTrack :
                BO.TaskStatus.Done;
 
-        //if (task.EndTask.HasValue && task.EndTask < _bl.Clock)//we finishe the task
-        //    return BO.TaskStatus.Done;
-        //if (!task.ScheduleStart.HasValue)// we  didnt create starting date
-        //    return BO.TaskStatus.Unscheduled;
-        //if (task.ScheduleStart.HasValue && !task.StartTask.HasValue)//we created starting date whisout start work
-        //    return BO.TaskStatus.Scheduled;
-        //if (task.StartTask.HasValue && !task.EndTask.HasValue)//we started work but didnt finish=in the middle
-        //    return BO.TaskStatus.OnTrack;
-        //return BO.TaskStatus.Unscheduled;
-
     }
 
     /// <summary>
@@ -298,13 +287,17 @@ public class TaskImplementation : ITask
     /// <exception cref="BO.BlNullPropertyException">if the name is empty string</exception>
     private void InputIntegrityCheck(BO.Task item)
     {
-
+        if (!BO.Tools.IsAllLetters(item.Name!))
+            throw new BO.BlInvalidInputPropertyException($"Task's name only contins letters");
         if (item.Name == "")
             throw new BO.BlInvalidInputPropertyException($"Task's name can not be empty");
-        if (item.StartTask < item.ScheduleStart)
-            throw new BO.BlInvalidInputPropertyException($"Starting can't be earlier then {item.ScheduleStart}");
+        if (item.ScheduleStart < _dal.StartDate)
+            throw new BO.BlInvalidInputPropertyException($"Schedule date can't be earlier then {_dal.StartDate}");
         if (item.EndTask < item.StartTask)
-            throw new BO.BlInvalidInputPropertyException($"Starting can't be earlier then {item.StartTask}");
+            if (item.StartTask < item.ScheduleStart)
+            throw new BO.BlInvalidInputPropertyException($"Starting date can't be earlier then {item.ScheduleStart}");
+        if (item.EndTask < item.StartTask)
+            throw new BO.BlInvalidInputPropertyException($"Ending date can't be earlier then {item.StartTask}");
 
     }
 

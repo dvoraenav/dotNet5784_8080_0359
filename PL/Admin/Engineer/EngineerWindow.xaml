@@ -45,13 +45,8 @@
             </Button.Resources>
 
         </Button>
-        <Button Grid.Column="1" Grid.Row="6" FontSize="15" Content="Update" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityOfUpdateKey}}" Click="UpdateEngineer_Click" >
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="10"/>
-                </Style>
-            </Button.Resources>
+        <Button Grid.Column="1" Grid.Row="6" FontSize="15" Content="Update" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityOfUpdateKey}}" Click="UpdateEngineer_Click" />
+        <Button Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"  FontSize="15" Content="Delete" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityOfUpdateKey}}" Click="Delete_click" />
 
-        </Button>
     </Grid>
 </Window>

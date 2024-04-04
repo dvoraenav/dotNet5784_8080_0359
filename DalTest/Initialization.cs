@@ -1,11 +1,12 @@
-﻿namespace DalTest;
-using DalApi;
+﻿using DalApi;
 using DO;
+
 using System.Xml.Linq;
 using Dal;
 using System.Runtime.CompilerServices;
 using System.Data.Common;
 
+namespace DalTest;
 public static class Initialization
 {
     private static IDal? s_dal;
@@ -53,37 +54,37 @@ public static class Initialization
     /// </summary>
     private static void createDependency()
     {
-        int[,] taskDependencies =
+        String[,] taskDependencies =
 {
-    // CurrentTaskId, LastTaskId
-    {1, 0},  // Research depends on Define
-    {2, 0},  // Scope depends on Define
-    {3, 2},  // Plan depends on Scope
-    {5, 3},  // Resources depends on Plan
-    {6, 3},  // Risk depends on Plan
-    {7, 3},  // Milestones depends on Plan
-    {9, 5},  // Team depends on Resources
-    {9, 4},  // Team depends on Stakeholders
-    {10, 9}, // Communication depends on Team
-    {11, 3}, // Design depends on Plan
-    {12, 11}, // Infrastructure depends on Design
-    {13, 12}, // Coding depends on Infrastructure
-    {14, 13}, // Quality depends on Coding
-    {15, 14}, // Testing depends on Quality
-    {16, 15}, // Deployment depends on Testing
-    {17, 16}, // Monitor depends on Deployment
-    {18, 17}, // Issues depends on Monitor
-    {19, 18}, // Review depends on Issues
-    {20, 19}  // Closure depends on Review
-};
+   {"Research Needs", "Define Goals"},  // Research depends on Define
+        {"Scope Project", "Define Goals"},  // Scope depends on Define
+        {"Plan Strategy", "Scope Project"},  // Plan depends on Scope
+        {"Allocate Resources", "Plan Strategy"},  // Resources depends on Plan
+        {"Manage Risks", "Plan Strategy"},  // Risk depends on Plan
+        {"Set Milestones", "Plan Strategy"},  // Milestones depends on Plan
+        {"Build Team", "Allocate Resources"},  // Team depends on Resources
+        {"Build Team", "Engage Stakeholders"},  // Team depends on Stakeholders
+        {"Establish Communication", "Build Team"},  // Communication depends on Team
+        {"Design Architecture", "Plan Strategy"},  // Design depends on Plan
+        {"Implement Infrastructure", "Design Architecture"},  // Infrastructure depends on Design
+        {"Code Functionality", "Implement Infrastructure"},  // Coding depends on Infrastructure
+        {"Ensure Quality", "Code Functionality"},  // Quality depends on Coding
+        {"Perform Testing", "Ensure Quality"},  // Testing depends on Quality
+        {"Deploy Components", "Perform Testing"},  // Deployment depends on Testing
+        {"Monitor Progress", "Deploy Components"},  // Monitor depends on Deployment
+        {"Address Issues", "Monitor Progress"},  // Issues depends on Monitor
+        {"Conduct Review", "Address Issues"},  // Review depends on Issues
+        {"Document Closure", "Conduct Review"}  // Closure depends on Review
+    };
 
         //array of dependency while the first in
         //couple is the last id and second is current id
 
         for (int i = 0; i < taskDependencies.GetLength(0); i++)
         {
-            int oldTID = taskDependencies[i, 0]; //last dependency
-            int currentTID = taskDependencies[i, 1];//cureent dependency
+            
+            int oldTID = s_dal!.Task.Read(x => x.Name == taskDependencies[i, 0])!.Id; //last dependency
+            int currentTID = s_dal!.Task.Read(x => x.Name == taskDependencies[i, 1])!.Id;//cureent dependency
             Dependency d = new Dependency(i, currentTID, oldTID);
             s_dal?.Dependency!.Create(d);
         }
@@ -145,7 +146,7 @@ public static class Initialization
             if (i < 5)
                 start = StartDate.Value;
 
-            Task newTask = new
+            DO.Task newTask = new
                (
                 Id: i,
                 Name: name,
@@ -173,6 +174,7 @@ public static class Initialization
     }
     public static void Reset()
     {
+        //TODO
         //resetting the serial numbers to 1
         //XElement config = XMLTools.LoadListFromXMLElement("data-config");
         //config.Element("NextTaskId")!.Value = "1";
