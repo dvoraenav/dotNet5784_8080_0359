@@ -24,7 +24,7 @@ namespace PL.Engineer;
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get;//static field
     public EngineerWindow(int id = 0)//defult id parameter
     {
-        
+        UpdateId = id == 0;
         InitializeComponent();
         if (id == 0)//it means that we are in adding condition
         { BO.Engineer engineer = new BO.Engineer();//create new engineer
@@ -106,4 +106,13 @@ namespace PL.Engineer;
         catch (Exception ex)
         { MessageBox.Show(ex.Message); }
     }
+
+    public bool UpdateId 
+    {
+        get { return (bool)GetValue(changeId); }
+        set { SetValue(changeId, value); }
+    }
+    
+    public static readonly DependencyProperty changeId =
+        DependencyProperty.Register("UpdateId", typeof(bool), typeof(EngineerWindow));
 }
