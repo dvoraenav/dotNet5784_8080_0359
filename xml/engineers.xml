@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfEngineer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Engineer>
-    <Id>273044483</Id>
-    <FullName>John Smith</FullName>
-    <Mail>john.smith@email.com</Mail>
-    <Cost>35</Cost>
-    <Level>Beginner</Level>
-  </Engineer>
-  <Engineer>
     <Id>215191420</Id>
     <FullName>Emma Johnson</FullName>
     <Mail>emma.johnson@email.com</Mail>
@@ -32,6 +25,13 @@
     <Id>251117987</Id>
     <FullName>David Brown</FullName>
     <Mail>david.brown@email.com</Mail>
+    <Cost>35</Cost>
+    <Level>Beginner</Level>
+  </Engineer>
+  <Engineer>
+    <Id>273044483</Id>
+    <FullName>John Smith</FullName>
+    <Mail>john.smith@email.com</Mail>
     <Cost>35</Cost>
     <Level>Beginner</Level>
   </Engineer>
