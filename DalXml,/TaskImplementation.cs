@@ -26,7 +26,7 @@ internal class TaskImplementation : ITask
         XMLTools.SaveListToXMLSerializer(tasks, s_tasks_xml);
     }
 
-    public void Read(int id) => Read(x => x.Id == id);
+    //public void Read(int id) => Read(x => x.Id == id);
 
     public Task? Read(Func<Task, bool> filter) => LoadListFromXMLSerializer<Task>(s_tasks_xml).Where(filter).FirstOrDefault();
 

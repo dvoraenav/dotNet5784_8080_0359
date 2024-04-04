@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -93,7 +94,16 @@ namespace PL.Engineer;
             this.Close();//auto closing window
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
-        
 
+    }
+    
+    private void Delete_click(object sender, RoutedEventArgs e)
+    {
+        try {
+            MessageBoxResult result = MessageBox.Show("Would you like to delete this engineer?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly);
+            if (result == MessageBoxResult.Yes) { s_bl.Engineer.Delete(CurrentEngineer.Id); }
+        }
+        catch (Exception ex)
+        { MessageBox.Show(ex.Message); }
     }
 }

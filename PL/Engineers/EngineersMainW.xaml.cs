@@ -24,7 +24,9 @@ namespace PL.Engineers
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get;//static field
 
         public EngineersMainW(int id=0)
-        { 
+        {
+
+            ProjectStart = s_bl.StartDate is not null;
             InitializeComponent();
             if (id == 0)//it means that we are in adding condition
             {
@@ -39,6 +41,8 @@ namespace PL.Engineers
                     BO.TaskInEngineer? t = s_bl.Engineer.GetTaskInEngineer(id);
                     if (t != null)
                     {
+                        TaskStart = CurrentTask!.StartTask is not null;
+                        
                         CurrentTask = s_bl.Task.ReadTask(t.Id);
                         Busy = "Visible";
                         Messege = "Hidden";
@@ -52,10 +56,9 @@ namespace PL.Engineers
                         Busy = "Hidden";
                         Messege = "Visible";
                     }
+                  
 
-
-
-                    }
+                }
                 catch (Exception ex)//TODO what exception??
                 { MessageBox.Show(ex.Message); }
             }
@@ -106,7 +109,22 @@ namespace PL.Engineers
         public static readonly DependencyProperty MessegeProp =
             DependencyProperty.Register("Messege", typeof(string), typeof(EngineersMainW));
 
+        public bool ProjectStart
+        {
+            get { return (bool)GetValue(ProjectStartProp); }
+            set { SetValue(ProjectStartProp, value); }
+        }
 
+        public static readonly DependencyProperty ProjectStartProp =
+            DependencyProperty.Register("ProjectStart", typeof(bool), typeof(TaskWindow));
+        public bool TaskStart
+        {
+            get { return (bool)GetValue(TaskStartProp); }
+            set { SetValue(TaskStartProp, value); }
+        }
+
+        public static readonly DependencyProperty TaskStartProp =
+            DependencyProperty.Register("TaskStart", typeof(bool), typeof(TaskWindow));
 
         private void UpdateInfo_Click(object sender, RoutedEventArgs e)
         {
@@ -138,6 +156,15 @@ namespace PL.Engineers
             }
             catch(Exception ex)
             { MessageBox.Show(ex.Message); }
+        }
+        private void EndTask_click(object sender, RoutedEventArgs e)
+        {
+            //TODO
+        }
+
+        private void StratTask_click(object sender, RoutedEventArgs e)
+        {
+            //TODO
         }
     }
 }

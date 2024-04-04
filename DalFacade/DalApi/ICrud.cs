@@ -8,11 +8,7 @@
         /// <param name="item">new object to add to the entity</param>
         /// <returns>the id of the new entity  (specially useful if it is an automatic number)</returns>
         int Create(T item);
-        /// <summary>
-        /// Return a reference to a single object with a specific id or null when the object does not exist
-        /// </summary>
-        /// <param name="id">Object ID number</param>
-        public void Read(int id);
+      
         /// <summary>
         /// search for the value that maintains the filter
         /// </summary>

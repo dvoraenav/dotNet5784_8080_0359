@@ -28,10 +28,13 @@
                     <TextBlock Text="creation time:" Width="130" Height="35"  FontSize="16" HorizontalAlignment="Left" Foreground="#FFFFDE87"  />
                     <TextBlock Text="{Binding NewTask}" Width="150" Height="25" FontSize="14" />
                 </StackPanel>
+                
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,50,0" VerticalAlignment="Center" Grid.Row="0">
                 <Label  Content="Task Status:" Height="40" Width="140" FontSize="25" Foreground="#FFFFDE87" />
                 <TextBlock Text="{Binding Status}" Height="20" Width="100" FontSize="15" TextAlignment="Center"/>
+                <Button Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"  FontSize="15" Content="Delete" Visibility="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToVisibilityOfUpdateKey}}" Click="Delete_click" />
+
             </StackPanel>
             <StackPanel  Grid.Row="1"  Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"  Margin="0,50,35,0">
                 <StackPanel Grid.Row="1" Orientation="Vertical"  >
@@ -58,11 +61,18 @@
                     <Label Content="Engineer:" Height="40" Width="210"   Margin="0,20,0,0"/>
                     <Label Content="Schedule date to start:" Height="40" Width="210"   Margin="0,20,0,0"
                            IsEnabled="{Binding ProjectStart ,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"/>
-                    <Label Content="Starting date:" Height="40" Width="210"   Margin="0,20,0,0"
-                           IsEnabled="{Binding ProjectStart ,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"/>
-                    <Label Content="Ending date:" Height="40" Width="210"   Margin="0,20,0,0"
-                           IsEnabled="{Binding ProjectStart ,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Starting date:" Height="40" Width="130"   Margin="0,20,0,0"/>
 
+                        <Button Width="75" Height="30"  Margin="0,10,0,0" Content="start task" FontSize="15" Click="StratTask_click"
+                               IsEnabled="{Binding ProjectStart ,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Ending date:" Height="40" Width="130"   Margin="0,20,0,0" />
+                        
+                        <Button Width="75" Height="30"  Margin="0,10,0,0" Content="end task" FontSize="15" Click="EndTask_click"
+                           IsEnabled="{Binding TaskStart ,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"/>
+                    </StackPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <TextBox Grid.Row="7" Grid.Column="1" Height="35"  Margin="0,20,0,0" Width="150" HorizontalAlignment="Left"  Text="{Binding NumDays,StringFormat='{}{0:dd}',Mode=TwoWay,NotifyOnValidationError=False}"/>
@@ -71,12 +81,12 @@
                     <DatePicker  Height="40" Width="150" HorizontalAlignment="Right" Margin="0,20,0,0" 
                                  Text="{Binding ScheduleStart,Mode=TwoWay}"
                                  IsEnabled="{Binding ProjectStart ,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"/>
-                    <DatePicker  Height="40" Width="150" HorizontalAlignment="Right" Margin="0,20,0,0" 
+                    <TextBlock Height="40" Width="150" HorizontalAlignment="Right" Margin="0,30,0,0" 
                                  Text="{Binding StartTask,Mode=TwoWay}"
                                  IsEnabled="{Binding ProjectStart ,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"/>
-                    <DatePicker  Height="40" Width="150" HorizontalAlignment="Right" Margin="0,20,0,0" 
-                                 Text="{Binding EndTask,Mode=TwoWay,NotifyOnValidationError=False}"
-                                 IsEnabled="{Binding ProjectStart ,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"/>
+                    <TextBlock  Height="40" Width="150" HorizontalAlignment="Right" Margin="0,30,0,0" 
+                                 Text="{Binding EndTask,Mode=TwoWay,NotifyOnValidationError=False}"/>
+                    
 
                 </StackPanel>
 

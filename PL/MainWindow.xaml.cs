@@ -87,8 +87,9 @@ public partial class MainWindow : Window
         
         if (!string.IsNullOrEmpty(userInput))
         {
-           
-            new EngineersMainW(int.Parse(userInput)).Show();
+            try { new EngineersMainW(int.Parse(userInput)).Show(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+          
         }
        
     }
