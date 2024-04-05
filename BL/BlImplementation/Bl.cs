@@ -15,7 +15,10 @@ internal class Bl : IBl
     public DateTime? StartDate
     {
         get { return dal.StartDate; }
-        set { if (StartDate != null)
+        set
+        {
+            if( value != null )
+            if (StartDate != null)
                 throw new Exception("A new project cannot be created. There is an existing project in progress");//TODO
             else dal.StartDate = value; }
     }
@@ -48,16 +51,15 @@ internal class Bl : IBl
     public void InitializeDB() 
     {
         ResetDB();
-        StartDate = null;
-        EndDate = null;
         DalTest.Initialization.Do();
     }
         
     public void ResetDB()
     {
+        dal.StartDate = null;
+        dal.EndDate = null;
         DalTest.Initialization.Reset();
-        StartDate = null;
-        EndDate = null;
+       
     }
 
     public DateTime Clock { get { return dal.Clock; }  set { dal.Clock = value; } }

@@ -177,7 +177,7 @@ public static class Initialization
                 string description = taskDescriptions[i];//description of the task
                 string result = taskResults[i];//result og the task
                 string comment = "the task is wating to start";//task comment
-                DateTime? newT = DateTime.Now; //creation time
+                DateTime? newT = s_dal.Clock; //creation time
                 TimeSpan? numDays = TimeSpan.FromDays(15 * (i + 1)); //creation time
 
 

@@ -131,8 +131,7 @@ namespace PL.Admin
         private void StartProject_Click(object sender, RoutedEventArgs e)
         {
             OpenDialoge = true;
-          
-            //TODO
+         
         }
         private void Gantt_window(object sender, RoutedEventArgs e) => new Gant().Show();
 

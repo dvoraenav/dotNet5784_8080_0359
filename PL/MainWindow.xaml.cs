@@ -89,7 +89,9 @@ public partial class MainWindow : Window
         {
             while (isClose)
             {
-                Application.Current.Dispatcher.Invoke(() => { CurrentDate = CurrentDate.AddSeconds(1); });
+                Application.Current.Dispatcher.Invoke(() => { CurrentDate = CurrentDate.AddSeconds(1);
+                    s_bl.Clock = CurrentDate;
+                });
                 Thread.Sleep(1000);
             }
         }).Start();

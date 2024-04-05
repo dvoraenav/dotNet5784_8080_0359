@@ -1,281 +1,281 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Task>
-    <Id>181</Id>
+    <Id>261</Id>
     <Name>Define Goals</Name>
     <Description>Define project goals</Description>
     <Result>Clear project goals defined</Result>
-    <NewTask>2024-04-05T15:54:22.2975088+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P15D</NumDays>
-    <ScheduleStart>2024-04-06T00:00:00</ScheduleStart>
-    <StartTask xsi:nil="true" />
-    <EndTask xsi:nil="true" />
-    <EngineerId xsi:nil="true" />
+    <ScheduleStart>2024-07-16T00:00:00</ScheduleStart>
+    <StartTask>2024-07-05T17:22:22.0273542+03:00</StartTask>
+    <EndTask>2024-07-20T17:22:52.0273542+03:00</EndTask>
+    <EngineerId>0</EngineerId>
   </Task>
   <Task>
-    <Id>182</Id>
+    <Id>262</Id>
     <Name>Research Needs</Name>
     <Description>Research construction requirements</Description>
     <Result>Construction requirements analyzed</Result>
-    <NewTask>2024-04-05T15:54:22.3054771+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P30D</NumDays>
-    <ScheduleStart>2024-04-06T00:00:00</ScheduleStart>
-    <StartTask>2024-04-05T16:35:43.3899521+03:00</StartTask>
-    <EndTask>2024-04-05T16:35:43.3899521+03:00</EndTask>
-    <EngineerId>273044483</EngineerId>
+    <ScheduleStart>2024-07-16T00:00:00</ScheduleStart>
+    <StartTask>2024-07-20T17:23:24.0273542+03:00</StartTask>
+    <EndTask>2024-07-22T17:23:39.0273542+03:00</EndTask>
+    <EngineerId>0</EngineerId>
   </Task>
   <Task>
-    <Id>183</Id>
+    <Id>263</Id>
     <Name>Scope Project</Name>
     <Description>Scope the project</Description>
     <Result>Project scope determined</Result>
-    <NewTask>2024-04-05T15:54:22.3075936+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P45D</NumDays>
-    <ScheduleStart>2024-04-06T00:00:00</ScheduleStart>
+    <ScheduleStart>2024-07-16T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>184</Id>
+    <Id>264</Id>
     <Name>Plan Strategy</Name>
     <Description>Develop detailed project plan</Description>
     <Result>Detailed project plan created</Result>
-    <NewTask>2024-04-05T15:54:22.3091078+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P60D</NumDays>
-    <ScheduleStart>2024-04-06T00:00:00</ScheduleStart>
+    <ScheduleStart>2024-07-16T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>185</Id>
+    <Id>265</Id>
     <Name>Engage Stakeholders</Name>
     <Description>Identify project stakeholders</Description>
     <Result>Stakeholders identified</Result>
-    <NewTask>2024-04-05T15:54:22.3107358+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P75D</NumDays>
-    <ScheduleStart>2024-04-06T00:00:00</ScheduleStart>
+    <ScheduleStart>2024-07-16T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>186</Id>
+    <Id>266</Id>
     <Name>Allocate Resources</Name>
     <Description>Allocate project resources and budget</Description>
     <Result>Resources allocated and budget set</Result>
-    <NewTask>2024-04-05T16:11:46.3779195+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P90D</NumDays>
-    <ScheduleStart>2024-06-05T00:00:00</ScheduleStart>
+    <ScheduleStart>2024-07-16T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
-    <EngineerId>273044483</EngineerId>
+    <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>187</Id>
+    <Id>267</Id>
     <Name>Manage Risks</Name>
     <Description>Assess and manage project risks</Description>
     <Result>Risks assessed and managed</Result>
-    <NewTask>2024-04-05T15:54:22.3145583+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P105D</NumDays>
-    <ScheduleStart>2024-04-06T00:00:00</ScheduleStart>
+    <ScheduleStart>2024-09-14T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>188</Id>
+    <Id>268</Id>
     <Name>Set Milestones</Name>
     <Description>Define project milestones</Description>
     <Result>Milestones defined</Result>
-    <NewTask>2024-04-05T15:54:22.3165058+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P120D</NumDays>
-    <ScheduleStart>2024-04-06T00:00:00</ScheduleStart>
+    <ScheduleStart>2024-07-16T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>189</Id>
+    <Id>269</Id>
     <Name>Build Team</Name>
     <Description>Assemble project team</Description>
     <Result>Project team assembled</Result>
-    <NewTask>2024-04-05T16:11:46.3779195+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P135D</NumDays>
-    <ScheduleStart>2024-06-05T00:00:00</ScheduleStart>
+    <ScheduleStart>2024-08-30T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
-    <EngineerId>273044483</EngineerId>
+    <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>190</Id>
+    <Id>270</Id>
     <Name>Establish Communication</Name>
     <Description>Develop communication plan</Description>
     <Result>Communication plan developed</Result>
-    <NewTask>2024-04-05T15:54:22.3214357+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P150D</NumDays>
-    <ScheduleStart>2024-04-06T00:00:00</ScheduleStart>
+    <ScheduleStart>2024-07-31T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>191</Id>
+    <Id>271</Id>
     <Name>Design Architecture</Name>
     <Description>Design project architecture</Description>
     <Result>Architecture designed</Result>
-    <NewTask>2024-04-05T15:54:22.3237509+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P165D</NumDays>
-    <ScheduleStart>2024-05-21T00:00:00</ScheduleStart>
+    <ScheduleStart>2024-07-16T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>192</Id>
+    <Id>272</Id>
     <Name>Implement Infrastructure</Name>
     <Description>Implement project infrastructure</Description>
     <Result>Infrastructure implemented</Result>
-    <NewTask>2024-04-05T16:11:46.3779195+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P180D</NumDays>
-    <ScheduleStart>2024-10-18T00:00:00</ScheduleStart>
+    <ScheduleStart>2024-12-28T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
-    <EngineerId>273044483</EngineerId>
+    <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>193</Id>
+    <Id>273</Id>
     <Name>Code Functionality</Name>
     <Description>Code project functionalities</Description>
     <Result>Functionalities coded</Result>
-    <NewTask>2024-04-05T15:54:22.3278979+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P195D</NumDays>
-    <ScheduleStart>2024-04-06T00:00:00</ScheduleStart>
+    <ScheduleStart>2024-12-28T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>194</Id>
+    <Id>274</Id>
     <Name>Ensure Quality</Name>
     <Description>Ensure project quality standards</Description>
     <Result>Quality standards ensured</Result>
-    <NewTask>2024-04-05T15:54:22.3298479+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P210D</NumDays>
-    <ScheduleStart>2024-11-02T00:00:00</ScheduleStart>
+    <ScheduleStart>2024-12-28T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>195</Id>
+    <Id>275</Id>
     <Name>Perform Testing</Name>
     <Description>Conduct testing procedures</Description>
     <Result>Testing conducted</Result>
-    <NewTask>2024-04-05T15:54:22.3317787+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P225D</NumDays>
-    <ScheduleStart>2024-11-02T00:00:00</ScheduleStart>
+    <ScheduleStart>2024-10-14T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>196</Id>
+    <Id>276</Id>
     <Name>Deploy Components</Name>
     <Description>Deploy project components</Description>
     <Result>Components deployed</Result>
-    <NewTask>2024-04-05T15:54:22.3338865+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P240D</NumDays>
-    <ScheduleStart>2024-11-02T00:00:00</ScheduleStart>
+    <ScheduleStart>2024-12-28T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>197</Id>
+    <Id>277</Id>
     <Name>Monitor Progress</Name>
     <Description>Monitor project progress</Description>
     <Result>Progress monitored</Result>
-    <NewTask>2024-04-05T15:54:22.3368545+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P255D</NumDays>
-    <ScheduleStart>2025-05-31T00:00:00</ScheduleStart>
+    <ScheduleStart>2025-07-26T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>198</Id>
+    <Id>278</Id>
     <Name>Address Issues</Name>
     <Description>Address and resolve project issues</Description>
     <Result>Issues addressed</Result>
-    <NewTask>2024-04-05T15:54:22.3392764+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P270D</NumDays>
-    <ScheduleStart>2025-06-30T00:00:00</ScheduleStart>
+    <ScheduleStart>2025-08-25T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>199</Id>
+    <Id>279</Id>
     <Name>Conduct Review</Name>
     <Description>Conduct project review</Description>
     <Result>Review conducted</Result>
-    <NewTask>2024-04-05T15:54:22.3412491+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P285D</NumDays>
-    <ScheduleStart>2025-06-30T00:00:00</ScheduleStart>
+    <ScheduleStart>2025-07-26T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />
   </Task>
   <Task>
-    <Id>200</Id>
+    <Id>280</Id>
     <Name>Document Closure</Name>
     <Description>Document project closure</Description>
     <Result>Closure documented</Result>
-    <NewTask>2024-04-05T15:54:22.3433153+03:00</NewTask>
+    <NewTask>2024-07-05T17:21:20.0273542+03:00</NewTask>
     <Comment>the task is wating to start</Comment>
     <DifficultyLevel>Beginner</DifficultyLevel>
     <NumDays>P300D</NumDays>
-    <ScheduleStart>2025-06-30T00:00:00</ScheduleStart>
+    <ScheduleStart>2025-08-25T00:00:00</ScheduleStart>
     <StartTask xsi:nil="true" />
     <EndTask xsi:nil="true" />
     <EngineerId xsi:nil="true" />

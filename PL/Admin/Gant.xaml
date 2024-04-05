@@ -39,6 +39,7 @@
             <Label Content="Scheduled"  FontSize="18" Background="LightGoldenrodYellow" />
             <Label Content="OnTrack"  FontSize="18" Background="Yellow"/>
             <Label Content="Done"  FontSize="18" Background="Orange"/>
+            <Label Content="Late"  FontSize="18" Background="Red"/>
         </StackPanel>
     </Grid>
 </Window>
