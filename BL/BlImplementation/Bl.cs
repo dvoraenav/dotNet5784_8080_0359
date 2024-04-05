@@ -6,8 +6,8 @@ namespace BlImplementation;
 
 internal class Bl : IBl
 {
-    
-   
+
+
     DalApi.IDal dal = DalApi.Factory.Get;
     /// <summary>
     /// The start date of the project
@@ -15,9 +15,9 @@ internal class Bl : IBl
     public DateTime? StartDate
     {
         get { return dal.StartDate; }
-        set {if (StartDate != null)
+        set { if (StartDate != null)
                 throw new Exception("A new project cannot be created. There is an existing project in progress");//TODO
-             else dal.StartDate = value; }
+            else dal.StartDate = value; }
     }
 
     /// <summary>
@@ -28,11 +28,14 @@ internal class Bl : IBl
         get { return dal.EndDate; }
         set
         {
-            if (StartDate is null ||
-                StartDate > value ||
-                dal.Task.ReadAll(x => x.ScheduleStart == null ||
-                (x.ScheduleStart + x.NumDays) > value).Any())
-                throw new BlInvalidInputPropertyException("The Date is too early");//TODO
+            if (EndDate != null)
+            {
+                if (StartDate is null ||
+                    StartDate > value ||
+                    dal.Task.ReadAll(x => x.ScheduleStart == null ||
+                    (x.ScheduleStart + x.NumDays) > value).Any())
+                    throw new BlInvalidInputPropertyException("The Date is too early");//TODO
+            }
             dal.EndDate = value;
         }
     }
@@ -42,8 +45,20 @@ internal class Bl : IBl
     public IEngineer Engineer => new EngineerImplementation();
     public ITask Task => new TaskImplementation(this);
 
-    public void InitializeDB() => DalTest.Initialization.Do();
-    public void ResetDB() => DalTest.Initialization.Reset();
+    public void InitializeDB() 
+    {
+        ResetDB();
+        StartDate = null;
+        EndDate = null;
+        DalTest.Initialization.Do();
+    }
+        
+    public void ResetDB()
+    {
+        DalTest.Initialization.Reset();
+        StartDate = null;
+        EndDate = null;
+    }
 
     public DateTime Clock { get { return dal.Clock; }  set { dal.Clock = value; } }
  }
