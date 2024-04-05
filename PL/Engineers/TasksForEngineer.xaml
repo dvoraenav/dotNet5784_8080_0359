@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineers"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="TasksForEngineer" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -27,7 +28,7 @@
             </StackPanel>
         </Grid>
         <!---list view for the tasks-->
-        <ListView Margin="5" Grid.Row="1" SelectedValue="{Binding Path=Selected_Task, Mode=TwoWay}" ItemsSource="{Binding Path=TasksList}" MouseDoubleClick="TaskSelection"  FontSize="15"/>
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding TasksList}" MouseDoubleClick="TaskSelection"  FontSize="15"/>
 
     </Grid>
 </Window>

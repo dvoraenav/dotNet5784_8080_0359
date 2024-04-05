@@ -132,6 +132,7 @@ namespace PL.Task
                     {
                         CurrentTask = s_bl.Task.ReadTask(id)!;//all the details of this id
                         TaskList = s_bl.Task.TaskList(x => x.Id != id);
+                        Difficulty = CurrentTask.DifficultyLevel;
                     }
                     catch (Exception ex)//TODO what exception??
                     { MessageBox.Show(ex.Message); }
@@ -181,7 +182,19 @@ namespace PL.Task
         }
 
 
-        private void ChangeDependencies(object sender, RoutedEventArgs e) => OpenDialoge = true;
+        private void ChangeDependencies(object sender, RoutedEventArgs e)
+        {try
+            {
+                if (s_bl.EndDate != null)
+                    MessageBox.Show("The project schedule already exists. It is not possible to add new dependencies");
+                else
+                {
+                    OpenDialoge = true;
+                }
+            }
+            catch(Exception ex)
+            { MessageBox.Show(ex.Message); }
+        }
 
        
         private void AddDependency(object sender, MouseButtonEventArgs e)
@@ -239,11 +252,14 @@ namespace PL.Task
         {
             try
             {
-                if(CurrentTask.EndTask != null) { MessageBox.Show("The task already finished"); }
-                CurrentTask.EndTask = s_bl.Clock;
-                s_bl.Task.Update(CurrentTask);
-                MessageBox.Show("The ending date was updated succesfully");
-                this.Close();
+                if (CurrentTask.EndTask != null) { MessageBox.Show("The task already finished"); }
+                else
+                {
+                    CurrentTask.EndTask = s_bl.Clock;
+                    s_bl.Task.Update(CurrentTask);
+                    MessageBox.Show("The ending date was updated succesfully");
+                    this.Close();
+                }
             }
             catch(Exception ex) { MessageBox.Show(ex.Message); }
         }

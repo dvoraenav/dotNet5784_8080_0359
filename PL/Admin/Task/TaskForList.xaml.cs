@@ -89,7 +89,7 @@ namespace PL.Task
             try
             {
                 BO.TaskInList? taskList = ((sender as ListView)?.SelectedItem as BO.TaskInList);
-                new TaskWindow(taskList!.Id).ShowDialog();// create new engineer window in adding condition and prevent return to the privius window until it is closed
+                new TaskWindow(taskList!.Id).ShowDialog();
                 TasksList = s_bl?.Task.TaskList()!;
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }

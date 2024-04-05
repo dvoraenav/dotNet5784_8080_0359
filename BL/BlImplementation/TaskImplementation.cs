@@ -144,52 +144,54 @@ public class TaskImplementation : ITask
         {
             InputIntegrityCheck(item);
             DO.Task task = _dal.Task.Read(x => x.Id == item.Id) ?? throw new BO.BlDoesNotExistException($"Task with ID {item.Id} dose not exists");
+            if (item.Engineer.Id != 0 && task.EngineerId != null && task.EngineerId != item.Engineer.Id)
+                throw new BO.BlInvalidInputPropertyException("the task already conect to other engineer yadebil");
+
 
 
             if (_dal.EndDate == null)//we didnt create the end date time of the task
-            {
-                task = task with//we can update everything
                 {
-                    Name = item.Name,
-                    Description = item.Description,
-                    NumDays = item.NumDays,
-                    DifficultyLevel = (DO.EngineerExpireance)item.DifficultyLevel,
-                    Comment = item.Comment,
-                    NewTask = item.NewTask,
-                    Result = item.Result,
-                    EngineerId = item.Engineer?.Id,
-                };
-
-                IEnumerable<DO.Dependency?> dependencies = _dal.Dependency.ReadAll(x => x.CurrentTaskId == item.Id) ?? new List<DO.Dependency>();
-
-                if (item.Depndencies is null)
-                    return;
-
-                item.Depndencies.Where(_new => !dependencies.Any(old => old.LastTaskId == _new.Id)).ToList().
-                    ForEach(_new => _dal.Dependency.Create(new DO.Dependency
+                    task = task with//we can update everything
                     {
-                        CurrentTaskId = task.Id,
-                        LastTaskId = _new.Id
-                    }));
+                        Name = item.Name,
+                        Description = item.Description,
+                        NumDays = item.NumDays,
+                        DifficultyLevel = (DO.EngineerExpireance)item.DifficultyLevel,
+                        Comment = item.Comment,
+                        NewTask = item.NewTask,
+                        Result = item.Result,
+                        EngineerId = item.Engineer?.Id,
+                    };
 
-                dependencies.Where(old => !item.Depndencies.Any(_new => _new.Id == old!.LastTaskId)).ToList().
-                    ForEach(old => _dal.Dependency.Delete(old!.Id));
-            }
-            else
-            {
-                task = task with//we can update only the textual fileds after created the end date
+                    IEnumerable<DO.Dependency?> dependencies = _dal.Dependency.ReadAll(x => x.CurrentTaskId == item.Id) ?? new List<DO.Dependency>();
+
+                    if (item.Depndencies is null)
+                        return;
+
+                    item.Depndencies.Where(_new => !dependencies.Any(old => old.LastTaskId == _new.Id)).ToList().
+                        ForEach(_new => _dal.Dependency.Create(new DO.Dependency
+                        {
+                            CurrentTaskId = task.Id,
+                            LastTaskId = _new.Id
+                        }));
+
+                    dependencies.Where(old => !item.Depndencies.Any(_new => _new.Id == old!.LastTaskId)).ToList().
+                        ForEach(old => _dal.Dependency.Delete(old!.Id));
+                }
+                else
                 {
-                    Name = item.Name,
-                    Description = item.Description,
-                    Comment = item.Comment,
-                    Result = item.Result,
-                    EngineerId = item.Engineer?.Id,
-                    StartTask = item.StartTask,
-                    EndTask = item.EndTask,
-                };
-            }
-            if (item.Engineer.Id != 0 && _dal.Engineer.Read(x => x.Id == item.Engineer?.Id) == null)
-                throw new BO.BlDoesNotExistException($"Engeineer with ID {item.Id} does not exists");
+                    task = task with//we can update only the textual fileds after created the end date
+                    {
+                        Name = item.Name,
+                        Description = item.Description,
+                        Comment = item.Comment,
+                        Result = item.Result,
+                        EngineerId = item.Engineer?.Id,
+                        StartTask = item.StartTask,
+                        EndTask = item.EndTask,
+                    };
+                }
+
             _dal.Task.Update(task);
         }
         catch (DO.DalDoesNotExistException ex) { throw new BO.BlDoesNotExistException(ex.Message); }
@@ -225,15 +227,15 @@ public class TaskImplementation : ITask
     public IEnumerable<BO.TaskInGantt> GanttList()
     {
         return (from task in _dal.Task.ReadAll()
-               select new BO.TaskInGantt()
-               {
-                   Id = task.Id,
-                   Name = task.Name!,
-                   StartOffset = (int)(task.ScheduleStart - _dal.StartDate)!.Value.TotalDays,
-                   TaskLenght = (int)task.NumDays!.Value.TotalDays,
-                   Status = SetStatus(task),
-                   CompliteValue = CalcValue(task)
-               }).OrderBy(T=>T.StartOffset).ThenBy(t=>t.TaskLenght);
+                select new BO.TaskInGantt()
+                {
+                    Id = task.Id,
+                    Name = task.Name!,
+                    StartOffset = (int)(task.ScheduleStart - _dal.StartDate)!.Value.TotalDays,
+                    TaskLenght = (int)task.NumDays!.Value.TotalDays,
+                    Status = SetStatus(task),
+                    CompliteValue = CalcValue(task)
+                }).OrderBy(T => T.StartOffset).ThenBy(t => t.TaskLenght);
     }
 
     public IEnumerable<TaskInList> TaskForEngineer(int id)
@@ -241,18 +243,16 @@ public class TaskImplementation : ITask
         DO.Engineer eng = _dal.Engineer.Read(x => x.Id == id)!;
 
         IEnumerable<DO.Task> tasks = _dal.Task.ReadAll(x => x.EngineerId is null && x.DifficultyLevel <= eng.Level);
-        IEnumerable<Dependency> dependencies = _dal.Dependency.ReadAll();
 
         return from task in tasks
-               from dep in dependencies
-               let t = _dal.Task.Read(x => x.Id == dep.LastTaskId)
-               where t.EndTask is null
+               let boTask = ReadTask(task.Id)
+               where boTask.Depndencies is null || boTask.Depndencies.Any(dep => dep.Status != BO.TaskStatus.Done)
                select new TaskInList()
                {
                    Id = task.Id,
                    Description = task.Description,
-                   Name = task.Name,
-                   Status = SetStatus(task)
+                   Name = task.Name!,
+                   Status = boTask.Status
                };
     }
 
@@ -300,7 +300,7 @@ public class TaskImplementation : ITask
                         if (lastDepDate > earlyStart)
                             earlyStart = lastDepDate;
                     }
-                    tasks[newTask] = tasks[newTask] with { ScheduleStart = earlyStart};
+                    tasks[newTask] = tasks[newTask] with { ScheduleStart = earlyStart };
 
                     schedule.Add(newTask, tasks[newTask]);
                     tasks.Remove(newTask);
@@ -334,7 +334,7 @@ public class TaskImplementation : ITask
         return task.ScheduleStart is null ? BO.TaskStatus.Unscheduled :
                task.StartTask is null ? BO.TaskStatus.Scheduled :
                task.EndTask is null ? BO.TaskStatus.OnTrack :
-               task.EndTask<_bl.Clock ? BO.TaskStatus.Late:
+               task.EndTask < _bl.Clock ? BO.TaskStatus.Late :
                BO.TaskStatus.Done;
 
     }

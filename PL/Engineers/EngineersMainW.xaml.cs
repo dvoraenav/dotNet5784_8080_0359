@@ -1,4 +1,5 @@
-﻿using PL.Engineer;
+﻿using BO;
+using PL.Engineer;
 using PL.Task;
 using System;
 using System.Collections.Generic;
@@ -40,8 +41,9 @@ public partial class EngineersMainW : Window
                 BO.TaskInEngineer? t = s_bl.Engineer.GetTaskInEngineer(id);
                 if (t != null)
                 {
-                    TaskStart = CurrentTask!.StartTask is not null;
                     CurrentTask = s_bl.Task.ReadTask(t.Id);
+                    TaskStart = CurrentTask!.StartTask is not null;
+                    
                     Busy = "Visible";
                     Messege = "Hidden";
                     if (CurrentTask!.StartTask != null)
@@ -129,7 +131,7 @@ public partial class EngineersMainW : Window
     }
 
     public static readonly DependencyProperty ProjectStartProp =
-        DependencyProperty.Register("ProjectStart", typeof(bool), typeof(TaskWindow));
+        DependencyProperty.Register("ProjectStart", typeof(bool), typeof(EngineersMainW));
     /// <summary>
     /// boolian field tell us the task started
     /// </summary>
@@ -140,7 +142,7 @@ public partial class EngineersMainW : Window
     }
 
     public static readonly DependencyProperty TaskStartProp =
-        DependencyProperty.Register("TaskStart", typeof(bool), typeof(TaskWindow));
+        DependencyProperty.Register("TaskStart", typeof(bool), typeof(EngineersMainW));
     /// <summary>
     /// button that update the information of the engineer
     /// </summary>
@@ -178,7 +180,17 @@ public partial class EngineersMainW : Window
     {
         try
         {
-            new TasksForEngineer(CurrentEngineer.Id).Show();
+
+            if (CurrentTask != null && CurrentTask!.EndTask is null)
+                MessageBox.Show("You can't start this task before finish the last one.", "Confirmation", MessageBoxButton.OK);
+            else
+            {
+                new TasksForEngineer(CurrentEngineer.Id).Show();
+                TaskInEngineer? t = s_bl.Engineer.GetTaskInEngineer(CurrentEngineer.Id);
+                if (t is not null)
+                    CurrentTask = s_bl.Task.ReadTask(t.Id);
+                this.Close();
+            }
         }
         catch (Exception ex)
         { MessageBox.Show(ex.Message); }
@@ -193,10 +205,13 @@ public partial class EngineersMainW : Window
         try
         {
             if (CurrentTask.EndTask != null) { MessageBox.Show("The task already finished"); }
-            CurrentTask.EndTask = s_bl.Clock;
-            s_bl.Task.Update(CurrentTask);
-            MessageBox.Show("The ending date was updated succesfully");
-            this.Close();
+            else
+            {
+                CurrentTask.EndTask = s_bl.Clock;
+                s_bl.Task.Update(CurrentTask);
+                MessageBox.Show("The ending date was updated succesfully");
+                this.Close();
+            }
         }
         catch (Exception ex) { MessageBox.Show(ex.Message); }
     }
