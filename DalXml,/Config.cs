@@ -14,6 +14,7 @@ internal class Config
         get { return GetDate(s_data_config_xml, "EndProject"); }
         set { SetDate(value, s_data_config_xml, "EndProject"); }
     }
+ 
 
 
     internal static int NextTaskId { get => XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextTaskId"); }

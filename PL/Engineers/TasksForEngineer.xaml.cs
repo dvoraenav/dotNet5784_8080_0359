@@ -27,7 +27,7 @@ namespace PL.Engineers
             Id = id;
             InitializeComponent();
             TasksList = s_bl.Task.TaskForEngineer(id);
-
+            
         }
 
         public IEnumerable<BO.TaskInList> TasksList

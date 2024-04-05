@@ -145,7 +145,7 @@ public class TaskImplementation : ITask
             InputIntegrityCheck(item);
             DO.Task task = _dal.Task.Read(x => x.Id == item.Id) ?? throw new BO.BlDoesNotExistException($"Task with ID {item.Id} dose not exists");
             if (item.Engineer.Id != 0 && task.EngineerId != null && task.EngineerId != item.Engineer.Id)
-                throw new BO.BlInvalidInputPropertyException("the task already conect to other engineer yadebil");
+                throw new BO.BlInvalidInputPropertyException("the task already conect to other engineer");
 
 
 
