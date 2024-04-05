@@ -214,7 +214,6 @@ public static class Initialization
         //config.Element("startDate")?.SetValue("");
         //config.Element("finishDate")?.SetValue("");
         //XMLTools.SaveListToXMLElement(config, "data-config");
-
         Factory.Get.Task.Clear();
         Factory.Get.Engineer.Clear();
         Factory.Get.Dependency.Clear();

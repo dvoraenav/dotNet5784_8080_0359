@@ -64,7 +64,6 @@ namespace PL.Admin
             DependencyProperty.Register("OpenDialoge", typeof(bool), typeof(AdminMainWindow));
 
 
-
         public DateTime Clock
         {
             get { return (DateTime)GetValue(ClockProperty); }
@@ -74,7 +73,6 @@ namespace PL.Admin
         // Using a DependencyProperty as the backing store for Clock.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ClockProperty =
             DependencyProperty.Register("Clock", typeof(DateTime), typeof(AdminMainWindow));
-
 
 
         private void EngineerList_Click(object sender, RoutedEventArgs e)
@@ -97,6 +95,7 @@ namespace PL.Admin
         /// <param name="e"> click</param>
         private void Initialization_Click(object sender, RoutedEventArgs e)
         {
+
             MessageBoxResult result = MessageBox.Show("Would you like to create Initial data?", "Data Initialization", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly);
             if (result == MessageBoxResult.Yes) { s_bl.InitializeDB(); }//intilize data if return yes
             this.Close();
@@ -111,9 +110,18 @@ namespace PL.Admin
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Would you like to reset the data?", "Reset Data", MessageBoxButton.YesNoCancel);
-            if (result == MessageBoxResult.Yes) { s_bl.ResetDB(); }//reset data if return yes
-            
+            if (result == MessageBoxResult.Yes)
+            {
+                s_bl.ResetDB();
+                
+            }
         }
+
+
+                                    
+          //reset data if return yes
+            
+        
         /// <summary>
         /// to create starting date to project will be the current time
         /// </summary>

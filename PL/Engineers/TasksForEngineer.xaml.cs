@@ -26,8 +26,17 @@ namespace PL.Engineers
         {
             Id = id;
             InitializeComponent();
-            TasksList = s_bl.Task.TaskForEngineer(id);
-            
+            try
+            {
+                TasksList = s_bl.Task.TaskForEngineer(id);
+                if (TasksList == null)
+                {
+                    MessageBox.Show("there ara no available tasks for you");
+                    this.Close();
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
         }
 
         public IEnumerable<BO.TaskInList> TasksList

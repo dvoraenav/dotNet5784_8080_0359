@@ -1,6 +1,7 @@
 ﻿using PL.Engineer;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -29,6 +31,7 @@ namespace PL.Task
             {
                 AddMode = s_bl.StartDate is null;
                 TasksList = s_bl?.Task.TaskList()!;
+                
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
