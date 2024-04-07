@@ -207,9 +207,12 @@ namespace PL.Task
                     if (label.Background == Brushes.Transparent)
                     {
                         TaskInList selected = label.Content as TaskInList;
-                        CurrentTask.Depndencies.Add(selected);
-                        DepList.Add(selected);
-                        label.Background = Brushes.Green;
+                        if (!CurrentTask.Depndencies.Any(x=>x.Id==selected.Id))
+                        {
+                            CurrentTask.Depndencies.Add(selected);
+                            DepList.Add(selected);
+                            label.Background = Brushes.Green;
+                        }
                     }
                     else
                     {

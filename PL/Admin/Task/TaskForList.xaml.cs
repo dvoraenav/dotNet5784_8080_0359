@@ -23,15 +23,15 @@ namespace PL.Task
     public partial class TaskForListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get;
-
         public TaskForListWindow()
         {
+
             InitializeComponent();
             try
             {
                 AddMode = s_bl.StartDate is null;
                 TasksList = s_bl?.Task.TaskList()!;
-                
+
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -86,7 +86,7 @@ namespace PL.Task
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
         }
-        
+
         private void TaskSelection(object sender, MouseButtonEventArgs e)
         {
             try
@@ -98,7 +98,7 @@ namespace PL.Task
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
         }
-      
+
         private void Search_TaskChanged(object sender, TextChangedEventArgs e)
         {
             try

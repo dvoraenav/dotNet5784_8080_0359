@@ -45,100 +45,58 @@ public static class Initialization
             catch (Exception ex) //if there  is engineer with the randome id
             {
                 throw new Exception(ex.ToString());
-                 i--; 
+                i--;
             }//trying to create again
         }
     }
     /// <summary>
     /// creating new dependencies
     /// </summary>
-    private static void createDependency()
+    private static void CreateDependency()
     {
-        int depend = 0;
-        int dependon = 0;
-        List<DO.Task> tasks = s_dal!.Task.ReadAll().ToList();
-        for (int i = 0; i < tasks.Count() * 2; i++)
+
+
+        string[,] taskDependencies =
         {
-            switch (i)
-            {
-                case int x when x < 5:
-                    break;
+        // CurrentTask, LastTask
+        {"Research Needs", "Define Goals"},  // Research depends on Define
+        {"Scope Project", "Define Goals"},  // Scope depends on Define
+        {"Plan Strategy", "Scope Project"},  // Plan depends on Scope
+        {"Allocate Resources", "Plan Strategy"},  // Resources depends on Plan
+        {"Manage Risks", "Plan Strategy"},  // Risk depends on Plan
+        {"Set Milestones", "Plan Strategy"},  // Milestones depends on Plan
+        {"Build Team", "Allocate Resources"},  // Team depends on Resources
+        {"Build Team", "Engage Stakeholders"},  // Team depends on Stakeholders
+        {"Establish Communication", "Build Team"},  // Communication depends on Team
+        {"Design Architecture", "Plan Strategy"},  // Design depends on Plan
+        {"Implement Infrastructure", "Design Architecture"},  // Infrastructure depends on Design
+        {"Code Functionality", "Implement Infrastructure"},  // Coding depends on Infrastructure
+        {"Ensure Quality", "Code Functionality"},  // Quality depends on Coding
+        {"Perform Testing", "Ensure Quality"},  // Testing depends on Quality
+        {"Deploy Components", "Perform Testing"},  // Deployment depends on Testing
+        {"Monitor Progress", "Deploy Components"},  // Monitor depends on Deployment
+        {"Address Issues", "Monitor Progress"},  // Issues depends on Monitor
+        {"Conduct Review", "Address Issues"},  // Review depends on Issues
+        {"Document Closure", "Conduct Review"}  // Closure depends on Review
+    };
 
-                case int x when x < 10:
-                    dependon = s_rand.Next(0, 5);
-                    depend = s_rand.Next(5, 11);
-                    dependon = tasks[dependon].Id;
-                    depend = tasks[depend].Id;
-                    break;
-
-                case int x when x < 20:
-                    dependon = s_rand.Next(5, 11);
-                    depend = s_rand.Next(11, 16);
-                    dependon = tasks[dependon].Id;
-                    depend = tasks[depend].Id;
-                    break;
-
-                case int x when x < 40:
-                    dependon = s_rand.Next(11, 16);
-                    depend = s_rand.Next(16, 20);
-                    dependon = tasks[dependon].Id;
-                    depend = tasks[depend].Id;
-                    break;
-
-                default:
-                    return;
-
-            }
-            if (i > 4 && depend != dependon)
-                s_dal.Dependency.Create(new Dependency(
-                    Id: 0,
-                    CurrentTaskId: depend,
-                    LastTaskId: dependon));
-            //        String[,] taskDependencies =
-            //{
-            //   {"Research Needs", "Define Goals"},  // Research depends on Define
-            //        {"Scope Project", "Define Goals"},  // Scope depends on Define
-            //        {"Plan Strategy", "Scope Project"},  // Plan depends on Scope
-            //        {"Allocate Resources", "Plan Strategy"},  // Resources depends on Plan
-            //        {"Manage Risks", "Plan Strategy"},  // Risk depends on Plan
-            //        {"Set Milestones", "Plan Strategy"},  // Milestones depends on Plan
-            //        {"Build Team", "Allocate Resources"},  // Team depends on Resources
-            //        {"Build Team", "Engage Stakeholders"},  // Team depends on Stakeholders
-            //        {"Establish Communication", "Build Team"},  // Communication depends on Team
-            //        {"Design Architecture", "Plan Strategy"},  // Design depends on Plan
-            //        {"Implement Infrastructure", "Design Architecture"},  // Infrastructure depends on Design
-            //        {"Code Functionality", "Implement Infrastructure"},  // Coding depends on Infrastructure
-            //        {"Ensure Quality", "Code Functionality"},  // Quality depends on Coding
-            //        {"Perform Testing", "Ensure Quality"},  // Testing depends on Quality
-            //        {"Deploy Components", "Perform Testing"},  // Deployment depends on Testing
-            //        {"Monitor Progress", "Deploy Components"},  // Monitor depends on Deployment
-            //        {"Address Issues", "Monitor Progress"},  // Issues depends on Monitor
-            //        {"Conduct Review", "Address Issues"},  // Review depends on Issues
-            //        {"Document Closure", "Conduct Review"}  // Closure depends on Review
-            //    };
-
-            //        //array of dependency while the first in
-            //        //couple is the last id and second is current id
-
-            //        for (int i = 0; i < taskDependencies.GetLength(0); i++)
-            //        {
-
-            //            int oldTID = s_dal!.Task.Read(x => x.Name == taskDependencies[i, 0])!.Id; //last dependency
-            //            int currentTID = s_dal!.Task.Read(x => x.Name == taskDependencies[i, 1])!.Id;//cureent dependency
-            //            Dependency d = new Dependency(i, currentTID, oldTID);
-            //            s_dal?.Dependency!.Create(d);
-            //        }
-
+        for (int i = 0; i < taskDependencies.GetLength(0); i++)
+        {
+            int currentTask =s_dal.Task.Read(x=>x.Name== taskDependencies[i, 0]).Id;
+            int lastTask = s_dal.Task.Read(x => x.Name == taskDependencies[i, 1]).Id;
+            Dependency d = new Dependency( i,currentTask, lastTask);
+            s_dal?.Dependency!.Create(d);
         }
     }
+
 
     /// <summary>
     /// creatind new tasks
     /// </summary>
-    private static void createTask()
-        {
-            string[] tasks =
-         {
+    private static void CreateTask()
+    {
+        string[] tasks =
+     {
         "Define Goals","Research Needs","Scope Project","Plan Strategy","Engage Stakeholders",
         "Allocate Resources","Manage Risks","Set Milestones","Build Team","Establish Communication",
         "Design Architecture","Implement Infrastructure","Code Functionality",
@@ -146,8 +104,8 @@ public static class Initialization
         "Address Issues","Conduct Review","Document Closure"
     };
 
-            string[] taskDescriptions =
-            {
+        string[] taskDescriptions =
+        {
         "Define project goals", "Research construction requirements", "Scope the project",
         "Develop detailed project plan", "Identify project stakeholders",
         "Allocate project resources and budget", "Assess and manage project risks",
@@ -158,8 +116,8 @@ public static class Initialization
         "Address and resolve project issues", "Conduct project review", "Document project closure"
     };
 
-            string[] taskResults =
-            {
+        string[] taskResults =
+        {
         "Clear project goals defined", "Construction requirements analyzed",
         "Project scope determined", "Detailed project plan created",
         "Stakeholders identified", "Resources allocated and budget set",
@@ -171,29 +129,29 @@ public static class Initialization
         "Progress monitored", "Issues addressed",
         "Review conducted", "Closure documented"
     };//arry of description of the tasks
-            for (int i = 0; i < tasks.Length; i++)
-            {
-                string name = tasks[i];//name of the task
-                string description = taskDescriptions[i];//description of the task
-                string result = taskResults[i];//result og the task
-                string comment = "the task is wating to start";//task comment
-                DateTime? newT = s_dal.Clock; //creation time
-                TimeSpan? numDays = TimeSpan.FromDays(15 * (i + 1)); //creation time
+        for (int i = 0; i < tasks.Length; i++)
+        {
+            string name = tasks[i];//name of the task
+            string description = taskDescriptions[i];//description of the task
+            string result = taskResults[i];//result og the task
+            string comment = "the task is wating to start";//task comment
+            DateTime? newT = s_dal.Clock; //creation time
+            TimeSpan? numDays = TimeSpan.FromDays(15 * (i + 1)); //creation time
 
 
-                DO.Task newTask = new
-                   (
-                    Id: i,
-                    Name: name,
-                    Description: description,
-                    Result: result,
-                    Comment: comment,
-                    NewTask: newT,
-                    NumDays: numDays
+            DO.Task newTask = new
+               (
+                Id: i,
+                Name: name,
+                Description: description,
+                Result: result,
+                Comment: comment,
+                NewTask: newT,
+                NumDays: numDays
 
-                   );
-                if (s_dal is not null) s_dal.Task!.Create(newTask);
-            } 
+               );
+            if (s_dal is not null) s_dal.Task!.Create(newTask);
+        }
     }
     //public static void Do(IDal dal) //stage 2
     public static void Do()
@@ -201,8 +159,8 @@ public static class Initialization
         //s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");//stage 2
         s_dal = DalApi.Factory.Get; //stage 4
         createEngineer();
-        createTask();
-        createDependency();
+        CreateTask();
+        CreateDependency();
     }
     public static void Reset()
     {

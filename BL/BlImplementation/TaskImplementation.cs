@@ -36,11 +36,9 @@ public class TaskImplementation : ITask
             int id = _dal.Task.Create(_dotask);//keep the id of the task
 
             if (item.Depndencies != null) // if the list of the dependancy is not empty
-                item.Depndencies.ForEach(x => _dal.Dependency.Create(new DO.Dependency()//go into the list of the dependent tasks
-                {
-                    CurrentTaskId = id,
-                    LastTaskId = x.Id  //update the tasks that i dependent in them
-                }));
+
+                item.Depndencies.ForEach(x => AddDependency(item.Id, x.Id));
+
             return id; // return the id of the task
         }
         catch (DO.DalAlreadyExistsException ex)
@@ -148,49 +146,44 @@ public class TaskImplementation : ITask
                 throw new BO.BlInvalidInputPropertyException("the task already conect to other engineer");
 
 
-
             if (_dal.EndDate == null)//we didnt create the end date time of the task
+            {
+                task = task with//we can update everything
                 {
-                    task = task with//we can update everything
-                    {
-                        Name = item.Name,
-                        Description = item.Description,
-                        NumDays = item.NumDays,
-                        DifficultyLevel = (DO.EngineerExpireance)item.DifficultyLevel,
-                        Comment = item.Comment,
-                        NewTask = item.NewTask,
-                        Result = item.Result,
-                        EngineerId = item.Engineer?.Id,
-                    };
+                    Name = item.Name,
+                    Description = item.Description,
+                    NumDays = item.NumDays,
+                    DifficultyLevel = (DO.EngineerExpireance)item.DifficultyLevel,
+                    Comment = item.Comment,
+                    NewTask = item.NewTask,
+                    Result = item.Result,
+                    EngineerId = item.Engineer?.Id,
+                };
 
-                    IEnumerable<DO.Dependency?> dependencies = _dal.Dependency.ReadAll(x => x.CurrentTaskId == item.Id) ?? new List<DO.Dependency>();
+                IEnumerable<DO.Dependency?> dependencies = _dal.Dependency.ReadAll(x => x.CurrentTaskId == item.Id) ?? new List<DO.Dependency>();
 
-                    if (item.Depndencies is null)
-                        return;
+                if (item.Depndencies is null)
+                    return;
 
-                    item.Depndencies.Where(_new => !dependencies.Any(old => old.LastTaskId == _new.Id)).ToList().
-                        ForEach(_new => _dal.Dependency.Create(new DO.Dependency
-                        {
-                            CurrentTaskId = task.Id,
-                            LastTaskId = _new.Id
-                        }));
+                item.Depndencies.Where(_new => !dependencies.Any(old => old!.LastTaskId == _new.Id)).ToList().
+                ForEach(_new => AddDependency(item.Id, _new.Id));//add new depenency
 
-                    dependencies.Where(old => !item.Depndencies.Any(_new => _new.Id == old!.LastTaskId)).ToList().
-                        ForEach(old => _dal.Dependency.Delete(old!.Id));
-                }
-                else
+                dependencies.Where(old => !item.Depndencies.Any(_new => _new.Id == old!.LastTaskId)).ToList().
+                    ForEach(old => _dal.Dependency.Delete(old!.Id));
+            }
+            else
+            {
+                task = task with//we can update only the textual fileds after created the end date
                 {
-                    task = task with//we can update only the textual fileds after created the end date
-                    {
-                        Name = item.Name,
-                        Description = item.Description,
-                        Comment = item.Comment,
-                        Result = item.Result,
-                        EngineerId = item.Engineer?.Id,
-                        StartTask = item.StartTask,
-                        EndTask = item.EndTask,
-                    };
-                }
+                    Name = item.Name,
+                    Description = item.Description,
+                    Comment = item.Comment,
+                    Result = item.Result,
+                    EngineerId = item.Engineer?.Id,
+                    StartTask = item.StartTask,
+                    EndTask = item.EndTask,
+                };
+            }
 
             _dal.Task.Update(task);
         }
@@ -255,7 +248,34 @@ public class TaskImplementation : ITask
                    Status = boTask.Status
                };
     }
+    private void AddDependency(int currentTaskId, int lastTaskId)
+    {
+        if (CheckCircularDependency(currentTaskId, lastTaskId))
+            throw new BlInvalidInputPropertyException("The selected dependent tasks create a circular dependency");
 
+        _dal.Dependency.Create(new DO.Dependency
+        {
+            CurrentTaskId = currentTaskId,
+            LastTaskId = lastTaskId
+        });
+    }
+    private bool CheckCircularDependency(int id1, int taskB) 
+    {
+        BO.Task task1 = _bl.Task.ReadTask(id1)!;
+        if (task1.Depndencies == null)
+            return false;
+        foreach (var dependency in task1.Depndencies)
+        {
+            if (dependency.Id == taskB)
+                return true;
+
+            if (CheckCircularDependency(dependency.Id, taskB))
+                return true;
+
+        }
+        return false;
+
+    }
     public void ScheduleTasks(DateTime startDate)
     {
         Dictionary<int, DO.Task> tasks = _dal.Task.ReadAll().ToList().ToDictionary(task => task.Id);
