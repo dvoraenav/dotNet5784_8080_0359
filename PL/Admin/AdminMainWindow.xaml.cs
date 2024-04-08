@@ -113,7 +113,8 @@ namespace PL.Admin
             if (result == MessageBoxResult.Yes)
             {
                 s_bl.ResetDB();
-                
+                this.Close();
+                new AdminMainWindow().Show();
             }
         }
 
