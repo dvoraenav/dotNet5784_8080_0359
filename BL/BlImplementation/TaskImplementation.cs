@@ -1,11 +1,8 @@
 ﻿using BlApi;
 using BO;
-using DalApi;
 using DO;
 using System.Data;
 using System.Threading.Tasks;
-using Factory = BlApi.Factory;
-using ITask = BlApi.ITask;
 
 namespace BlImplementation;
 
@@ -251,9 +248,9 @@ public class TaskImplementation : ITask
                    Status = boTask.Status
                };
     }
-    private void AddDependency(int lastTaskId, int currentTaskId)
+    private void AddDependency(int currentTaskId, int lastTaskId)
     {
-        if (CheckCircularDependency(currentTaskId, lastTaskId)==false)
+        if (!CheckCircularDependency(lastTaskId, currentTaskId))
             throw new BlInvalidInputPropertyException("The selected dependent tasks create a circular dependency");
 
         _dal.Dependency.Create(new DO.Dependency
@@ -262,18 +259,17 @@ public class TaskImplementation : ITask
             LastTaskId = lastTaskId
         });
     }
-    private bool CheckCircularDependency(int id1, int taskB) 
+    
+    private bool CheckCircularDependency(int taskA, int taskB)
     {
-        var dep= _dal.Dependency.ReadAll(x =>x.LastTaskId==id1);
-        if(_dal.Dependency.Read(t=>t.LastTaskId==id1&&t.CurrentTaskId==taskB)!=null)return false;
-        foreach (var dependency in dep) 
-        {
-            if (CheckCircularDependency(dependency.CurrentTaskId, taskB) == false) return false;
-                   
-        }
+        var dep = _dal.Dependency.ReadAll(x => x.CurrentTaskId == taskA);
+        if (_dal.Dependency.Read(t => t.CurrentTaskId == taskA && t.LastTaskId == taskB) != null)
+            return false;
+        foreach (var dependency in dep)
+            if (CheckCircularDependency(dependency.LastTaskId, taskB) == false) return false;
         return true;
-
     }
+
     public void ScheduleTasks(DateTime startDate)
     {
         Dictionary<int, DO.Task> tasks = _dal.Task.ReadAll().ToList().ToDictionary(task => task.Id);

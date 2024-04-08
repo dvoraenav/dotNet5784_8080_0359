@@ -147,7 +147,7 @@ namespace PL.Task
                 TaskStart = CurrentTask.StartTask is not null;
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
-            }
+        }
 
 
         /*****************************   Function  **************************/
@@ -183,7 +183,8 @@ namespace PL.Task
 
 
         private void ChangeDependencies(object sender, RoutedEventArgs e)
-        {try
+        {
+            try
             {
                 if (s_bl.EndDate != null)
                     MessageBox.Show("The project schedule already exists. It is not possible to add new dependencies");
@@ -192,11 +193,11 @@ namespace PL.Task
                     OpenDialoge = true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             { MessageBox.Show(ex.Message); }
         }
 
-       
+
         private void AddDependency(object sender, MouseButtonEventArgs e)
         {
             try
@@ -207,17 +208,15 @@ namespace PL.Task
                     if (label.Background == Brushes.Transparent)
                     {
                         TaskInList selected = label.Content as TaskInList;
-                        if (!CurrentTask.Depndencies.Any(x=>x.Id==selected.Id))
-                        {
-                            CurrentTask.Depndencies.Add(selected);
-                            DepList.Add(selected);
-                            label.Background = Brushes.Green;
-                        }
+                        CurrentTask.Depndencies.Add(selected);
+                        DepList.Add(selected);
+                        label.Background = Brushes.Green;
                     }
                     else
                     {
                         TaskInList selected = label.Content as TaskInList;
-                        CurrentTask.Depndencies.Remove(selected);
+                        CurrentTask.Depndencies.RemoveAll(t=> t.Id ==selected.Id);
+                        selected = DepList.First(x => x.Id == selected.Id);
                         DepList.Remove(selected);
                         label.Background = Brushes.Transparent;
                     }
@@ -264,7 +263,7 @@ namespace PL.Task
                     this.Close();
                 }
             }
-            catch(Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void StratTask_click(object sender, RoutedEventArgs e)
