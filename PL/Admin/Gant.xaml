@@ -18,9 +18,17 @@
         <ListView ItemsSource="{Binding GanttList}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"/>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name }"/>
-                    <GridViewColumn Width="1500">
+                    <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name }"/>
+                    <GridViewColumn Header="Dependencies" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListBox ItemsSource="{Binding DepndenciesNames}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="5000">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

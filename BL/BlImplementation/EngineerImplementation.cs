@@ -158,17 +158,17 @@ internal class EngineerImplementation : IEngineer
     private static void InputIntegrityCheck(BO.Engineer? item)
     {
         if (!IsAllDigits(item.Id.ToString()))
-            throw new BO.BlInvalidInputPropertyException($"Engeineer's Id can only contins numbers");
+            throw new BO.BlInvalidInputPropertyException($"Engeineer's Id can only contains numbers");
         if (item!.Id <= 0)
             throw new BO.BlInvalidInputPropertyException($"Engeineer's Id can not be negative");
-        if (!IsAllLetters(item.FullName!))
-            throw new BO.BlInvalidInputPropertyException($"Engeineer's name can only contins letters");
-        if (item.FullName == "")
-            throw new BO.BlInvalidInputPropertyException($"Engeineer's name can not be empty"); 
-        if (!IsAllDigits(item.Cost.ToString()!))
-            throw new BO.BlInvalidInputPropertyException($"Engeineer's cost can only contins numbers");
-        if (item.Cost <= 0)
+        if (item.FullName == "" || item.FullName == null)
+            throw new BO.BlInvalidInputPropertyException($"Engeineer's name can not be empty");
+        if (!IsAllLetters(item.FullName))
+            throw new BO.BlInvalidInputPropertyException($"Engeineer's name can only contains letters");
+        if (item.Cost <= 0 )
             throw new BO.BlInvalidInputPropertyException($"Engeineer's cost can not be negative or 0");
+        if (!IsAllDigits(item.Cost.ToString()))
+            throw new BO.BlInvalidInputPropertyException($"Engeineer's cost can only contains numbers");
         if (!new EmailAddressAttribute().IsValid(item.Mail))// only return true if there is only 1 '@' character
             // and it is neither the first nor the last character
             throw new BO.BlInvalidInputPropertyException($"Engeineer's mail address is not valid");

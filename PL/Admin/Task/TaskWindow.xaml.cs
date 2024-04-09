@@ -42,6 +42,15 @@ namespace PL.Task
 
         public static readonly DependencyProperty ProjectStartProp =
             DependencyProperty.Register("ProjectStart", typeof(bool), typeof(TaskWindow));
+
+        public bool CurrentTime
+        {
+            get { return (bool)GetValue(CurrentTimeProp); }
+            set { SetValue(CurrentTimeProp, value); }
+        }
+
+        public static readonly DependencyProperty CurrentTimeProp =
+            DependencyProperty.Register("CurrentTime", typeof(bool), typeof(TaskWindow));
         public bool TaskStart
         {
             get { return (bool)GetValue(TaskStartProp); }
@@ -116,7 +125,7 @@ namespace PL.Task
             {
                 AddMode = id == 0;
                 ProjectStart = s_bl.StartDate is not null;
-
+                
                 OpenDialoge = false;
                 TaskList = s_bl.Task.TaskList();
 
@@ -131,6 +140,8 @@ namespace PL.Task
                     try
                     {
                         CurrentTask = s_bl.Task.ReadTask(id)!;//all the details of this id
+                        if(CurrentTask.ScheduleStart!=null)
+                        CurrentTime = s_bl.Clock >= CurrentTask.ScheduleStart;
                         TaskList = s_bl.Task.TaskList(x => x.Id != id);
                         Difficulty = CurrentTask.DifficultyLevel;
                     }

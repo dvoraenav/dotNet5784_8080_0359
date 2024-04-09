@@ -35,28 +35,31 @@ static class Tools
         Target target = new Target();
 
         Dictionary<string, PropertyInfo> propertiesInfoTarget = target.GetType().GetProperties()
-                 .ToDictionary(p => p.Name, p => p); //יוצר מילון של צמדים עם שם של שדה והערך בו
+                 .ToDictionary(p => p.Name, p => p); 
 
         IEnumerable<PropertyInfo> propertiesInfoSource = source!.GetType().GetProperties();
 
-        foreach (var propertyInfo in propertiesInfoSource)
+        try
         {
-            //try
-            //{
-            if (propertiesInfoTarget.TryGetValue(propertyInfo.Name, out var value)
-                && (propertyInfo.PropertyType == typeof(string) || !(propertyInfo.PropertyType.IsClass)))
+            foreach (var propertyInfo in propertiesInfoSource)
             {
 
-                value.SetValue(target, propertyInfo.GetValue(source));
+                if (propertiesInfoTarget.TryGetValue(propertyInfo.Name, out var value)
+                    && (propertyInfo.PropertyType == typeof(string) || !(propertyInfo.PropertyType.IsClass)))
+                {
+
+                    value.SetValue(target, propertyInfo.GetValue(source));
+                }
+
             }
-            //}
-            //catch (ArgumentNullException ex) { propertiesInfoTarget[propertyInfo.Name].SetValue(target, null); }
 
+            addOtherPropertiesValues(objects, target, propertiesInfoTarget);
+
+            return target;
         }
-
-        addOtherPropertiesValues(objects, target, propertiesInfoTarget);
-
-        return target;
+        catch (Exception ex) {
+            throw new BlGeneralExceptionException(ex.Message);
+                }
     }
 
     private static void addOtherPropertiesValues<Target>(object[] objects, Target target, Dictionary<string, PropertyInfo> propertiesInfoTarget) where Target : new()

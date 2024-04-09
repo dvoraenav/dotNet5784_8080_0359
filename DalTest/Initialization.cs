@@ -82,8 +82,8 @@ public static class Initialization
 
         for (int i = 0; i < taskDependencies.GetLength(0); i++)
         {
-            int currentTask =s_dal.Task.Read(x=>x.Name== taskDependencies[i, 0]).Id;
-            int lastTask = s_dal.Task.Read(x => x.Name == taskDependencies[i, 1]).Id;
+            int currentTask = s_dal!.Task.Read(x=>x.Name== taskDependencies[i, 0])!.Id;
+            int lastTask = s_dal.Task.Read(x => x.Name == taskDependencies[i, 1])!.Id;
             Dependency d = new Dependency( i,currentTask, lastTask);
             s_dal?.Dependency!.Create(d);
         }
@@ -136,7 +136,7 @@ public static class Initialization
             string result = taskResults[i];//result og the task
             string comment = "the task is wating to start";//task comment
             DateTime? newT = s_dal.Clock; //creation time
-            TimeSpan? numDays = TimeSpan.FromDays(15 * (i + 1)); //creation time
+            TimeSpan? numDays = TimeSpan.FromDays(10 * (i + 1)); //creation time
 
 
             DO.Task newTask = new
@@ -153,29 +153,19 @@ public static class Initialization
             if (s_dal is not null) s_dal.Task!.Create(newTask);
         }
     }
-    //public static void Do(IDal dal) //stage 2
     public static void Do()
     {
-        //s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");//stage 2
-        s_dal = DalApi.Factory.Get; //stage 4
+        s_dal = DalApi.Factory.Get; 
         createEngineer();
         CreateTask();
         CreateDependency();
     }
     public static void Reset()
     {
-        //TODO
-        //resetting the serial numbers to 1
-        //XElement config = XMLTools.LoadListFromXMLElement("data-config");
-        //config.Element("NextTaskId")!.Value = "1";
-        //config.Element("NextLinkId")!.Value = "1";
-        //config.Element("startDate")?.SetValue("");
-        //config.Element("finishDate")?.SetValue("");
-        //XMLTools.SaveListToXMLElement(config, "data-config");
+      
         Factory.Get.Task.Clear();
         Factory.Get.Engineer.Clear();
         Factory.Get.Dependency.Clear();
-        //(The check for existing initial data is performed within the function "DeleteAll")
 
     }
 }

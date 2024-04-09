@@ -143,7 +143,7 @@ public class TaskImplementation : ITask
             InputIntegrityCheck(item);
             DO.Task task = _dal.Task.Read(x => x.Id == item.Id) ?? throw new BO.BlDoesNotExistException($"Task with ID {item.Id} dose not exists");
             if (item.Engineer.Id != 0 && task.EngineerId != null && task.EngineerId != item.Engineer.Id)
-                throw new BO.BlInvalidInputPropertyException("the task already conect to other engineer");
+                throw new BO.BlInvalidInputPropertyException("the task already conected to other engineer");
 
 
             if (_dal.EndDate == null)//we didnt create the end date time of the task
@@ -192,7 +192,8 @@ public class TaskImplementation : ITask
     }
 
     /// <summary>
-    /// Update schedule date of an object
+    /// Update schedule date of an object-
+    /// Function not used due to automatic date setting function
     /// </summary>
     /// <param name="id">the id of the object</param>
     /// <param name="date">the date to update</param>
@@ -227,10 +228,17 @@ public class TaskImplementation : ITask
                     StartOffset = (int)(task.ScheduleStart - _dal.StartDate)!.Value.TotalDays,
                     TaskLenght = (int)task.NumDays!.Value.TotalDays,
                     Status = SetStatus(task),
+                    DepndenciesNames=_bl.Task.ReadTask(task.Id)!.Depndencies!.Select(dep=>dep.Name).ToList()!,
                     CompliteValue = CalcValue(task)
                 }).OrderBy(T => T.StartOffset).ThenBy(t => t.TaskLenght);
     }
 
+
+    /// <summary>
+    /// list of tasks for a enginner.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public IEnumerable<TaskInList> TaskForEngineer(int id)
     {
         DO.Engineer eng = _dal.Engineer.Read(x => x.Id == id)!;
@@ -260,26 +268,32 @@ public class TaskImplementation : ITask
         });
     }
     
-    private bool CheckCircularDependency(int taskA, int taskB)
+    private bool CheckCircularDependency(int lastTaskId, int currentTaskId)
     {
-        var dep = _dal.Dependency.ReadAll(x => x.CurrentTaskId == taskA);
-        if (_dal.Dependency.Read(t => t.CurrentTaskId == taskA && t.LastTaskId == taskB) != null)
+        var dep = _dal.Dependency.ReadAll(x => x.CurrentTaskId == lastTaskId);
+        if (_dal.Dependency.Read(t => t.CurrentTaskId == lastTaskId && t.LastTaskId == currentTaskId) != null)
             return false;
         foreach (var dependency in dep)
-            if (CheckCircularDependency(dependency.LastTaskId, taskB) == false) return false;
+            if (CheckCircularDependency(dependency.LastTaskId, currentTaskId) == false) 
+                return false;
         return true;
     }
 
+    // Retrieve all tasks from the data access layer and convert them to a dictionary using task IDs as keys
+    // Key: Task ID, Value: Task object
     public void ScheduleTasks(DateTime startDate)
     {
+        // Retrieve all tasks and dependencies from the data access layer and convert them to lists
         Dictionary<int, DO.Task> tasks = _dal.Task.ReadAll().ToList().ToDictionary(task => task.Id);
         List<Dependency> dependencies = _dal.Dependency.ReadAll().ToList();
 
-
         // Initialize the schedule with tasks that have no dependencies
-        Dictionary<int, DO.Task> schedule = tasks.Where(task => !dependencies.Any(dep => dep.CurrentTaskId == task.Key)).
-            Select(task => task.Value).ToList().ToDictionary(task => task.Id);
+        // Select tasks without any dependencies and convert them to a dictionary
+        Dictionary<int, DO.Task> schedule = tasks.Where(task => !dependencies.Any(dep => dep.CurrentTaskId == task.Key))
+                                                  .Select(task => task.Value).ToList().ToDictionary(task => task.Id);
 
+        // Set the start date for tasks in the schedule
+        // Remove scheduled tasks from the tasks dictionary
         foreach (int key in schedule.Keys)
         {
             DO.Task old = schedule[key];
@@ -288,13 +302,16 @@ public class TaskImplementation : ITask
             tasks.Remove(key);
         }
 
+        // Schedule tasks with dependencies iteratively
         while (tasks.Count > 0)
         {
-            foreach (int newTask in tasks.Keys)
+            // Iterate over tasks waiting to be scheduled
+            foreach (int currentTask in tasks.Keys)
             {
                 bool canSchedule = true;
 
-                foreach (Dependency dep in dependencies.Where(dep => dep.CurrentTaskId == newTask))
+                // Check if the task can be scheduled by ensuring all dependencies are already scheduled
+                foreach (Dependency dep in dependencies.Where(dep => dep.CurrentTaskId == currentTask))
                 {
                     if (!schedule.ContainsKey(dep.LastTaskId))
                     {
@@ -303,29 +320,35 @@ public class TaskImplementation : ITask
                     }
                 }
 
+                // If all dependencies are scheduled, calculate the earliest start date for the task
                 if (canSchedule)
                 {
                     DateTime? earlyStart = DateTime.MinValue;
-                    DateTime? lastDepDate = DateTime.MinValue;
+                    DateTime? maxDepDate = DateTime.MinValue;
 
-                    foreach (Dependency dep in dependencies.Where(dep => dep.CurrentTaskId == newTask))
+                    // Calculate the earliest start date based on dependencies
+                    foreach (Dependency dep in dependencies.Where(dep => dep.CurrentTaskId == currentTask))
                     {
-                        lastDepDate = schedule[dep.LastTaskId].ScheduleStart + schedule[dep.LastTaskId].NumDays;
-                        if (lastDepDate > earlyStart)
-                            earlyStart = lastDepDate;
+                        maxDepDate = schedule[dep.LastTaskId].ScheduleStart + schedule[dep.LastTaskId].NumDays;
+                        if (maxDepDate > earlyStart)
+                            earlyStart = maxDepDate;
                     }
-                    tasks[newTask] = tasks[newTask] with { ScheduleStart = earlyStart };
-
-                    schedule.Add(newTask, tasks[newTask]);
-                    tasks.Remove(newTask);
+                    // Update the task's scheduled start date and add it to the schedule
+                    tasks[currentTask] = tasks[currentTask] with { ScheduleStart = earlyStart };
+                    schedule.Add(currentTask, tasks[currentTask]);
+                    tasks.Remove(currentTask);
                 }
             }
         }
 
+        // Update the tasks in the data access layer with their scheduled start dates
         schedule.Values.ToList().ForEach(task => { _dal.Task.Update(task); });
+
+        // Set the start date and end date in the data access layer
         _dal.StartDate = startDate;
         _dal.EndDate = schedule.Values.Max(t => t.ScheduleStart + t.NumDays);
     }
+
     private int CalcValue(DO.Task task)
     {
         if (task.StartTask is null)
@@ -345,11 +368,15 @@ public class TaskImplementation : ITask
     /// <returns> the Task Status</returns>
     private BO.TaskStatus SetStatus(DO.Task task)
     {
-        return task.ScheduleStart is null ? BO.TaskStatus.Unscheduled :
-               task.StartTask is null ? BO.TaskStatus.Scheduled :
-               task.EndTask is null ? BO.TaskStatus.OnTrack :
-               task.EndTask < _bl.Clock ? BO.TaskStatus.Late :
-               BO.TaskStatus.Done;
+        if (task.ScheduleStart is null)
+             return BO.TaskStatus.Unscheduled;
+        if (task.StartTask is null)
+            return BO.TaskStatus.Scheduled;
+        if (task.EndTask is null)
+            return BO.TaskStatus.OnTrack;
+        if (task.EndTask > task.ScheduleStart+task.NumDays)
+            return BO.TaskStatus.Late;
+        return BO.TaskStatus.Done;
 
     }
 
